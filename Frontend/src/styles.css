@@ -1,0 +1,67 @@
+:root {
+  /* Colors */
+  --primary-color: #a52405;
+  --primary-text-color: #000000;
+  --secondary-text-color: #6d6d6d;
+  --divider-color: rgba(0, 0, 0, 0.07);
+
+  /* Typography */
+  color: var(--primary-text-color);
+  font-family: "Poppins", sans-serif;
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+
+  --text-base-size: 1em;
+  --text-scale-ratio: 1.2;
+
+  --text-md: var(--text-base-size);
+  --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+  --text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+  --text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  /* Spacing */
+  --space-base-size: 1em;
+  --space-xs: calc(0.5 * var(--space-base-size));
+  --space-sm: calc(0.75 * var(--space-base-size));
+  --space-md: calc(1.25 * var(--space-base-size));
+  --space-lg: calc(2 * var(--space-base-size));
+  --space-xl: calc(3.25 * var(--space-base-size));
+
+  --outer-margin-horizontal: var(--space-xl);
+}
+
+/* Global Styles */
+body {
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--text-xxl);
+}
+h2 {
+  font-size: var(--text-xl);
+}
+h3 {
+  font-size: var(--text-lg);
+}
+h4 {
+  font-size: var(--text-md);
+}
+
+.app-logo {
+  color: var(--primary-color);
+  font-weight: var(--weight-bold);
+  margin: 0 var(--space-xs) 0 0;
+}
+
+.app-title {
+  color: var(--primary-color);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  margin: 0;
+}

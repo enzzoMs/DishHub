@@ -1,0 +1,49 @@
+header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-lg) var(--outer-margin-horizontal) var(--space-lg)
+    var(--outer-margin-horizontal);
+}
+
+nav {
+  text-align: center;
+}
+
+nav a {
+  color: var(--secondary-text-color);
+  font-size: 14px;
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  padding-bottom: var(--space-xs);
+  margin: 0 var(--space-lg) 0 var(--space-lg);
+
+  &.active-link {
+    animation: 300ms 1 normal underline-anim;
+    color: var(--primary-color);
+    font-weight: var(--weight-bold);
+    text-underline-offset: 0.6em;
+    text-decoration: underline 0.17em var(--primary-color);
+  }
+}
+
+.header-item {
+  flex: 1;
+}
+
+.app-brand-wrapper {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+@keyframes underline-anim {
+  from {
+    text-decoration: underline 0.17em var(--primary-color);
+    text-underline-offset: 0.3em;
+  }
+
+  to {
+    text-decoration: underline 0.17em var(--primary-color);
+    text-underline-offset: 0.6em;
+  }
+}

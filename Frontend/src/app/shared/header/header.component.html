@@ -1,0 +1,29 @@
+<header>
+  <div class="header-item">
+    <a routerLink="/" title="Go to DishHub Home" class="app-brand-wrapper">
+      <span class="app-logo material-icons">local_dining</span>
+      <h1 class="app-title">DishHub</h1>
+    </a>
+  </div>
+  <nav class="header-item">
+    <a [@grow]="0"
+      [routerLink]="appRoutes.Home"
+      routerLinkActive="active-link"
+      ariaCurrentWhenActive="page"
+      >Home</a
+    >
+    <a
+      [routerLink]="appRoutes.Restaurants"
+      routerLinkActive="active-link"
+      ariaCurrentWhenActive="page"
+      >Restaurants</a
+    >
+    <a
+      [routerLink]="appRoutes.About"
+      routerLinkActive="active-link"
+      ariaCurrentWhenActive="page"
+      >About</a
+    >
+  </nav>
+  <div class="header-item"></div>
+</header>
