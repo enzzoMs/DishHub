@@ -6,4 +6,5 @@
 
 main {
   flex: 1;
+  margin: 0 var(--outer-margin-horizontal) 0 var(--outer-margin-horizontal);
 }

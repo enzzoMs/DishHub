@@ -14,7 +14,7 @@ nav a {
   font-size: 14px;
   font-weight: var(--weight-semibold);
   text-decoration: none;
-  padding-bottom: var(--space-xs);
+  padding-bottom: var(--space-sm);
   margin: 0 var(--space-lg) 0 var(--space-lg);
 
   &.active-link {

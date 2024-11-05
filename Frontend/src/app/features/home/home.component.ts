@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
+import { HeroComponent } from "./hero/hero.component";
 
 @Component({
-  selector: 'dhub-home',
+  selector: "dhub-home",
   standalone: true,
-  imports: [],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  imports: [HeroComponent],
+  templateUrl: "./home.component.html",
 })
-export class HomeComponent {
-
-}
+export class HomeComponent {}

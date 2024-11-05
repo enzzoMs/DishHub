@@ -1,7 +1,7 @@
 footer {
   display: flex;
   border-top: 2px solid var(--divider-color);
-  padding: var(--space-xs) var(--outer-margin-horizontal) var(--space-xs)
+  padding: var(--space-sm) var(--outer-margin-horizontal) var(--space-sm)
     var(--outer-margin-horizontal);
 }
 
