@@ -2,11 +2,11 @@
   /* Colors */
   --primary-color: #a52405;
   --on-primary-color: #ffffff;
-  --dark-primary-color: #8A2911;
-  --surface-color: #F7EAE6;
+  --dark-primary-color: #8a2911;
+  --surface-color: #f7eae6;
   --primary-text-color: #000000;
   --secondary-text-color: #6d6d6d;
-  --divider-color: #EDEDED;
+  --divider-color: #ededed;
 
   /* Typography */
   color: var(--primary-text-color);
@@ -14,12 +14,11 @@
   font-size: var(--text-md);
   font-weight: var(--weight-medium);
 
-  --text-base-size: 1em;
-  --text-sm: calc(var(--text-base-size) * 0.9);
-  --text-md: var(--text-base-size);
-  --text-lg: calc(var(--text-base-size) * 1.25);
-  --text-xl: calc(var(--text-base-size) * 1.5);
-  --text-xxl: calc(var(--text-base-size) * 2.25);
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-xxl: 2.25rem;
 
   --weight-medium: 500;
   --weight-semibold: 600;
@@ -27,17 +26,20 @@
   --weight-black: 900;
 
   /* Spacing */
-  --space-base-size: 1em;
-  --space-sm: calc(0.5 * var(--space-base-size));
-  --space-md: var(--space-base-size);
-  --space-lg: calc(2 * var(--space-base-size));
-  --space-xl: calc(3 * var(--space-base-size));
-  --space-xxl: calc(4 * var(--space-base-size));
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-xxl: 4rem;
 
   --outer-margin-horizontal: var(--space-xl);
+  --inner-margin-horizontal: calc(
+    var(--outer-margin-horizontal) + var(--space-xl)
+  );
 
   /* Misc */
   --surface-corner-radius: 15px;
+  --review-star-color: #EB6D00;
 }
 
 /* Global Styles */
@@ -47,15 +49,24 @@ body {
 
 h1 {
   font-size: var(--text-xxl);
+  font-weight: var(--weight-bold);
 }
+
 h2 {
   font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
 }
+
 h3 {
   font-size: var(--text-lg);
 }
+
 h4 {
   font-size: var(--text-md);
+}
+
+.material-icons {
+  font-size: var(--text-xl);
 }
 
 .app-logo {
@@ -82,8 +93,8 @@ h4 {
   border-radius: 4px;
   border: none;
   padding: var(--space-sm) var(--space-lg) var(--space-sm) var(--space-lg);
+}
 
-  &:hover {
-    background-color: var(--dark-primary-color);
-  }
+.primary-button:hover {
+  background-color: var(--dark-primary-color);
 }

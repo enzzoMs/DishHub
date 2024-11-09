@@ -1,16 +1,15 @@
 footer {
   display: flex;
   border-top: 2px solid var(--divider-color);
-  padding: var(--space-sm) var(--outer-margin-horizontal) var(--space-sm)
-    var(--outer-margin-horizontal);
+  padding: var(--space-sm) var(--outer-margin-horizontal);
 }
 
 .github-logo-wrapper {
   margin-left: auto;
   display: flex;
   align-items: center;
+}
 
-  img {
-    height: var(--text-xl);
-  }
+.github-logo-wrapper img {
+  height: var(--text-xl);
 }

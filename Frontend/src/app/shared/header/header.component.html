@@ -1,12 +1,11 @@
 <header>
-  <div class="header-item">
+  <h1 class="header-item app-title">
     <a routerLink="/" title="Go to DishHub Home" class="app-brand-wrapper">
-      <span class="app-logo material-icons">local_dining</span>
-      <h1 class="app-title">DishHub</h1>
+      <span class="material-icons app-logo">local_dining</span>DishHub
     </a>
-  </div>
+  </h1>
   <nav class="header-item">
-    <a [@grow]="0"
+    <a
       [routerLink]="appRoutes.Home"
       routerLinkActive="active-link"
       ariaCurrentWhenActive="page"

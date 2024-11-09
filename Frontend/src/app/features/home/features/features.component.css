@@ -1,0 +1,125 @@
+.features-heading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.features-heading-wrapper > h2 {
+  text-align: center;
+  margin: 0 var(--space-lg);
+}
+
+.features-heading-wrapper .features-title {
+  display: block;
+  color: var(--primary-color);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  margin-bottom: var(--text-sm);
+}
+
+.features-heading-wrapper:before, .features-heading-wrapper:after {
+  display: inline-block;
+  content: "";
+  width: 70px;
+  height: 3px;
+  background-color: var(--primary-color);
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin: var(--space-xxl) 0;
+  column-gap: var(--space-xxl);
+}
+
+.feature-item > .feature-description {
+  flex: 1;
+}
+
+.feature-item > article {
+  flex: 0.7;
+}
+
+.feature-description .feature-title {
+  display: block;
+  color: var(--primary-color);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  margin-bottom: var(--text-sm);
+}
+
+.feature-description > h3 {
+  margin-top: 0;
+}
+
+.feature-description > p {
+  margin-bottom: var(--space-lg);
+}
+
+.review-title > h1 {
+  font-size: var(--text-lg);
+  margin: 0;
+}
+
+.review-title > p {
+  color: var(--secondary-text-color);
+  font-weight: var(--weight-semibold);
+  margin-top: var(--space-sm);
+}
+
+.review-message > .review-quote {
+  color: var(--primary-color);
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.review-message > .review-quote:first-child {
+  transform: scaleX(-1);
+}
+
+.review-stars {
+  display: flex;
+  color: var(--review-star-color);
+  column-gap: var(--space-sm);
+  margin-bottom: 0;
+}
+
+.restaurant-header {
+  display: flex;
+}
+
+.restaurant-title {
+  flex: 1;
+  font-size: var(--text-lg);
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-md);
+  margin: 0;
+}
+
+.restaurant-score {
+  color: var(--review-star-color);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-sm);
+  margin: 0;
+}
+
+.restaurant-icon {
+  font-size: var(--text-xxl);
+  color: var(--primary-color);
+}
+
+.restaurant-location {
+  color: var(--secondary-text-color);
+  font-weight: var(--weight-semibold);
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-md);
+  margin-top: var(--space-lg);
+  margin-bottom: 0;
+}
