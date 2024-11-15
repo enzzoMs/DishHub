@@ -4,34 +4,6 @@ section {
   row-gap: var(--space-xxl);
 }
 
-.features-heading-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.features-heading-wrapper > h2 {
-  text-align: center;
-  margin: 0 var(--space-lg);
-}
-
-.features-heading-wrapper .features-title {
-  display: block;
-  color: var(--primary-color);
-  font-size: var(--text-md);
-  font-weight: var(--weight-semibold);
-  text-transform: uppercase;
-  margin-bottom: var(--text-sm);
-}
-
-.features-heading-wrapper:before, .features-heading-wrapper:after {
-  display: inline-block;
-  content: "";
-  width: 70px;
-  height: 3px;
-  background-color: var(--primary-color);
-}
-
 .feature-item {
   display: flex;
   align-items: center;

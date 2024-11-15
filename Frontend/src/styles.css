@@ -83,6 +83,35 @@ h4 {
   background-color: var(--dark-primary-color);
 }
 
+/* Section Heading ==================== */
+.section-heading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-heading-wrapper > h2 {
+  text-align: center;
+  margin: 0 var(--space-lg);
+}
+
+.section-heading-wrapper .section-title {
+  display: block;
+  color: var(--primary-color);
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  margin-bottom: var(--text-sm);
+}
+
+.section-heading-wrapper:before, .section-heading-wrapper:after {
+  display: inline-block;
+  content: "";
+  width: 70px;
+  height: 3px;
+  background-color: var(--primary-color);
+}
+
 /* Loading Indicators ============== */
 .loading-dots {
   font-size: var(--text-xxl);

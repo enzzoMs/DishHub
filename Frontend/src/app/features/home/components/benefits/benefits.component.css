@@ -1,0 +1,20 @@
+.benefits {
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-xxl);
+  margin-top: var(--space-xxl);
+}
+
+.benefit-item {
+  flex: 1;
+  text-align: center;
+}
+
+.benefit-logo {
+  color: var(--primary-color);
+  font-size: 4rem;
+  background-color: var(--surface-color);
+  border-radius: var(--surface-corner-radius);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
