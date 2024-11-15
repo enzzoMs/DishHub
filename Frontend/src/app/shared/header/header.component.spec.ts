@@ -18,6 +18,10 @@ describe("HeaderComponent", () => {
     fixture.detectChanges();
   });
 
+  it("should be created", () => {
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
   it("should navigate to home on logo click", () => {
     const logoWrapper = fixture.nativeElement.querySelector(
       ".app-brand-wrapper",

@@ -13,17 +13,17 @@ export const appRoutes: Routes = [
   {
     path: RoutePaths.Home,
     component: HomeComponent,
-    title: "DishHub – Home",
+    title: "Home - DishHub",
   },
   {
     path: RoutePaths.Restaurants,
     component: RestaurantsComponent,
-    title: "DishHub – Restaurants",
+    title: "Restaurants - DishHub",
   },
   {
     path: RoutePaths.About,
     component: AboutComponent,
-    title: "DishHub – About",
+    title: "About - DishHub",
   },
   { path: "", redirectTo: "home", pathMatch: "full" },
   // TODO: { path: "**", NotFoundComponent}

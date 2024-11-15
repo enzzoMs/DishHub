@@ -1,0 +1,27 @@
+section {
+  display: flex;
+  column-gap: var(--space-lg);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) 0;
+  border-top: var(--divider-color) solid var(--divider-height);
+  border-bottom: var(--divider-color) solid var(--divider-height);
+}
+
+section > h2 {
+  margin: 0;
+}
+
+.statistic-item {
+  color: var(--secondary-text-color);
+  font-weight: var(--weight-semibold);
+  text-align: center;
+}
+
+.statistic-item > .statistic-count {
+  color: var(--primary-color);
+  font-size: var(--text-lg);
+  display: block;
+}
+
+

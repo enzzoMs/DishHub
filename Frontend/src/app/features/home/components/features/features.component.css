@@ -1,3 +1,9 @@
+section {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--space-xxl);
+}
+
 .features-heading-wrapper {
   display: flex;
   align-items: center;
@@ -29,7 +35,6 @@
 .feature-item {
   display: flex;
   align-items: center;
-  margin: var(--space-xxl) 0;
   column-gap: var(--space-xxl);
 }
 

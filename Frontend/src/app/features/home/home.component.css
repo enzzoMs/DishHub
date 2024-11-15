@@ -2,3 +2,8 @@
   display: block;
   margin: var(--space-xxl) var(--space-xl) 0 var(--space-xl);
 }
+
+dhub-statistics {
+  display: block;
+  margin: var(--space-xxl) 0;
+}

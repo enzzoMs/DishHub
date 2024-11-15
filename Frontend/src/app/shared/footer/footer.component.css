@@ -1,6 +1,6 @@
 footer {
   display: flex;
-  border-top: 2px solid var(--divider-color);
+  border-top: var(--divider-height) solid var(--divider-color);
   padding: var(--space-sm) var(--outer-margin-horizontal);
 }
 

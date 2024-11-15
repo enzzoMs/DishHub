@@ -1,0 +1,28 @@
+<section aria-labelledby="statistics-title">
+  <h2 id="statistics-title">See how our community is growing</h2>
+  @if (appStatistics$ | async; as appStatistics) {
+    <p class="statistic-item">
+      <span class="statistic-count"
+        >{{ appStatistics.usersCount | roundToFive }}+</span
+      >Food Lovers
+    </p>
+    <p class="statistic-item">
+      <span class="statistic-count"
+        >{{ appStatistics.restaurantsCount | roundToFive }}+</span
+      >Restaurants Listed
+    </p>
+    <p class="statistic-item">
+      <span class="statistic-count"
+        >{{ appStatistics.reviewsCount | roundToFive }}+</span
+      >Reviews Shared
+    </p>
+  } @else {
+    <p class="statistic-item"><span class="loading-dots"></span>Food Lovers</p>
+    <p class="statistic-item">
+      <span class="loading-dots"></span>Restaurants Listed
+    </p>
+    <p class="statistic-item">
+      <span class="loading-dots"></span>Reviews Shared
+    </p>
+  }
+</section>
