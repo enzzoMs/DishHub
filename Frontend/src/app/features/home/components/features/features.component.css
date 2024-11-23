@@ -47,6 +47,7 @@ section {
 }
 
 .review-message > .review-quote {
+  font-size: var(--text-xl);
   color: var(--primary-color);
   vertical-align: middle;
   margin-bottom: 4px;
@@ -57,6 +58,7 @@ section {
 }
 
 .review-stars {
+  font-size: var(--text-xl);
   display: flex;
   color: var(--review-star-color);
   column-gap: var(--space-sm);
@@ -86,6 +88,10 @@ section {
   margin: 0;
 }
 
+.restaurant-score .material-icons {
+  font-size: var(--text-xl);
+}
+
 .restaurant-icon {
   font-size: var(--text-xxl);
   color: var(--primary-color);
@@ -99,4 +105,8 @@ section {
   column-gap: var(--space-md);
   margin-top: var(--space-lg);
   margin-bottom: 0;
+}
+
+.restaurant-location .material-icons {
+  font-size: var(--text-xl);
 }

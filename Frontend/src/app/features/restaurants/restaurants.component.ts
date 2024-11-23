@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import {RestaurantsFilterComponent} from "./components/restaurants-filter/restaurants-filter.component";
 
 @Component({
-  selector: 'dhub-restaurants',
+  selector: "dhub-restaurants",
   standalone: true,
-  imports: [],
-  templateUrl: './restaurants.component.html',
-  styleUrl: './restaurants.component.css'
+  imports: [RestaurantsFilterComponent],
+  templateUrl: "./restaurants.component.html",
+  styleUrl: "./restaurants.component.css",
 })
-export class RestaurantsComponent {
-
-}
+export class RestaurantsComponent {}

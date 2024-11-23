@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+}
+
+dhub-restaurants-filter {
+  flex: 0.2;
+}
+
+div {
+  flex: 1;
+}

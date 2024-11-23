@@ -1,0 +1,39 @@
+<form [formGroup]="restaurantFilterForm" (ngSubmit)="applyFilters()">
+  <p class="form-title"><span class="material-icons">search</span>Filters</p>
+  <label for="name-field">Name</label>
+  <input
+    id="name-field"
+    type="text"
+    size="1"
+    placeholder="e.g. Luna Bistro"
+    formControlName="name"
+  />
+  <label for="location-field">Location</label>
+  <input
+    id="location-field"
+    type="text"
+    size="1"
+    placeholder="e.g. Pasta Lane"
+    formControlName="location"
+  />
+  <label for="score-selection">Score</label>
+  <ng-select
+    id="score-selection"
+    formControlName="score"
+    [items]="scoreOptions"
+    [clearable]="false"
+    [searchable]="false"
+    labelForId="score-selection"
+  >
+    <ng-template ng-label-tmp ng-option-tmp let-scoreOption="item">
+      @if (scoreOption.value === null) {
+        <span>Any</span>
+      } @else {
+        @for (_ of [].constructor(scoreOption.value); track $index) {
+          <span class="material-icons">star</span>
+        }
+      }
+    </ng-template>
+  </ng-select>
+  <button type="submit" class="primary-button">Apply</button>
+</form>
