@@ -29,7 +29,7 @@
       @if (scoreOption.value === null) {
         <span>Any</span>
       } @else {
-        @for (_ of [].constructor(scoreOption.value); track $index) {
+        @for (_ of scoreOption.value | enumerate; track $index) {
           <span class="material-icons">star</span>
         }
       }

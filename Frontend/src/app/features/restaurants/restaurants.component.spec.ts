@@ -1,23 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { RestaurantsComponent } from './restaurants.component';
+import { RestaurantsComponent } from "./restaurants.component";
+import { provideRouter} from "@angular/router";
 
-describe('RestaurantsComponent', () => {
-  let component: RestaurantsComponent;
-  let fixture: ComponentFixture<RestaurantsComponent>;
-
-  beforeEach(async () => {
+describe("RestaurantsComponent", () => {
+  it("should be created", async () => {
     await TestBed.configureTestingModule({
-      imports: [RestaurantsComponent]
-    })
-    .compileComponents();
+      imports: [RestaurantsComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(RestaurantsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should be created', () => {
+    const fixture = TestBed.createComponent(RestaurantsComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 });

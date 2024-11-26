@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { Observable } from "rxjs";
 import { AsyncPipe } from "@angular/common";
-import { RoundToFivePipe } from "../../pipes/round-to-five.pipe";
 import { AppStatistics } from "../../models/app-statistics.model";
 import { StatisticsService } from "../../services/statistics.service";
+import { RoundToFivePipe } from "../../../../shared/pipes/round-to-five/round-to-five.pipe";
 
 @Component({
   selector: "dhub-statistics",
@@ -15,7 +15,7 @@ import { StatisticsService } from "../../services/statistics.service";
 export class StatisticsComponent {
   readonly appStatistics$: Observable<AppStatistics>;
 
-  constructor( readonly statisticsService: StatisticsService) {
+  constructor(readonly statisticsService: StatisticsService) {
     this.appStatistics$ = statisticsService.appStatistics$;
   }
 }

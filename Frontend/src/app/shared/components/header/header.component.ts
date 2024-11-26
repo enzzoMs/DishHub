@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
-import { RoutePaths } from "../../app.routes";
+import { RoutePaths } from "../../../app.routes";
 
 @Component({
   selector: "dhub-header",

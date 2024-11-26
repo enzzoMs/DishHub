@@ -14,7 +14,7 @@ section {
   flex: 1;
 }
 
-.feature-item > article {
+.feature-item > :not(.feature-description) {
   flex: 0.7;
 }
 
@@ -63,50 +63,4 @@ section {
   color: var(--review-star-color);
   column-gap: var(--space-sm);
   margin-bottom: 0;
-}
-
-.restaurant-header {
-  display: flex;
-}
-
-.restaurant-title {
-  flex: 1;
-  font-size: var(--text-lg);
-  display: flex;
-  align-items: center;
-  column-gap: var(--space-md);
-  margin: 0;
-}
-
-.restaurant-score {
-  color: var(--review-star-color);
-  font-size: var(--text-lg);
-  font-weight: var(--weight-semibold);
-  display: flex;
-  align-items: center;
-  column-gap: var(--space-sm);
-  margin: 0;
-}
-
-.restaurant-score .material-icons {
-  font-size: var(--text-xl);
-}
-
-.restaurant-icon {
-  font-size: var(--text-xxl);
-  color: var(--primary-color);
-}
-
-.restaurant-location {
-  color: var(--secondary-text-color);
-  font-weight: var(--weight-semibold);
-  display: flex;
-  align-items: center;
-  column-gap: var(--space-md);
-  margin-top: var(--space-lg);
-  margin-bottom: 0;
-}
-
-.restaurant-location .material-icons {
-  font-size: var(--text-xl);
 }

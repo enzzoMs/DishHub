@@ -39,24 +39,10 @@
   </div>
 
   <div class="feature-item">
-    <article>
-      <div class="restaurant-header">
-        <h1 class="restaurant-title">
-          <span class="material-icons restaurant-icon">storefront</span>La
-          Tavola Italiana
-        </h1>
-        <p class="restaurant-score">
-          <span class="material-icons">star</span>4.8
-        </p>
-      </div>
-      <p>
-        Authentic Italian cuisine with fresh pasta, wood-fired pizzas, and a
-        cozy, rustic vibe.
-      </p>
-      <p class="restaurant-location">
-        <span class="material-icons">location_on</span>123 Pasta Lane
-      </p>
-    </article>
+    <dhub-restaurant-item
+      [restaurantModel]="restaurantExample"
+      [showDetailsButton]="false"
+    />
     <div class="feature-description">
       <h3><span class="feature-title">Explore</span>Explore New Places</h3>
       <p>

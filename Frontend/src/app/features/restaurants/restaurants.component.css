@@ -4,8 +4,10 @@
 
 dhub-restaurants-filter {
   flex: 0.2;
+  margin-right: var(--space-xxl);
 }
 
-div {
+dhub-restaurants-list {
   flex: 1;
+  margin-left: var(--space-lg);
 }

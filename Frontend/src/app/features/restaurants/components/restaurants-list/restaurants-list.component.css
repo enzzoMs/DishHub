@@ -1,0 +1,45 @@
+.pagination-summary {
+  border-bottom: var(--divider-height) solid var(--divider-color);
+  padding-bottom: var(--space-md);
+}
+
+.pagination-range {
+  font-weight: var(--weight-bold);
+}
+
+dhub-restaurant-item,
+.restaurant-skeleton {
+  display: block;
+  border-bottom: var(--divider-height) solid var(--divider-color);
+  margin-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+}
+
+.restaurant-skeleton .skeleton-square {
+  width: var(--space-lg);
+  height: var(--space-lg);
+}
+
+.restaurant-header-skeleton {
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-sm);
+}
+
+.restaurant-header-skeleton .skeleton-text {
+  width: 15%;
+}
+
+.restaurant-footer-skeleton {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-md);
+}
+
+.restaurant-footer-skeleton .skeleton-text {
+  width: 15%;
+}
+
+.dhub-pagination-control {
+  margin-top: var(--space-xl);
+}

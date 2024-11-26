@@ -1,0 +1,49 @@
+<p class="pagination-summary">
+  Showing
+  <span class="pagination-range"
+    >{{ pageStart }}-{{ pageEnd }}</span
+  >
+  of <span class="pagination-range">{{ totalItems }}</span> results
+</p>
+
+@let restaurants =
+  (restaurants$ | async) || []
+    | paginate
+      : {
+          itemsPerPage: pageSize,
+          currentPage: currentPage,
+          totalItems: totalItems,
+        };
+
+@if (loading$ | async) {
+  @for (_ of pageSize | enumerate; track $index) {
+    <div class="restaurant-skeleton">
+      <div class="restaurant-header-skeleton">
+        <div class="skeleton-square"></div>
+        <div class="skeleton-text"></div>
+      </div>
+      <div class="skeleton-text"></div>
+      <div class="skeleton-text"></div>
+      <div class="restaurant-footer-skeleton">
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    </div>
+  }
+} @else {
+  @for (restaurant of restaurants; track restaurant.id) {
+    <dhub-restaurant-item [restaurantModel]="restaurant" />
+  }
+}
+
+<pagination-controls
+  class="dhub-pagination-control"
+  screenReaderPaginationLabel="Pagination"
+  screenReaderPageLabel="page"
+  screenReaderCurrentLabel="You're on page"
+  (pageChange)="pageChanged($event)"
+  (pageBoundsCorrection)="pageBoundsCorrection($event)"
+  [maxSize]="7"
+  [directionLinks]="false"
+>
+</pagination-controls>

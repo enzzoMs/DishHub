@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { HeaderComponent } from "./header.component";
 import { By } from "@angular/platform-browser";
 import { provideRouter } from "@angular/router";
-import { RoutePaths, appRoutes } from "../../app.routes";
+import { RoutePaths, appRoutes } from "../../../app.routes";
 
 describe("HeaderComponent", () => {
   let fixture: ComponentFixture<HeaderComponent>;

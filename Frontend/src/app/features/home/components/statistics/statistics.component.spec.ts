@@ -3,7 +3,7 @@ import { StatisticsComponent } from "./statistics.component";
 import { StatisticsService } from "../../services/statistics.service";
 import { Subject } from "rxjs";
 import { AppStatistics } from "../../models/app-statistics.model";
-import { RoundToFivePipe } from "../../pipes/round-to-five.pipe";
+import { RoundToFivePipe } from "../../../../shared/pipes/round-to-five/round-to-five.pipe";
 
 describe("StatisticsComponent", () => {
   let component: StatisticsComponent;
@@ -13,7 +13,7 @@ describe("StatisticsComponent", () => {
   const testStatistics$ = new Subject<AppStatistics | undefined>();
 
   beforeEach(async () => {
-    const statisticsServiceSpy = jasmine.createSpyObj(
+    const statisticsServiceSpy: jasmine.SpyObj<StatisticsService> = jasmine.createSpyObj(
       "statisticsServiceSpy",
       [],
       { appStatistics$: testStatistics$ },

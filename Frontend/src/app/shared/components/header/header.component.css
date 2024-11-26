@@ -21,7 +21,6 @@ nav {
 
 nav a {
   color: var(--secondary-text-color);
-  font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
   text-decoration: none;
   margin: 0 var(--space-lg);

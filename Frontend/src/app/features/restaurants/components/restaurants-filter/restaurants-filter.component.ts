@@ -6,6 +6,7 @@ import {
 } from "@ng-select/ng-select";
 import { FormBuilder, FormControl, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
+import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe";
 
 interface ScoreOption {
   value: number | null;
@@ -19,6 +20,7 @@ interface ScoreOption {
     ReactiveFormsModule,
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
+    EnumeratePipe,
   ],
   templateUrl: "./restaurants-filter.component.html",
   styleUrl: "./restaurants-filter.component.css",

@@ -1,4 +1,5 @@
-@import "../node_modules/@ng-select/ng-select/themes/default.theme.css" layer(components);
+@import "../node_modules/@ng-select/ng-select/themes/default.theme.css"
+  layer(components);
 
 :root {
   /* Colors */
@@ -8,7 +9,7 @@
   --surface-color: #f7eae6;
   --primary-text-color: #000000;
   --secondary-text-color: #6d6d6d;
-  --secondary-text-color__alpha-70: #9A9A9A;
+  --secondary-text-color__alpha-70: #9a9a9a;
   --divider-color: #ededed;
 
   /* Typography */
@@ -115,7 +116,40 @@ input:focus {
 }
 
 .ng-option-marked {
-  background-color: #EFEFEF;
+  background-color: #efefef;
+}
+
+.dhub-pagination-control {
+  display: block;
+}
+
+.dhub-pagination-control .ngx-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--space-sm);
+  padding: 0;
+}
+
+.dhub-pagination-control .ngx-pagination a {
+  padding: 0.8rem 1.2rem;
+}
+
+.dhub-pagination-control .ngx-pagination a:hover {
+  background-color: var(--divider-color);
+}
+
+.dhub-pagination-control .ngx-pagination li {
+  border-radius: 10%;
+  border: var(--divider-height) solid var(--divider-color);
+}
+
+.dhub-pagination-control .ngx-pagination .current {
+  display: flex;
+  align-items: center;
+  background: var(--primary-color);
+  border: none;
+  padding: 0.8rem 1.4rem;
 }
 
 /* Buttons ======================= */
@@ -128,7 +162,7 @@ input:focus {
   background-color: var(--primary-color);
   border-radius: 4px;
   border: none;
-  padding: var(--space-sm) var(--space-lg) var(--space-sm) var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
 }
 
 .primary-button:hover {
@@ -156,10 +190,11 @@ input:focus {
   margin-bottom: var(--text-sm);
 }
 
-.section-heading-wrapper:before, .section-heading-wrapper:after {
+.section-heading-wrapper:before,
+.section-heading-wrapper:after {
   display: inline-block;
   content: "";
-  width: 70px;
+  width: 4.5rem;
   height: 3px;
   background-color: var(--primary-color);
 }
@@ -190,6 +225,36 @@ input:focus {
   }
   50% {
     transform: scale(1);
+  }
+}
+
+.skeleton-square {
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 25%;
+  animation: skeleton-loading 1s infinite alternate;
+}
+
+.skeleton-text {
+  display: block;
+  width: 100%;
+  height: var(--text-md);
+  border-radius: var(--surface-corner-radius);
+  animation: skeleton-loading 1s infinite alternate;
+  margin: var(--space-sm) 0;
+}
+
+.skeleton-text:last-child {
+  width: 80%;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: #d2d6dc;
+  }
+  100% {
+    background-color: #e8eaed;
   }
 }
 
