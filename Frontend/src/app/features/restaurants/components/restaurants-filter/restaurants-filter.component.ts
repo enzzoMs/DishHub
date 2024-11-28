@@ -4,13 +4,13 @@ import {
   NgOptionTemplateDirective,
   NgSelectComponent,
 } from "@ng-select/ng-select";
-import { FormBuilder, FormControl, ReactiveFormsModule } from "@angular/forms";
-import { Router } from "@angular/router";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe";
-
-interface ScoreOption {
-  value: number | null;
-}
+import {
+  RestaurantFilters,
+  ScoreOption,
+} from "../../models/restaurant-filter.model";
 
 @Component({
   selector: "dhub-restaurants-filter",
@@ -21,13 +21,12 @@ interface ScoreOption {
     NgOptionTemplateDirective,
     NgLabelTemplateDirective,
     EnumeratePipe,
+    FormsModule,
   ],
   templateUrl: "./restaurants-filter.component.html",
   styleUrl: "./restaurants-filter.component.css",
 })
 export class RestaurantsFilterComponent {
-  readonly restaurantFilterForm;
-
   readonly scoreOptions: ScoreOption[] = [
     { value: null },
     { value: 1 },
@@ -37,19 +36,29 @@ export class RestaurantsFilterComponent {
     { value: 5 },
   ];
 
+  readonly restaurantFilters: RestaurantFilters = {
+    name: "",
+    location: "",
+    score: this.scoreOptions[0],
+  };
+
   constructor(
-    formBuilder: FormBuilder,
+    activatedRoute: ActivatedRoute,
     private readonly router: Router,
   ) {
-    this.restaurantFilterForm = formBuilder.group({
-      name: [""],
-      location: [""],
-      score: new FormControl<ScoreOption>(this.scoreOptions[0]),
+    activatedRoute.queryParamMap.subscribe((paramsMap) => {
+      this.restaurantFilters.name = paramsMap.get("name");
+      this.restaurantFilters.location = paramsMap.get("location");
+
+      const scoreParam = parseInt(paramsMap.get("score")!, 10);
+      this.restaurantFilters.score = {
+        value: isNaN(scoreParam) ? null : scoreParam,
+      };
     });
   }
 
   applyFilters() {
-    const { name, location, score } = this.restaurantFilterForm.value;
+    const { name, location, score } = this.restaurantFilters;
 
     this.router.navigate([], {
       queryParams: {

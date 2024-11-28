@@ -31,8 +31,15 @@
     </div>
   }
 } @else {
-  @for (restaurant of restaurants; track restaurant.id) {
-    <dhub-restaurant-item [restaurantModel]="restaurant" />
+  @if (restaurants.length === 0) {
+    <div class="no-restaurants-wrapper">
+      <span class="material-icons no-restaurants-icon">restaurant</span>
+      <p>No Restaurants Found</p>
+    </div>
+  } @else {
+    @for (restaurant of restaurants; track restaurant.id) {
+      <dhub-restaurant-item [restaurantModel]="restaurant" />
+    }
   }
 }
 
@@ -44,6 +51,7 @@
   (pageChange)="pageChanged($event)"
   (pageBoundsCorrection)="pageBoundsCorrection($event)"
   [maxSize]="7"
+  [autoHide]="restaurants.length === 0"
   [directionLinks]="false"
 >
 </pagination-controls>

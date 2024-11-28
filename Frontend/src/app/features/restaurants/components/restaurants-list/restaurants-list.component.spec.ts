@@ -72,6 +72,7 @@ describe("RestaurantsListComponent", () => {
     expect(restaurantsServiceMock.getRestaurantsForPage).toHaveBeenCalledWith(
       1,
       component.pageSize,
+      jasmine.any(Object),
     );
     expect(restaurants!).toEqual(mockPaginatedRestaurants.data);
     expect(component.totalItems).toEqual(mockPaginatedRestaurants.totalItems);
@@ -87,7 +88,7 @@ describe("RestaurantsListComponent", () => {
       queryParams: {
         page: 7,
       },
-      queryParamsHandling: "replace",
+      queryParamsHandling: "merge",
     });
   });
 
@@ -118,6 +119,29 @@ describe("RestaurantsListComponent", () => {
     expect(restaurants!).toEqual(mockPaginatedRestaurants.data);
   });
 
+  it("should update restaurant filters when query params change", () => {
+    const nameFilter = "Luna Bistro";
+    const locationFilter = "Pasta Lane";
+    const scoreFilter = 4;
+
+    const paramsMap = new Map<string, string>();
+    paramsMap.set("name", nameFilter);
+    paramsMap.set("location", locationFilter);
+    paramsMap.set("score", scoreFilter.toString());
+
+    queryParamsMock$.next(paramsMap);
+
+    expect(restaurantsServiceMock.getRestaurantsForPage).toHaveBeenCalledWith(
+      jasmine.anything(),
+      jasmine.anything(),
+      {
+        name: nameFilter,
+        location: locationFilter,
+        score: { value: scoreFilter },
+      },
+    );
+  });
+
   it("should navigate to closest valid page when page number is outside bounds", () => {
     const router = TestBed.inject(Router);
     spyOn(router, "navigate");
@@ -130,7 +154,7 @@ describe("RestaurantsListComponent", () => {
       queryParams: {
         page: closestValidPage,
       },
-      queryParamsHandling: "replace",
+      queryParamsHandling: "merge",
     });
   });
 
@@ -151,9 +175,23 @@ describe("RestaurantsListComponent", () => {
   });
 
   it("should update pagination range when page changes", () => {
+    const totalItems = 10;
+    const mockPaginatedRestaurants = {
+      totalItems: totalItems,
+      pageNumber: 1,
+      data: [],
+    };
+    restaurantsServiceMock.getRestaurantsForPage.and.returnValue(
+      of(mockPaginatedRestaurants),
+    );
+
     const newPage = 2;
-    const expectedPageStart = (newPage - 1) * component.pageSize + 1;
-    const expectedPageEnd = newPage * component.pageSize;
+
+    let expectedPageStart = (newPage - 1) * component.pageSize + 1;
+    expectedPageStart = expectedPageStart > totalItems ? totalItems : expectedPageStart;
+
+    let expectedPageEnd = newPage * component.pageSize;
+    expectedPageEnd = expectedPageEnd > totalItems ? totalItems : expectedPageEnd;
 
     const paramsMap = new Map<string, string>();
     paramsMap.set("page", newPage.toString());

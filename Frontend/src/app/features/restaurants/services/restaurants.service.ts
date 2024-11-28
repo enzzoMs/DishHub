@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Restaurant } from "../models/restaurant.model";
 import { PaginatedItems } from "../../../shared/models/PaginatedItems";
+import { RestaurantFilters } from "../models/restaurant-filter.model";
 
 @Injectable({
   providedIn: "root",
@@ -10,21 +11,39 @@ export class RestaurantsService {
   getRestaurantsForPage(
     page: number,
     pageSize: number,
+    filters: RestaurantFilters,
   ): Observable<PaginatedItems<Restaurant>> {
     // TODO: Replace with HTTP call
     return new Observable<PaginatedItems<Restaurant>>((subscriber) => {
       setTimeout(() => {
+        const filteredRestaurants = this.restaurants.filter((restaurant) => {
+          return (
+            (!filters.name ||
+              restaurant.name
+                .toLowerCase()
+                .includes(filters.name.toLowerCase())) &&
+            (!filters.location ||
+              restaurant.location
+                .toLowerCase()
+                .includes(filters.location.toLowerCase())) &&
+            (!filters.score.value || restaurant.score === filters.score.value)
+          );
+        });
+
         subscriber.next({
-          data: this.restaurants.slice((page - 1) * pageSize, page * pageSize),
+          data: filteredRestaurants.slice(
+            (page - 1) * pageSize,
+            page * pageSize,
+          ),
           pageNumber: page,
-          totalItems: this.restaurants.length,
+          totalItems: filteredRestaurants.length,
         });
         subscriber.complete();
       }, 800);
     });
   }
 
-  private restaurants = [
+  private restaurants: Restaurant[] = [
     {
       id: 1,
       name: "The Spicy Fork",

@@ -1,25 +1,28 @@
-<form [formGroup]="restaurantFilterForm" (ngSubmit)="applyFilters()">
+<form (ngSubmit)="applyFilters()">
   <p class="form-title"><span class="material-icons">search</span>Filters</p>
   <label for="name-field">Name</label>
   <input
     id="name-field"
+    name="name"
     type="text"
     size="1"
     placeholder="e.g. Luna Bistro"
-    formControlName="name"
+    [(ngModel)]="restaurantFilters.name"
   />
   <label for="location-field">Location</label>
   <input
     id="location-field"
+    name="location"
     type="text"
     size="1"
     placeholder="e.g. Pasta Lane"
-    formControlName="location"
+    [(ngModel)]="restaurantFilters.location"
   />
   <label for="score-selection">Score</label>
   <ng-select
     id="score-selection"
-    formControlName="score"
+    name="score"
+    [(ngModel)]="restaurantFilters.score"
     [items]="scoreOptions"
     [clearable]="false"
     [searchable]="false"

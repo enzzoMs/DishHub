@@ -11,6 +11,7 @@
   --secondary-text-color: #6d6d6d;
   --secondary-text-color__alpha-70: #9a9a9a;
   --divider-color: #ededed;
+  --background-item: #bdbdbd;
 
   /* Typography */
   color: var(--primary-text-color);
