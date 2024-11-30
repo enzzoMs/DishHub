@@ -1,0 +1,34 @@
+@if (restaurantModel$ | async; as restaurant) {
+  <div class="restaurant-profile-wrapper">
+    <div class="restaurant-icon">
+      <span class="material-icons">storefront</span>
+    </div>
+    <div class="restaurant-description">
+      <div class="restaurant-header">
+        <h1 id="restaurant-name">{{ restaurant.name }}</h1>
+        <p class="restaurant-score">
+          <span class="material-icons">star</span>{{ restaurant.score }}
+        </p>
+      </div>
+      <p>{{ restaurant.description }}</p>
+      <p class="restaurant-location">
+        <span class="material-icons">location_on</span>{{ restaurant.location }}
+      </p>
+    </div>
+  </div>
+} @else {
+  <div class="restaurant-profile-wrapper">
+    <div class="skeleton-square restaurant-icon-skeleton"></div>
+    <div class="restaurant-description">
+      <div class="restaurant-skeleton-header">
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+      <div class="restaurant-description-skeleton">
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+      <div class="skeleton-text restaurant-location-skeleton"></div>
+    </div>
+  </div>
+}

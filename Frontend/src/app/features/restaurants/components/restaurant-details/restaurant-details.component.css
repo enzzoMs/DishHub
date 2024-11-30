@@ -1,0 +1,18 @@
+.back-link-wrapper {
+  margin-top: 0;
+  margin-bottom: var(--space-lg);
+}
+
+.back-link-wrapper a {
+  display: inline-flex;
+  align-items: center;
+  column-gap: var(--space-sm);
+  color: var(--primary-text-color);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+
+dhub-restaurant-profile {
+  display: block;
+  margin: 0 var(--space-xxl);
+}

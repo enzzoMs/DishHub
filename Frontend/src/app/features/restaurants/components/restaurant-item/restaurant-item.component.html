@@ -13,11 +13,16 @@
   </p>
   <div class="restaurant-footer">
     <p class="restaurant-location">
-    <span class="material-icons">location_on</span
-    >{{ restaurantModel().location }}
+      <span class="material-icons">location_on</span
+      >{{ restaurantModel().location }}
     </p>
     @if (showDetailsButton()) {
-      <button class="primary-button">See Details</button>
+      <button
+        class="primary-button"
+        [routerLink]="['/' + RoutePaths.Restaurants, restaurantModel().id]"
+      >
+        See Details
+      </button>
     }
   </div>
 </article>

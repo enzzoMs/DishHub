@@ -1,0 +1,91 @@
+.restaurant-profile-wrapper {
+  display: flex;
+  column-gap: var(--space-xxl);
+}
+
+.restaurant-icon {
+  flex: 0.3;
+  color: var(--primary-color);
+  font-size: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--surface-corner-radius);
+  background-color: var(--surface-color);
+}
+
+.restaurant-description {
+  flex: 1;
+}
+
+.restaurant-header {
+  display: flex;
+  align-items: center;
+}
+
+.restaurant-header h1 {
+  flex: 1;
+  margin: 0;
+}
+
+.restaurant-score {
+  color: var(--review-star-color);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-sm);
+  margin: 0;
+}
+
+.restaurant-description > h1 {
+  margin-top: 0;
+}
+
+.restaurant-description > p {
+  text-align: justify;
+}
+
+.restaurant-location {
+  color: var(--secondary-text-color);
+  font-weight: var(--weight-semibold);
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-md);
+  margin-top: var(--space-lg);
+  margin-bottom: 0;
+}
+
+.restaurant-location .material-icons {
+  font-size: var(--text-xl);
+}
+
+.restaurant-icon-skeleton {
+  flex: 0.3;
+  height: auto;
+}
+
+.restaurant-skeleton-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.restaurant-skeleton-header .skeleton-text:first-child {
+  height: var(--text-xl);
+  width: 30%;
+}
+
+.restaurant-skeleton-header .skeleton-text:last-child {
+  height: var(--text-xl);
+  width: 15%;
+}
+
+.restaurant-description-skeleton .skeleton-text:last-child {
+  width: 45%;
+}
+
+.restaurant-location-skeleton {
+  width: 20%;
+  margin-top: var(--space-lg);
+}

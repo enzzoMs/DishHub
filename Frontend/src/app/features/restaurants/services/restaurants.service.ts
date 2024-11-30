@@ -8,6 +8,18 @@ import { RestaurantFilters } from "../models/restaurant-filter.model";
   providedIn: "root",
 })
 export class RestaurantsService {
+  getRestaurantById(id: number): Observable<Restaurant> {
+    // TODO: Replace with HTTP call
+    return new Observable((subscriber) => {
+      setTimeout(() => {
+        subscriber.next(
+          this.restaurants.find((restaurant) => restaurant.id === id),
+        );
+        subscriber.complete();
+      }, 800);
+    });
+  }
+
   getRestaurantsForPage(
     page: number,
     pageSize: number,

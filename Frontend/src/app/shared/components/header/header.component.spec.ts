@@ -35,8 +35,8 @@ describe("HeaderComponent", () => {
       .queryAll(By.css("nav a"))
       .map((debugElement) => debugElement.nativeElement as HTMLAnchorElement);
 
-    expect(navLinks[0].href).toBe(document.baseURI + RoutePaths.Home);
-    expect(navLinks[1].href).toBe(document.baseURI + RoutePaths.Restaurants);
-    expect(navLinks[2].href).toBe(document.baseURI + RoutePaths.About);
+    expect(navLinks[0].getAttribute("ng-reflect-router-link")).toBe(RoutePaths.Home);
+    expect(navLinks[1].getAttribute("ng-reflect-router-link")).toBe(RoutePaths.Restaurants);
+    expect(navLinks[2].getAttribute("ng-reflect-router-link")).toBe(RoutePaths.About);
   });
 });
