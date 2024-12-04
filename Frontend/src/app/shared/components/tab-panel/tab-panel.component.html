@@ -1,0 +1,33 @@
+<div #tabList role="tablist" tabindex="0" (keydown)="onTabListKeydown($event)">
+  @for (header of tabHeaders(); track $index) {
+    @let lowercaseHeader = header.toLowerCase();
+    @let isSelected = $index === selectedTabIndex();
+
+    <button
+      id="{{ lowercaseHeader }}-tab"
+      role="tab"
+      class="tab-button"
+      [attr.aria-controls]="lowercaseHeader + '-panel'"
+      [tabindex]="isSelected ? 0 : -1"
+      [attr.aria-selected]="isSelected"
+      (click)="selectTab($index)"
+    >
+      {{ header }}
+    </button>
+  }
+</div>
+
+@for (tabItem of tabItems(); track $index) {
+  @if ($index === selectedTabIndex()) {
+    @let lowercaseHeader = tabItem.header().toLowerCase();
+
+    <div
+      id="{{ lowercaseHeader }}-panel"
+      role="tabpanel"
+      tabindex="0"
+      [attr.aria-labelledby]="lowercaseHeader + '-tab'"
+    >
+      <ng-container *ngTemplateOutlet="tabItem.template()"></ng-container>
+    </div>
+  }
+}

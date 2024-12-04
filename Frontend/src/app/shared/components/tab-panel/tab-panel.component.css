@@ -1,0 +1,25 @@
+div[role=tablist] {
+  display: flex;
+  justify-content: center;
+  column-gap: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: var(--divider-height) solid var(--divider-color);
+}
+
+.tab-button {
+  color: inherit;
+  font-size: var(--text-lg);
+  font-family: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.tab-button[aria-selected="false"] {
+  color: var(--secondary-text-color__alpha-70);
+}
+
+.tab-button[aria-selected="false"]:hover {
+  color: var(--secondary-text-color);
+}

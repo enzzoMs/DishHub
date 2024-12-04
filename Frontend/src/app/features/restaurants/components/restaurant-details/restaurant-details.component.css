@@ -12,7 +12,11 @@
   text-decoration: none;
 }
 
-dhub-restaurant-profile {
-  display: block;
+.restaurant-details-wrapper {
   margin: 0 var(--space-xxl);
+}
+
+dhub-restaurant-reviews-and-menu {
+  display: block;
+  margin: var(--space-xxl) var(--space-xxl) 0 var(--space-xxl);
 }
