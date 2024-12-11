@@ -1,0 +1,41 @@
+dhub-review-item,
+.review-skeleton {
+  display: block;
+  border-bottom: var(--divider-height) solid var(--divider-color);
+  margin-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+}
+
+.review-header-skeleton {
+  margin-bottom: var(--space-md);
+}
+
+.review-header-skeleton .skeleton-text {
+  width: 20%;
+}
+
+.review-header-skeleton :last-child.skeleton-text {
+  width: 10%;
+}
+
+.review-comment-skeleton :last-child.skeleton-text {
+  width: 80%;
+}
+
+.review-rating-skeleton {
+  width: 15%;
+  margin-top: var(--space-lg);
+}
+
+.no-data-found-wrapper {
+  margin: var(--space-xxl) 0 var(--space-lg) 0;
+}
+
+.see-more-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.secondary-button {
+  margin: var(--space-xl) 0 var(--space-lg) 0;
+}

@@ -1,0 +1,33 @@
+@let reviews = reviews$ | async;
+
+@if (reviews?.length !== 0) {
+  @for (review of reviews; track $index) {
+    <dhub-review-item [reviewModel]="review" />
+  }
+  @if (loading$ | async) {
+    @for (_ of pageSize | enumerate; track $index) {
+      <div class="review-skeleton">
+        <div class="review-header-skeleton">
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+        </div>
+        <div class="review-comment-skeleton">
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+        </div>
+        <div class="skeleton-text review-rating-skeleton"></div>
+      </div>
+    }
+  } @else if (!allReviewsLoaded) {
+    <div class="see-more-button-container">
+      <button class="secondary-button" (click)="seeMoreReviews()">
+        See More
+      </button>
+    </div>
+  }
+} @else {
+  <div class="no-data-found-wrapper">
+    <span class="material-icons no-data-found-icon">restaurant</span>
+    <p>No Reviews Found</p>
+  </div>
+}

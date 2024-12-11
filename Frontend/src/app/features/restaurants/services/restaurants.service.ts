@@ -3,6 +3,8 @@ import { Observable } from "rxjs";
 import { Restaurant } from "../models/restaurant.model";
 import { PaginatedItems } from "../../../shared/models/PaginatedItems";
 import { RestaurantFilters } from "../models/restaurant-filter.model";
+import { Review } from "../models/review.model";
+import { MenuItem, MenuItemCategory } from "../models/menu-item.model";
 
 @Injectable({
   providedIn: "root",
@@ -54,6 +56,214 @@ export class RestaurantsService {
       }, 800);
     });
   }
+
+  getRestaurantReviews(
+    id: number,
+    page: number,
+    pageSize: number,
+  ): Observable<PaginatedItems<Review>> {
+    return new Observable<PaginatedItems<Review>>((subscriber) => {
+      setTimeout(() => {
+        subscriber.next({
+          data: this.reviews.slice((page - 1) * pageSize, page * pageSize),
+          pageNumber: page,
+          totalItems: this.reviews.length,
+        });
+        subscriber.complete();
+      }, 800);
+    });
+  }
+
+  getRestaurantMenu(id: number): Observable<MenuItem[]> {
+    return new Observable<MenuItem[]>((subscriber) => {
+      setTimeout(() => {
+        subscriber.next(this.menuItems);
+        subscriber.complete();
+      }, 800);
+    });
+  }
+
+  private menuItems: MenuItem[] = [
+    {
+      name: "Bife de Chorizo",
+      category: MenuItemCategory.MainCourse,
+      description:
+        "Corte nobre de carne bovina, grelhado no ponto perfeito, servido com molho chimichurri.",
+      price: 49.9,
+    },
+    {
+      name: "Picanha na Brasa",
+      category: MenuItemCategory.MainCourse,
+      description:
+        "Picanha suculenta, temperada com sal grosso e grelhada na brasa.",
+      price: 69.9,
+    },
+    {
+      name: "Costela de Cordeiro",
+      category: MenuItemCategory.MainCourse,
+      description:
+        "Costela de cordeiro assada lentamente, com ervas e especiarias, servida com purê de batatas.",
+      price: 89.9,
+    },
+    {
+      name: "Feijoada Completa",
+      category: MenuItemCategory.MainCourse,
+      description:
+        "Feijoada tradicional com carnes variadas, arroz, farofa, couve e laranja.",
+      price: 39.9,
+    },
+    {
+      name: "Frango Grelhado com Ervas",
+      category: MenuItemCategory.MainCourse,
+      description:
+        "Peito de frango marinado com ervas finas e grelhado, servido com arroz e salada.",
+      price: 29.9,
+    },
+    {
+      name: "Brigadeiro Gourmet",
+      category: MenuItemCategory.Desserts,
+      description:
+        "Brigadeiro de chocolate belga com granulado dourado, servido em uma mini taça.",
+      price: 12.9,
+    },
+    {
+      name: "Pavê de Morango",
+      category: MenuItemCategory.Desserts,
+      description:
+        "Camadas de biscoito champanhe, creme de leite e morangos frescos, coberto com chantilly.",
+      price: 18.9,
+    },
+    {
+      name: "Torta de Limão",
+      category: MenuItemCategory.Desserts,
+      description:
+        "Torta crocante com recheio de limão siciliano e cobertura de merengue.",
+      price: 22.9,
+    },
+    {
+      name: "Mousse de Maracujá",
+      category: MenuItemCategory.Desserts,
+      description: "Mousse cremosa de maracujá com calda de maracujá fresca.",
+      price: 14.9,
+    },
+    {
+      name: "Cheesecake de Framboesa",
+      category: MenuItemCategory.Desserts,
+      description:
+        "Cheesecake leve e cremoso, coberto com uma deliciosa calda de framboesa.",
+      price: 25.9,
+    },
+    {
+      name: "Salada Caesar",
+      category: MenuItemCategory.Appetizers,
+      description:
+        "Folhas frescas de alface, molho Caesar, croutons crocantes e lascas de parmesão.",
+      price: 19.9,
+    },
+    {
+      name: "Bruschetta de Tomate e Manjericão",
+      category: MenuItemCategory.Appetizers,
+      description:
+        "Pão italiano torrado, coberto com tomate picado, manjericão e azeite de oliva.",
+      price: 15.9,
+    },
+    {
+      name: "Espaguete ao Alho e Óleo",
+      category: MenuItemCategory.Pasta,
+      description:
+        "Espaguete al dente, temperado com alho frito, azeite de oliva e pimenta calabresa.",
+      price: 27.9,
+    },
+    {
+      name: "Lasagna de Carne",
+      category: MenuItemCategory.Pasta,
+      description:
+        "Lasanha recheada com carne moída, molho béchamel e queijo gratinado.",
+      price: 32.9,
+    },
+    {
+      name: "Pizza Margherita",
+      category: MenuItemCategory.Pasta,
+      description:
+        "Pizza com molho de tomate, mozzarella, manjericão fresco e azeite de oliva.",
+      price: 35.9,
+    },
+  ];
+
+  private reviews: Review[] = [
+    {
+      userName: "Alice Johnson",
+      rating: 4,
+      comment: "Amazing experience! The product quality exceeded expectations.",
+      date: new Date("2024-03-16"),
+    },
+    {
+      userName: "Bob Smith",
+      rating: 3,
+      comment: "Decent product, but delivery was delayed.",
+      date: new Date("2024-03-15"),
+    },
+    {
+      userName: "Catherine Lee",
+      rating: 5,
+      comment: "Exceptional service and great value for money!",
+      date: new Date("2024-03-14"),
+    },
+    {
+      userName: "David Brown",
+      rating: 1,
+      comment: "Good overall, but packaging could be improved.",
+      date: new Date("2024-03-13"),
+    },
+    {
+      userName: "Ella Williams",
+      rating: 3,
+      comment: "Not satisfied with the product's durability.",
+      date: new Date("2024-03-12"),
+    },
+    {
+      userName: "Frank Thomas",
+      rating: 2,
+      comment: "Quick delivery and excellent quality. Highly recommend!",
+      date: new Date("2024-03-11"),
+    },
+    {
+      userName: "Grace Hall",
+      rating: 3,
+      comment: "Product works as expected, but the instructions were unclear.",
+      date: new Date("2024-03-10"),
+    },
+    {
+      userName: "Henry Scott",
+      rating: 5,
+      comment: "Absolutely perfect! Couldn't ask for more.",
+      date: new Date("2024-03-09"),
+    },
+    {
+      userName: "Isabella Moore",
+      rating: 3,
+      comment: "Average product, not worth the price.",
+      date: new Date("2024-03-08"),
+    },
+    {
+      userName: "Jack Wilson",
+      rating: 4,
+      comment: "Solid purchase with minor flaws.",
+      date: new Date("2024-03-07"),
+    },
+    {
+      userName: "Karen White",
+      rating: 4,
+      comment: "Fantastic product and excellent customer support.",
+      date: new Date("2024-03-06"),
+    },
+    {
+      userName: "Liam Harris",
+      rating: 2,
+      comment: "Very disappointed. The product did not match the description.",
+      date: new Date("2024-03-05"),
+    },
+  ];
 
   private restaurants: Restaurant[] = [
     {

@@ -1,76 +1,17 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
 import { RestaurantProfileComponent } from "./restaurant-profile.component";
-import { RestaurantsService } from "../../services/restaurants.service";
-import { ActivatedRoute } from "@angular/router";
-import { Restaurant } from "../../models/restaurant.model";
-import { of } from "rxjs";
+import { provideRouter } from "@angular/router";
 
 describe("RestaurantProfileComponent", () => {
-  let component: RestaurantProfileComponent;
-  let fixture: ComponentFixture<RestaurantProfileComponent>;
-
-  let restaurantsServiceMock: jasmine.SpyObj<RestaurantsService>;
-  const testRestaurantId = 0;
-
-  beforeEach(async () => {
-    restaurantsServiceMock = jasmine.createSpyObj("restaurantsServiceMock", [
-      "getRestaurantById",
-    ]);
-
-    const activatedRouteMock = {
-      snapshot: {
-        paramMap: {
-          get(name: string): string | null {
-            return name === "id" ? testRestaurantId.toString() : null;
-          },
-        },
-      },
-    };
-
+  it("should be created", async () => {
     await TestBed.configureTestingModule({
       imports: [RestaurantProfileComponent],
-      providers: [
-        { provide: RestaurantsService, useValue: restaurantsServiceMock },
-        {
-          provide: ActivatedRoute,
-          useValue: activatedRouteMock,
-        },
-      ],
+      providers: [provideRouter([])],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RestaurantProfileComponent);
-    component = fixture.componentInstance;
-  });
-
-  it("should be created", () => {
+    const fixture = TestBed.createComponent(RestaurantProfileComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
-  });
-
-  it("should fetch restaurant on initialization using id from route params", () => {
-    const testRestaurant: Restaurant = {
-      id: testRestaurantId,
-      name: "",
-      description: "",
-      location: "",
-      score: 0,
-    };
-
-    restaurantsServiceMock.getRestaurantById.and.returnValue(
-      of(testRestaurant),
-    );
-
-    fixture.detectChanges();
-
-    let restaurant: Restaurant | undefined = undefined;
-
-    component.restaurantModel$!.subscribe((restaurantModel) => {
-      restaurant = restaurantModel;
-    });
-
-    expect(restaurantsServiceMock.getRestaurantById).toHaveBeenCalledOnceWith(
-      testRestaurantId,
-    );
-    expect(restaurant!).toEqual(testRestaurant);
   });
 });

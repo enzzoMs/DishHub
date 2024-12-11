@@ -1,0 +1,32 @@
+.review-title > h1 {
+  font-size: var(--text-lg);
+  margin: 0;
+}
+
+.review-title > p {
+  color: var(--secondary-text-color);
+  font-weight: var(--weight-semibold);
+  margin-top: var(--space-sm);
+}
+
+.review-quote {
+  font-size: var(--text-xl);
+  color: var(--primary-color);
+  vertical-align: middle;
+  margin-bottom: 4px;
+  margin-left: 4px;
+}
+
+.review-quote:first-child {
+  transform: scaleX(-1);
+  margin-left: 0;
+  margin-right: 4px;
+}
+
+.review-stars {
+  font-size: var(--text-xl);
+  display: flex;
+  color: var(--review-star-color);
+  column-gap: var(--space-sm);
+  margin-bottom: 0;
+}

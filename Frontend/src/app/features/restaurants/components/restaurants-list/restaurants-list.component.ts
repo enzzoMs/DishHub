@@ -30,7 +30,7 @@ export class RestaurantsListComponent implements OnInit {
   currentPage = 1;
 
   readonly restaurants$: Observable<Restaurant[]>;
-  private restaurantsUpdater$ = new BehaviorSubject<null>(null);
+  private restaurantsUpdater$ = new BehaviorSubject<void>(undefined);
 
   private loadingSubject$ = new BehaviorSubject(true);
   loading$ = this.loadingSubject$.asObservable();
@@ -101,7 +101,7 @@ export class RestaurantsListComponent implements OnInit {
   }
 
   updateRestaurants() {
-    this.restaurantsUpdater$.next(null);
+    this.restaurantsUpdater$.next();
   }
 
   private updatePaginationRange() {

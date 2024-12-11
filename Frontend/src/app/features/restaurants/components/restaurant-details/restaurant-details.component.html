@@ -3,8 +3,25 @@
 </p>
 
 <article aria-labelledby="restaurant-name">
+  @let restaurantModel = restaurantModel$ | async;
+
   <div class="restaurant-details-wrapper">
-    <dhub-restaurant-profile />
-    <dhub-restaurant-reviews-and-menu />
+    <dhub-restaurant-profile [restaurantModel]="restaurantModel ?? undefined" />
+
+    <section
+      class="restaurant-reviews-and-menu"
+      aria-label="Reviews and Restaurant Menu"
+    >
+      <dhub-tab-panel>
+        <dhub-tab-item header="Reviews [{{ reviewCount$ | async }}]">
+          <dhub-restaurant-reviews
+            (reviewCountChanged)="updateReviewCount($event)"
+          />
+        </dhub-tab-item>
+        <dhub-tab-item header="Menu">
+          <dhub-restaurant-menu [restaurantId]="restaurantModel?.id" />
+        </dhub-tab-item>
+      </dhub-tab-panel>
+    </section>
   </div>
 </article>

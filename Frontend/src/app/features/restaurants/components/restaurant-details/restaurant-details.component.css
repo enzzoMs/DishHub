@@ -16,7 +16,6 @@
   margin: 0 var(--space-xxl);
 }
 
-dhub-restaurant-reviews-and-menu {
-  display: block;
+.restaurant-reviews-and-menu {
   margin: var(--space-xxl) var(--space-xxl) 0 var(--space-xxl);
 }

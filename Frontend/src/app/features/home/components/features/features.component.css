@@ -34,33 +34,3 @@ section {
 .feature-description > p {
   margin-bottom: var(--space-lg);
 }
-
-.review-title > h1 {
-  font-size: var(--text-lg);
-  margin: 0;
-}
-
-.review-title > p {
-  color: var(--secondary-text-color);
-  font-weight: var(--weight-semibold);
-  margin-top: var(--space-sm);
-}
-
-.review-message > .review-quote {
-  font-size: var(--text-xl);
-  color: var(--primary-color);
-  vertical-align: middle;
-  margin-bottom: 4px;
-}
-
-.review-message > .review-quote:first-child {
-  transform: scaleX(-1);
-}
-
-.review-stars {
-  font-size: var(--text-xl);
-  display: flex;
-  color: var(--review-star-color);
-  column-gap: var(--space-sm);
-  margin-bottom: 0;
-}

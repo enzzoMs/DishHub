@@ -1,0 +1,39 @@
+<div class="categories-filter">
+  <label for="category-selection">Category: </label>
+  <ng-select
+    id="category-selection"
+    class="category-select"
+    labelForId="category-selection"
+    [(ngModel)]="selectedCategory"
+    [items]="menuCategories"
+    [clearable]="false"
+    [searchable]="false"
+  >
+  </ng-select>
+  <div class="category-selection-spacer"></div>
+</div>
+
+@if (menuItems$ | async; as menuItems) {
+  @if (menuItems.length === 0) {
+    <div class="no-data-found-wrapper">
+      <span class="material-icons no-data-found-icon">restaurant</span>
+      <p>No Menu Found</p>
+    </div>
+  } @else {
+    @for (menuItem of menuItems; track $index) {
+      <dhub-menu-item [menuModel]="menuItem" />
+    }
+  }
+} @else {
+  @for (_ of numOfLoadingSkeletons | enumerate; track $index) {
+    <div class="menu-item-skeleton">
+      <div class="skeleton-text menu-item-category-skeleton"></div>
+      <div class="menu-item-header-skeleton">
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+      <div class="skeleton-text"></div>
+      <div class="skeleton-text"></div>
+    </div>
+  }
+}

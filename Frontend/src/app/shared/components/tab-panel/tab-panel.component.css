@@ -10,7 +10,7 @@ div[role=tablist] {
   color: inherit;
   font-size: var(--text-lg);
   font-family: inherit;
-  font-weight: inherit;
+  font-weight: var(--weight-semibold);
   cursor: pointer;
   background: none;
   border: none;

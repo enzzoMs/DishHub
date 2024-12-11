@@ -1,0 +1,16 @@
+<article>
+  <hgroup class="review-title">
+    <h1>{{ reviewModel().userName }}</h1>
+    <p>{{ reviewDate() }}</p>
+  </hgroup>
+  <p>
+    <span class="material-icons review-quote">format_quote</span
+    >{{ reviewModel().comment
+    }}<span class="material-icons review-quote"> format_quote </span>
+  </p>
+  <p class="review-stars">
+    @for (_ of reviewModel().rating | enumerate; track $index) {
+      <span class="material-icons">star</span>
+    }
+  </p>
+</article>

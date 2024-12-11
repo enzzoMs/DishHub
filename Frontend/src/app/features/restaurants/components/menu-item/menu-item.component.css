@@ -1,0 +1,24 @@
+.menu-category {
+  color: var(--secondary-text-color);
+  font-weight: var(--weight-semibold);
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+}
+
+.menu-header h1 {
+  flex: 1;
+  font-size: var(--text-lg);
+  margin: 0;
+}
+
+.menu-header p {
+  font-weight: var(--weight-bold);
+  margin: 0;
+}
+
+article > p:last-child {
+  margin-bottom: 0;
+}
