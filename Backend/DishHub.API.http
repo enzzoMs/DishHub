@@ -1,0 +1,8 @@
+@host = http://localhost:5012
+
+### GET - All Restaurants
+
+GET {{host}}/weatherforecast/
+Accept: application/json
+
+###
