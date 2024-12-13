@@ -1,0 +1,17 @@
+@host = http://localhost:5012
+
+### GET - All Restaurants
+
+GET {{host}}/restaurants/
+Accept: application/json
+
+### GET - Restaurants with Pagination
+
+GET {{host}}/restaurants?page=1&pageSize=10
+Accept: application/json
+
+### GET - Restaurants by Id
+
+GET {{host}}/restaurants/0
+Accept: application/json
+
