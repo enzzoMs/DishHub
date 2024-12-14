@@ -1,5 +1,7 @@
 using DishHub.API.Data;
-using DishHub.API.Services;
+using DishHub.API.Endpoints.Menu;
+using DishHub.API.Endpoints.Restaurants;
+using DishHub.API.Endpoints.Reviews;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<RestaurantsService>();
 builder.Services.AddTransient<ReviewsService>();
+builder.Services.AddTransient<MenuService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

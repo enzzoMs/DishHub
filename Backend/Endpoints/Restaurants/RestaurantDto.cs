@@ -1,4 +1,6 @@
-﻿namespace DishHub.API.DTOs;
+﻿using DishHub.API.Endpoints.Reviews;
+
+namespace DishHub.API.Endpoints.Restaurants;
 
 public record RestaurantDto(
     int Id, 

@@ -1,5 +1,7 @@
 ﻿using DishHub.API.Data.Entities;
-using DishHub.API.DTOs;
+using DishHub.API.Endpoints.Menu;
+using DishHub.API.Endpoints.Restaurants;
+using DishHub.API.Endpoints.Reviews;
 
 namespace DishHub.API.Utils;
 
@@ -19,5 +21,12 @@ public static class DtoMapper
         Comment: reviewEntity.Comment,
         Rating: reviewEntity.Rating,
         CreationDate: reviewEntity.CreationDate
+    );
+    
+    public static MenuItemDto MapMenuItem(MenuItemEntity menuItemEntity) => new(
+        Id: menuItemEntity.Id,
+        Description: menuItemEntity.Description,
+        Category: menuItemEntity.Category,
+        Price: menuItemEntity.Price
     );
 }

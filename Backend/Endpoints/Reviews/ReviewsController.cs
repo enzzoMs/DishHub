@@ -1,8 +1,7 @@
 ﻿using System.Text.Json;
-using DishHub.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DishHub.API.Controllers;
+namespace DishHub.API.Endpoints.Reviews;
 
 [ApiController]
 [Route("/restaurants/{restaurantId}/reviews")]

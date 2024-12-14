@@ -6,7 +6,7 @@ namespace DishHub.API.Data.Entities;
 [Table("Reviews")]
 public class ReviewEntity(string comment)
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
 
     [MaxLength(300)] 
     public string Comment { get; set; } = comment;

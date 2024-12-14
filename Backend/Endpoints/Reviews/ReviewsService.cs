@@ -1,9 +1,8 @@
 ﻿using DishHub.API.Data;
-using DishHub.API.DTOs;
 using DishHub.API.Utils;
 using Microsoft.EntityFrameworkCore;
 
-namespace DishHub.API.Services;
+namespace DishHub.API.Endpoints.Reviews;
 
 public class ReviewsService(AppDbContext appDbContext)
 {

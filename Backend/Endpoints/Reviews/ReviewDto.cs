@@ -1,4 +1,4 @@
-﻿namespace DishHub.API.DTOs;
+﻿namespace DishHub.API.Endpoints.Reviews;
 
 public record ReviewDto(
     string UserName,

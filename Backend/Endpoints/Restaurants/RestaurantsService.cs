@@ -1,9 +1,8 @@
 ﻿using DishHub.API.Data;
-using DishHub.API.DTOs;
 using DishHub.API.Utils;
 using Microsoft.EntityFrameworkCore;
 
-namespace DishHub.API.Services;
+namespace DishHub.API.Endpoints.Restaurants;
 
 public class RestaurantsService(AppDbContext appDbContext)
 {
@@ -12,13 +11,18 @@ public class RestaurantsService(AppDbContext appDbContext)
         .Select(restaurant => DtoMapper.MapRestaurant(restaurant))
         .ToListAsync();
 
-    public async Task<RestaurantDto?> GetRestaurantById(int id, bool includeReviews)
+    public async Task<RestaurantDto?> GetRestaurantById(int id, bool includeReviews, bool includeMenu)
     {
         var restaurantsQuery = appDbContext.Restaurants.AsNoTracking();
 
         if (includeReviews)
         {
             restaurantsQuery = restaurantsQuery.Include(restaurant => restaurant.Reviews);
+        }
+        
+        if (includeMenu)
+        {
+            restaurantsQuery = restaurantsQuery.Include(restaurant => restaurant.Menu);
         }
 
         var restaurantEntity = await restaurantsQuery.FirstOrDefaultAsync(restaurant => restaurant.Id == id);

@@ -20,6 +20,11 @@ Accept: application/json
 GET {{host}}/restaurants/0?includeReviews=true
 Accept: application/json
 
+### GET - Restaurants by Id with Menu
+
+GET {{host}}/restaurants/0?includeMenu=true
+Accept: application/json
+
 ### GET - Restaurants Reviews
 
 GET {{host}}/restaurants/0/reviews
@@ -34,3 +39,19 @@ Accept: application/json
 
 GET {{host}}/restaurants/0/reviews/0
 Accept: application/json
+
+### GET - Restaurants Menu
+
+GET {{host}}/restaurants/0/menu
+Accept: application/json
+
+### GET - Restaurants Menu with Pagination
+
+GET {{host}}/restaurants/0/menu?page=1&pageSize=10
+Accept: application/json
+
+### GET - Restaurants Menu by Id
+
+GET {{host}}/restaurants/0/menu/0
+Accept: application/json
+

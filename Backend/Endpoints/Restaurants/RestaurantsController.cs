@@ -1,8 +1,7 @@
 ﻿using System.Text.Json;
-using DishHub.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DishHub.API.Controllers;
+namespace DishHub.API.Endpoints.Restaurants;
 
 [ApiController]
 [Route("/restaurants")]
@@ -34,9 +33,9 @@ public class RestaurantsController(RestaurantsService restaurantsService) : Cont
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetRestaurantById(
-        int id, [FromQuery] bool includeReviews = false)
+        int id, [FromQuery] bool includeReviews = false, [FromQuery] bool includeMenu = false)
     {
-        var restaurant = await restaurantsService.GetRestaurantById(id, includeReviews);
+        var restaurant = await restaurantsService.GetRestaurantById(id, includeReviews, includeMenu);
         return restaurant == null ? NotFound() : Ok(restaurant);
     }
 }
