@@ -10,6 +10,14 @@ public static class DtoMapper
         Name: restaurantEntity.Name,
         Description: restaurantEntity.Description,
         Location: restaurantEntity.Location,
-        Score: restaurantEntity.Score
+        Score: restaurantEntity.Score,
+        Reviews: restaurantEntity.Reviews.Select(MapReview)
+    );
+
+    public static ReviewDto MapReview(ReviewEntity reviewEntity) => new(
+        UserName: "",  // TODO: Add real user name,
+        Comment: reviewEntity.Comment,
+        Rating: reviewEntity.Rating,
+        CreationDate: reviewEntity.CreationDate
     );
 }

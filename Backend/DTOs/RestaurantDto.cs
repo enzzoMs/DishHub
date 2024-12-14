@@ -5,5 +5,6 @@ public record RestaurantDto(
     string Name, 
     string Description, 
     string Location,
-    double Score
+    double Score,
+    IEnumerable<ReviewDto> Reviews
 );

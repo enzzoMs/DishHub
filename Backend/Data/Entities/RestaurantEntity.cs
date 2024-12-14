@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DishHub.API.Data.Entities;
 
+[Table("Restaurants")]
 public class RestaurantEntity(string name, string description, string location, double score)
 {
     public int Id { get; set; }
@@ -16,4 +18,6 @@ public class RestaurantEntity(string name, string description, string location, 
     public string Location { get; set; } = location;
 
     public double Score { get; set; } = score;
+
+    public ICollection<ReviewEntity> Reviews { get; } = [];
 }

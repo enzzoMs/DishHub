@@ -15,3 +15,22 @@ Accept: application/json
 GET {{host}}/restaurants/0
 Accept: application/json
 
+### GET - Restaurants by Id with Reviews
+
+GET {{host}}/restaurants/0?includeReviews=true
+Accept: application/json
+
+### GET - Restaurants Reviews
+
+GET {{host}}/restaurants/0/reviews
+Accept: application/json
+
+### GET - Restaurants Reviews with Pagination
+
+GET {{host}}/restaurants/0/reviews?page=1&pageSize=10
+Accept: application/json
+
+### GET - Restaurants Review by Id
+
+GET {{host}}/restaurants/0/reviews/0
+Accept: application/json

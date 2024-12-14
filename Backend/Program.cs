@@ -1,4 +1,5 @@
 using DishHub.API.Data;
+using DishHub.API.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<RestaurantsService>();
+builder.Services.AddTransient<ReviewsService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
