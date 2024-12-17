@@ -198,7 +198,7 @@ describe("RestaurantsListComponent", () => {
 
     queryParamsMock$.next(paramsMap);
 
-    expect(component.pageStart).toBe(expectedPageStart);
-    expect(component.pageEnd).toBe(expectedPageEnd);
+    expect(component.pageStartIndex).toBe(expectedPageStart);
+    expect(component.pageEndIndex).toBe(expectedPageEnd);
   });
 });

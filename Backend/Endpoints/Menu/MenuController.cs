@@ -1,11 +1,14 @@
 ﻿using System.Text.Json;
+using DishHub.API.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace DishHub.API.Endpoints.Menu;
 
 [ApiController]
 [Route("restaurants/{restaurantId}/menu")]
-public class MenuController(MenuService menuService) : ControllerBase
+public class MenuController(
+    MenuService menuService, IOptions<ApiSettings> apiSettings) : ControllerBase
 {
     private const int DefaultPageSize = 10;
     
@@ -43,9 +46,11 @@ public class MenuController(MenuService menuService) : ControllerBase
         }
         
         var paginationMetadata = await menuService.GetPaginatedMenuMetadata(
-            restaurantId, page.Value, pageSize, Url.Link("GetRestaurantMenu", new{})!
+            restaurantId, page.Value, pageSize, Url.Link("GetRestaurantMenu", new {})!
         );
-        Response.Headers["X-Pagination"] = JsonSerializer.Serialize(paginationMetadata);
+        Response.Headers[apiSettings.Value.PaginationHeaderField] = JsonSerializer.Serialize(
+            paginationMetadata, JsonDefaults.JsonSerializerDefaults
+        );
 
         return Ok(paginatedMenu);
     }

@@ -59,14 +59,14 @@ public class MenuService(AppDbContext appDbContext)
         var totalPages = menuCount == 0 ? 
             1 : (int) Math.Ceiling((double) menuCount / pageSize);
 
-        var previousPageLink = page == 0 ? 
+        var previousPageLink = page == 1 ? 
             null : $"{restaurantMenuUrl}?page={page - 1}&pageSize={pageSize}";
         
         var nextPageLink = page == totalPages ?
             null : $"{restaurantMenuUrl}?page={page + 1}&pageSize={pageSize}";
         
         return new PaginationMetadata(
-            page, pageSize, totalPages, previousPageLink, nextPageLink
+            page, pageSize, menuCount, previousPageLink, nextPageLink
         );
     }
 }

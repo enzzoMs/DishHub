@@ -10,7 +10,7 @@ import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe
 import {
   RestaurantFilters,
   ScoreOption,
-} from "../../models/restaurant-filter.model";
+} from "../../models/restaurant-filters.model";
 
 @Component({
   selector: "dhub-restaurants-filter",

@@ -1,9 +1,11 @@
 using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using DishHub.API.Data;
 using DishHub.API.Endpoints.Menu;
 using DishHub.API.Endpoints.Restaurants;
 using DishHub.API.Endpoints.Reviews;
+using DishHub.API.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -13,9 +15,13 @@ builder.Services
     .AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.WriteIndented = true;
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
+
+builder.Services.Configure<ApiSettings>(
+    builder.Configuration.GetSection(nameof(ApiSettings))
+);
 
 const string apiDocUri = "dishhub-api";
 builder.Services.AddSwaggerGen(options =>
@@ -31,6 +37,21 @@ builder.Services.AddSwaggerGen(options =>
     
     var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+});
+
+var apiSettings = new ApiSettings();
+builder.Configuration.GetSection(nameof(ApiSettings)).Bind(apiSettings);
+
+const string corsPolicyName = "CorsPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicyName, policy =>
+    {
+        policy.WithOrigins(apiSettings.DishHubFrontendUrl)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithExposedHeaders(apiSettings.PaginationHeaderField);
+    });
 });
 
 builder.Services.AddTransient<RestaurantsService>();
@@ -55,6 +76,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicyName);
 
 app.UseAuthorization();
 

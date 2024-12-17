@@ -1,9 +1,9 @@
 ﻿namespace DishHub.API.Utils;
 
 public record PaginationMetadata(
-  int PageIndex,
+  int PageNumber,
   int PageSize,
-  int TotalPages,
+  int TotalItems,
   string? PreviousPageUrl,
   string? NextPageUrl
 );

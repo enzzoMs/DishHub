@@ -10,6 +10,11 @@ Accept: application/json
 GET {{host}}/restaurants?page=1&pageSize=10
 Accept: application/json
 
+### GET - Restaurants with Filters
+
+GET {{host}}/restaurants?name=Pizzeria&location=Pasta+Lane&score=5
+Accept: application/json
+
 ### GET - Restaurants by Id
 
 GET {{host}}/restaurants/0

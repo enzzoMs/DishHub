@@ -59,14 +59,14 @@ public class ReviewsService(AppDbContext appDbContext)
         var totalPages = reviewsCount == 0 ? 
             1 : (int) Math.Ceiling((double) reviewsCount / pageSize);
 
-        var previousPageLink = page == 0 ? 
+        var previousPageLink = page == 1 ? 
             null : $"{restaurantReviewsUrl}?page={page - 1}&pageSize={pageSize}";
         
         var nextPageLink = page == totalPages ?
             null : $"{restaurantReviewsUrl}?page={page + 1}&pageSize={pageSize}";
         
         return new PaginationMetadata(
-            page, pageSize, totalPages, previousPageLink, nextPageLink
+            page, pageSize, reviewsCount, previousPageLink, nextPageLink
         );
     }
 }

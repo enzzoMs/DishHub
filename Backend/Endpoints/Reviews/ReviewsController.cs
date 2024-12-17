@@ -1,11 +1,14 @@
 ﻿using System.Text.Json;
+using DishHub.API.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace DishHub.API.Endpoints.Reviews;
 
 [ApiController]
 [Route("/restaurants/{restaurantId}/reviews")]
-public class ReviewsController(ReviewsService reviewsService) : ControllerBase
+public class ReviewsController(
+    ReviewsService reviewsService, IOptions<ApiSettings> apiSettings) : ControllerBase
 {
     private const int DefaultPageSize = 10;
 
@@ -43,9 +46,11 @@ public class ReviewsController(ReviewsService reviewsService) : ControllerBase
         }
         
         var paginationMetadata = await reviewsService.GetPaginatedReviewsMetadata(
-            restaurantId, page.Value, pageSize, Url.Link("GetAllRestaurantReviews", new{})!
+            restaurantId, page.Value, pageSize, Url.Link("GetAllRestaurantReviews", new {})!
         );
-        Response.Headers["X-Pagination"] = JsonSerializer.Serialize(paginationMetadata);
+        Response.Headers[apiSettings.Value.PaginationHeaderField] = JsonSerializer.Serialize(
+            paginationMetadata, JsonDefaults.JsonSerializerDefaults
+        );
 
         return Ok(paginatedReviews);
     }

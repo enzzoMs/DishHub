@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { RestaurantsService } from "../../services/restaurants.service";
-import { BehaviorSubject, map, Observable, switchMap, tap } from "rxjs";
+import { BehaviorSubject, map, Observable, switchMap, timer, zip } from "rxjs";
 import { Restaurant } from "../../models/restaurant.model";
 import { AsyncPipe } from "@angular/common";
 import { RestaurantItemComponent } from "../restaurant-item/restaurant-item.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe";
-import { RestaurantFilters } from "../../models/restaurant-filter.model";
+import { RestaurantFilters } from "../../models/restaurant-filters.model";
 
 @Component({
   selector: "dhub-restaurants-list",
@@ -23,8 +23,8 @@ import { RestaurantFilters } from "../../models/restaurant-filter.model";
 })
 export class RestaurantsListComponent implements OnInit {
   totalItems = 0;
-  pageStart = 0;
-  pageEnd = 0;
+  pageStartIndex = 0;
+  pageEndIndex = 0;
 
   readonly pageSize = 4;
   currentPage = 1;
@@ -34,6 +34,8 @@ export class RestaurantsListComponent implements OnInit {
 
   private loadingSubject$ = new BehaviorSubject(true);
   loading$ = this.loadingSubject$.asObservable();
+
+  private readonly minLoadingTimeMs = 800;
 
   private restaurantsFilters: RestaurantFilters = {
     name: null,
@@ -48,18 +50,24 @@ export class RestaurantsListComponent implements OnInit {
   ) {
     this.restaurants$ = this.restaurantsUpdater$.asObservable().pipe(
       switchMap(() =>
-        restaurantService.getRestaurantsForPage(
-          this.currentPage,
-          this.pageSize,
-          this.restaurantsFilters
+        zip(
+          timer(this.minLoadingTimeMs),
+          restaurantService.getRestaurantsForPage(
+            this.currentPage,
+            this.pageSize,
+            this.restaurantsFilters,
+          ),
         ),
       ),
-      tap((paginatedRestaurants) => {
+      map((updateResult) => {
+        const paginatedRestaurants = updateResult[1];
+
         this.totalItems = paginatedRestaurants.totalItems;
         this.updatePaginationRange();
         this.loadingSubject$.next(false);
+
+        return paginatedRestaurants.data;
       }),
-      map((paginatedRestaurants) => paginatedRestaurants.data),
     );
 
     this.updatePaginationRange();
@@ -105,10 +113,18 @@ export class RestaurantsListComponent implements OnInit {
   }
 
   private updatePaginationRange() {
-    const newPageStart = (this.currentPage - 1) * this.pageSize + 1;
-    this.pageStart = newPageStart > this.totalItems ? this.totalItems : newPageStart;
+    if (this.totalItems === 0) {
+      this.pageStartIndex = 0;
+      this.pageEndIndex = 0;
+      return;
+    }
 
-    const newPageEnd = this.currentPage * this.pageSize;
-    this.pageEnd = newPageEnd > this.totalItems ? this.totalItems : newPageEnd;
+    const newPageStartIndex = (this.currentPage - 1) * this.pageSize + 1;
+    this.pageStartIndex =
+      newPageStartIndex > this.totalItems ? this.totalItems : newPageStartIndex;
+
+    const newPageEndIndex = this.currentPage * this.pageSize;
+    this.pageEndIndex =
+      newPageEndIndex > this.totalItems ? this.totalItems : newPageEndIndex;
   }
 }

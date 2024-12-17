@@ -1,11 +1,15 @@
 ﻿using System.Text.Json;
+using DishHub.API.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace DishHub.API.Endpoints.Restaurants;
 
 [ApiController]
 [Route("/restaurants")]
-public class RestaurantsController(RestaurantsService restaurantsService) : ControllerBase
+public class RestaurantsController(
+    RestaurantsService restaurantsService, 
+    IOptions<ApiSettings> apiSettings) : ControllerBase
 {
     private const int DefaultPageSize = 10;
     
@@ -23,7 +27,9 @@ public class RestaurantsController(RestaurantsService restaurantsService) : Cont
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet(Name = "GetAllRestaurants")]
     public async Task<ActionResult<List<RestaurantDto>>> GetAllRestaurants(
-        [FromQuery] int? page, [FromQuery] int pageSize = DefaultPageSize)
+        [FromQuery] RestaurantsFilters filters,
+        [FromQuery] int? page, 
+        [FromQuery] int pageSize = DefaultPageSize)
     {
         if (page == null)
         {
@@ -32,13 +38,16 @@ public class RestaurantsController(RestaurantsService restaurantsService) : Cont
         }
         
         var paginatedRestaurants = await restaurantsService.GetPaginatedRestaurants(
-            page.Value, pageSize
+            page.Value, pageSize, filters
         );
         
         var paginationMetadata = await restaurantsService.GetPaginatedRestaurantsMetadata(
-            page.Value, pageSize, Url.Link("GetAllRestaurants", new{})!
+            page.Value, pageSize, filters, Url.Link("GetAllRestaurants", new {})!
         );
-        Response.Headers["X-Pagination"] = JsonSerializer.Serialize(paginationMetadata);
+
+        Response.Headers[apiSettings.Value.PaginationHeaderField] = JsonSerializer.Serialize(
+            paginationMetadata, JsonDefaults.JsonSerializerDefaults
+        );
 
         return Ok(paginatedRestaurants);
     }
