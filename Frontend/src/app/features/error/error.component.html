@@ -1,0 +1,13 @@
+<div>
+  <h1>{{ errorCode }}</h1>
+  <p>Oops! Something went wrong!</p>
+  @switch (errorCode) {
+    @case (ErrorCode.NotFound) {
+      <p>The resource you are looking for could not be found.</p>
+    }
+    @default {
+      <p>Please try again later.</p>
+    }
+  }
+</div>
+

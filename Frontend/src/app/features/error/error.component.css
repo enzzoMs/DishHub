@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  column-gap: var(--space-xxl);
+}
+
+h1 {
+  font-size: 3.5rem;
+  color: var(--error-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--text-md);
+  padding-bottom: var(--space-md);
+  border-bottom: var(--divider-color) solid var(--divider-height);
+  margin-top: 0;
+}

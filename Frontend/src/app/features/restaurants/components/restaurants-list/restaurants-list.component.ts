@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RestaurantsService } from "../../services/restaurants.service";
 import { BehaviorSubject, map, Observable, switchMap, timer, zip } from "rxjs";
-import { Restaurant } from "../../models/restaurant.model";
+import {parseRestaurantScore, Restaurant} from "../../models/restaurant.model";
 import { AsyncPipe } from "@angular/common";
 import { RestaurantItemComponent } from "../restaurant-item/restaurant-item.component";
 import { NgxPaginationModule } from "ngx-pagination";
@@ -73,15 +73,15 @@ export class RestaurantsListComponent implements OnInit {
     this.updatePaginationRange();
 
     activatedRoute.queryParamMap.subscribe((paramMap) => {
-      const pageNumberParam = parseInt(paramMap.get("page")!, 10);
+      const pageNumberParam = Number(paramMap.get("page"));
       this.currentPage = isNaN(pageNumberParam) ? 1 : pageNumberParam;
 
       this.restaurantsFilters.name = paramMap.get("name");
       this.restaurantsFilters.location = paramMap.get("location");
 
-      const scoreParam = parseInt(paramMap.get("score")!, 10);
+      const scoreParam = paramMap.get("score");
       this.restaurantsFilters.score = {
-        value: isNaN(scoreParam) ? null : scoreParam,
+        value: parseRestaurantScore(scoreParam),
       };
 
       window.scrollTo(0, 0);

@@ -94,7 +94,6 @@ export class RestaurantsService {
             totalItems: paginationMetadata.totalItems,
           };
 
-          console.log(paginationMetadata)
           return paginatedItems;
         }),
       );

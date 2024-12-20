@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { RestaurantProfileComponent } from "../restaurant-profile/restaurant-profile.component";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Restaurant } from "../../models/restaurant.model";
@@ -9,6 +9,8 @@ import { TabItemComponent } from "../../../../shared/components/tab-item/tab-ite
 import { TabPanelComponent } from "../../../../shared/components/tab-panel/tab-panel.component";
 import { RestaurantReviewsComponent } from "../restaurant-reviews/restaurant-reviews.component";
 import { RestaurantMenuComponent } from "../restaurant-menu/restaurant-menu.component";
+import { RoutePaths } from "../../../../app.routes";
+import { ErrorCode } from "../../../error/models/ErrorCodes.model";
 
 @Component({
   selector: "dhub-restaurant-details",
@@ -33,12 +35,18 @@ export class RestaurantDetailsComponent implements OnInit {
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
     private readonly restaurantService: RestaurantsService,
   ) {}
 
   ngOnInit() {
-    const routeParams = this.activatedRoute.snapshot.paramMap;
-    const restaurantId = parseInt(routeParams.get("id")!, 10);
+    const restaurantIdParam = this.activatedRoute.snapshot.paramMap.get("id");
+    const restaurantId = Number(restaurantIdParam);
+
+    if (restaurantIdParam == null || isNaN(restaurantId)) {
+      this.redirectToNotFound();
+      return;
+    }
 
     this.restaurantModel$ =
       this.restaurantService.getRestaurantById(restaurantId);
@@ -46,5 +54,9 @@ export class RestaurantDetailsComponent implements OnInit {
 
   updateReviewCount(newReviewCount: number) {
     this.reviewCountSubject$.next(newReviewCount);
+  }
+
+  redirectToNotFound() {
+    this.router.navigate([RoutePaths.Error, ErrorCode.NotFound]);
   }
 }

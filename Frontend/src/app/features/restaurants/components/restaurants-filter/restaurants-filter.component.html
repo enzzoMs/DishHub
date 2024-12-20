@@ -7,7 +7,7 @@
     type="text"
     size="1"
     placeholder="e.g. Luna Bistro"
-    [(ngModel)]="restaurantFilters.name"
+    [(ngModel)]="restaurantsFilters.name"
   />
   <label for="location-field">Location</label>
   <input
@@ -16,13 +16,13 @@
     type="text"
     size="1"
     placeholder="e.g. Pasta Lane"
-    [(ngModel)]="restaurantFilters.location"
+    [(ngModel)]="restaurantsFilters.location"
   />
   <label for="score-selection">Score</label>
   <ng-select
     id="score-selection"
     name="score"
-    [(ngModel)]="restaurantFilters.score"
+    [(ngModel)]="restaurantsFilters.score"
     [items]="scoreOptions"
     [clearable]="false"
     [searchable]="false"

@@ -34,7 +34,7 @@ describe("RestaurantsFilterComponent", () => {
   });
 
   it("should initialize the form with default values", () => {
-    const { name, location, score } = component.restaurantFilters;
+    const { name, location, score } = component.restaurantsFilters;
 
     expect(name).toBe("");
     expect(location).toBe("");
@@ -49,9 +49,9 @@ describe("RestaurantsFilterComponent", () => {
     const locationFilter = "Pasta Lane";
     const scoreFilter = component.scoreOptions[4];
 
-    component.restaurantFilters.name = nameFilter;
-    component.restaurantFilters.location = locationFilter;
-    component.restaurantFilters.score = scoreFilter;
+    component.restaurantsFilters.name = nameFilter;
+    component.restaurantsFilters.location = locationFilter;
+    component.restaurantsFilters.score = scoreFilter;
 
     component.applyFilters();
 
@@ -75,8 +75,8 @@ describe("RestaurantsFilterComponent", () => {
     paramsMap.set("score", scoreFilter.value!.toString());
     queryParamsMock$.next(paramsMap);
 
-    expect(component.restaurantFilters.name).toBe(nameFilter);
-    expect(component.restaurantFilters.location).toBe(locationFilter);
-    expect(component.restaurantFilters.score).toEqual(scoreFilter);
+    expect(component.restaurantsFilters.name).toBe(nameFilter);
+    expect(component.restaurantsFilters.location).toBe(locationFilter);
+    expect(component.restaurantsFilters.score).toEqual(scoreFilter);
   });
 });

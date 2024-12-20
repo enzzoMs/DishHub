@@ -22,7 +22,7 @@ public class RestaurantsController(
     /// In case of paginated response, it also sets a custom `X-Pagination`
     /// header with metadata information about the pagination.
     /// </response>
-    /// <response code="400">If the restaurant's ID is invalid.</response>
+    /// <response code="400">If the request parameters are invalid.</response>
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet(Name = "GetAllRestaurants")]

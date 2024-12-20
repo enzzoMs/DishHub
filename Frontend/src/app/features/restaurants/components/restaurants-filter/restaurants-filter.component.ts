@@ -11,6 +11,7 @@ import {
   RestaurantFilters,
   ScoreOption,
 } from "../../models/restaurant-filters.model";
+import { parseRestaurantScore } from "../../models/restaurant.model";
 
 @Component({
   selector: "dhub-restaurants-filter",
@@ -36,7 +37,7 @@ export class RestaurantsFilterComponent {
     { value: 5 },
   ];
 
-  readonly restaurantFilters: RestaurantFilters = {
+  readonly restaurantsFilters: RestaurantFilters = {
     name: "",
     location: "",
     score: this.scoreOptions[0],
@@ -47,18 +48,18 @@ export class RestaurantsFilterComponent {
     private readonly router: Router,
   ) {
     activatedRoute.queryParamMap.subscribe((paramsMap) => {
-      this.restaurantFilters.name = paramsMap.get("name");
-      this.restaurantFilters.location = paramsMap.get("location");
+      this.restaurantsFilters.name = paramsMap.get("name");
+      this.restaurantsFilters.location = paramsMap.get("location");
 
-      const scoreParam = parseInt(paramsMap.get("score")!, 10);
-      this.restaurantFilters.score = {
-        value: isNaN(scoreParam) ? null : scoreParam,
+      const scoreParam = paramsMap.get("score");
+      this.restaurantsFilters.score = {
+        value: parseRestaurantScore(scoreParam),
       };
     });
   }
 
   applyFilters() {
-    const { name, location, score } = this.restaurantFilters;
+    const { name, location, score } = this.restaurantsFilters;
 
     this.router.navigate([], {
       queryParams: {
