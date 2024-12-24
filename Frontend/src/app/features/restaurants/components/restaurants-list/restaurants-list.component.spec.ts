@@ -1,4 +1,9 @@
-import { TestBed } from "@angular/core/testing";
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from "@angular/core/testing";
 
 import { RestaurantsListComponent } from "./restaurants-list.component";
 import { Restaurant } from "../../models/restaurant.model";
@@ -8,6 +13,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 describe("RestaurantsListComponent", () => {
   let component: RestaurantsListComponent;
+  let fixture: ComponentFixture<RestaurantsListComponent>;
 
   const queryParamsMock$ = new Subject<Map<string, string>>();
 
@@ -39,16 +45,15 @@ describe("RestaurantsListComponent", () => {
       ],
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(RestaurantsListComponent);
+    fixture = TestBed.createComponent(RestaurantsListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it("should be created", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should fetch restaurants for the first page on initialization", () => {
+  it("should fetch restaurants for the first page on initialization", fakeAsync(() => {
     const mockPaginatedRestaurants = {
       totalItems: 10,
       pageNumber: 1,
@@ -67,7 +72,9 @@ describe("RestaurantsListComponent", () => {
       restaurants = currentRestaurants;
     });
 
-    component.updateRestaurants();
+    fixture.detectChanges();
+
+    tick(component.minLoadingTimeMs);
 
     expect(restaurantsServiceMock.getRestaurantsForPage).toHaveBeenCalledWith(
       1,
@@ -76,7 +83,7 @@ describe("RestaurantsListComponent", () => {
     );
     expect(restaurants!).toEqual(mockPaginatedRestaurants.data);
     expect(component.totalItems).toEqual(mockPaginatedRestaurants.totalItems);
-  });
+  }));
 
   it("should add query params when page changes", () => {
     const router = TestBed.inject(Router);
@@ -92,7 +99,7 @@ describe("RestaurantsListComponent", () => {
     });
   });
 
-  it("should update restaurants when 'page' query param changes", () => {
+  it("should update restaurants when 'page' query param changes", fakeAsync(() => {
     const mockPaginatedRestaurants = {
       totalItems: 10,
       pageNumber: 2,
@@ -116,10 +123,14 @@ describe("RestaurantsListComponent", () => {
 
     queryParamsMock$.next(paramsMap);
 
-    expect(restaurants!).toEqual(mockPaginatedRestaurants.data);
-  });
+    fixture.detectChanges();
 
-  it("should update restaurant filters when query params change", () => {
+    tick(component.minLoadingTimeMs);
+
+    expect(restaurants!).toEqual(mockPaginatedRestaurants.data);
+  }));
+
+  it("should update restaurant filters when query params change", fakeAsync(() => {
     const nameFilter = "Luna Bistro";
     const locationFilter = "Pasta Lane";
     const scoreFilter = 4;
@@ -131,6 +142,9 @@ describe("RestaurantsListComponent", () => {
 
     queryParamsMock$.next(paramsMap);
 
+    fixture.detectChanges();
+    tick(component.minLoadingTimeMs);
+
     expect(restaurantsServiceMock.getRestaurantsForPage).toHaveBeenCalledWith(
       jasmine.anything(),
       jasmine.anything(),
@@ -140,7 +154,7 @@ describe("RestaurantsListComponent", () => {
         score: { value: scoreFilter },
       },
     );
-  });
+  }));
 
   it("should navigate to closest valid page when page number is outside bounds", () => {
     const router = TestBed.inject(Router);
@@ -158,7 +172,7 @@ describe("RestaurantsListComponent", () => {
     });
   });
 
-  it("should update the loading status when page changes", () => {
+  it("should update the loading status when page changes", fakeAsync(() => {
     const loadingStatus: boolean[] = [];
 
     component.loading$.subscribe((loading) => {
@@ -170,11 +184,14 @@ describe("RestaurantsListComponent", () => {
 
     queryParamsMock$.next(paramsMap);
 
+    fixture.detectChanges();
+    tick(component.minLoadingTimeMs);
+
     expect(loadingStatus.at(-2)).toBeTrue();
     expect(loadingStatus.at(-1)).toBeFalse();
-  });
+  }));
 
-  it("should update pagination range when page changes", () => {
+  it("should update pagination range when page changes", fakeAsync(() => {
     const totalItems = 10;
     const mockPaginatedRestaurants = {
       totalItems: totalItems,
@@ -188,17 +205,22 @@ describe("RestaurantsListComponent", () => {
     const newPage = 2;
 
     let expectedPageStart = (newPage - 1) * component.pageSize + 1;
-    expectedPageStart = expectedPageStart > totalItems ? totalItems : expectedPageStart;
+    expectedPageStart =
+      expectedPageStart > totalItems ? totalItems : expectedPageStart;
 
     let expectedPageEnd = newPage * component.pageSize;
-    expectedPageEnd = expectedPageEnd > totalItems ? totalItems : expectedPageEnd;
+    expectedPageEnd =
+      expectedPageEnd > totalItems ? totalItems : expectedPageEnd;
 
     const paramsMap = new Map<string, string>();
     paramsMap.set("page", newPage.toString());
 
     queryParamsMock$.next(paramsMap);
 
+    fixture.detectChanges();
+    tick(component.minLoadingTimeMs);
+
     expect(component.pageStartIndex).toBe(expectedPageStart);
     expect(component.pageEndIndex).toBe(expectedPageEnd);
-  });
+  }));
 });

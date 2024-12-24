@@ -13,9 +13,11 @@ describe("RestaurantDetailsComponent", () => {
 
   let restaurantServiceMock: jasmine.SpyObj<RestaurantsService>;
 
-  const routeParamMap = new Map<string, string>();
+  let routeParamMap: Map<string, string>;
 
   beforeEach(async () => {
+    routeParamMap = new Map<string, string>();
+
     const testRestaurant: Restaurant = {
       id: 0,
       name: "",

@@ -35,7 +35,7 @@ export class RestaurantsListComponent implements OnInit {
   private loadingSubject$ = new BehaviorSubject(true);
   loading$ = this.loadingSubject$.asObservable();
 
-  private readonly minLoadingTimeMs = 800;
+  readonly minLoadingTimeMs = 800;
 
   private restaurantsFilters: RestaurantFilters = {
     name: null,

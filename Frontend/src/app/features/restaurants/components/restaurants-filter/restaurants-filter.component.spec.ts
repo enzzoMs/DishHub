@@ -3,7 +3,7 @@ import { TestBed } from "@angular/core/testing";
 import { RestaurantsFilterComponent } from "./restaurants-filter.component";
 import { ActivatedRoute, provideRouter, Router } from "@angular/router";
 import { Subject } from "rxjs";
-import { ScoreOption } from "../../models/restaurant-filter.model";
+import { ScoreOption } from "../../models/restaurant-filters.model";
 
 describe("RestaurantsFilterComponent", () => {
   let component: RestaurantsFilterComponent;

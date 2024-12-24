@@ -39,21 +39,6 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
 
-var apiSettings = new ApiSettings();
-builder.Configuration.GetSection(nameof(ApiSettings)).Bind(apiSettings);
-
-const string corsPolicyName = "CorsPolicy";
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(corsPolicyName, policy =>
-    {
-        policy.WithOrigins(apiSettings.DishHubFrontendUrl)
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .WithExposedHeaders(apiSettings.PaginationHeaderField);
-    });
-});
-
 builder.Services.AddTransient<RestaurantsService>();
 builder.Services.AddTransient<ReviewsService>();
 builder.Services.AddTransient<MenuService>();
@@ -76,8 +61,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseCors(corsPolicyName);
 
 app.UseAuthorization();
 
