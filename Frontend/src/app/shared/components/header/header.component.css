@@ -45,3 +45,11 @@ nav a.active-link {
     text-underline-offset: 0.6em;
   }
 }
+
+.account-buttons {
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: var(--space-lg);
+}

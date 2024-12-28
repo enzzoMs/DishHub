@@ -10,6 +10,7 @@ import { Restaurant } from "../../models/restaurant.model";
 import { of, Subject } from "rxjs";
 import { RestaurantsService } from "../../services/restaurants.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import {AppConfig} from "../../../../../config/config-constants";
 
 describe("RestaurantsListComponent", () => {
   let component: RestaurantsListComponent;
@@ -74,7 +75,7 @@ describe("RestaurantsListComponent", () => {
 
     fixture.detectChanges();
 
-    tick(component.minLoadingTimeMs);
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     expect(restaurantsServiceMock.getRestaurantsForPage).toHaveBeenCalledWith(
       1,
@@ -125,7 +126,7 @@ describe("RestaurantsListComponent", () => {
 
     fixture.detectChanges();
 
-    tick(component.minLoadingTimeMs);
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     expect(restaurants!).toEqual(mockPaginatedRestaurants.data);
   }));
@@ -143,7 +144,7 @@ describe("RestaurantsListComponent", () => {
     queryParamsMock$.next(paramsMap);
 
     fixture.detectChanges();
-    tick(component.minLoadingTimeMs);
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     expect(restaurantsServiceMock.getRestaurantsForPage).toHaveBeenCalledWith(
       jasmine.anything(),
@@ -185,7 +186,7 @@ describe("RestaurantsListComponent", () => {
     queryParamsMock$.next(paramsMap);
 
     fixture.detectChanges();
-    tick(component.minLoadingTimeMs);
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     expect(loadingStatus.at(-2)).toBeTrue();
     expect(loadingStatus.at(-1)).toBeFalse();
@@ -218,7 +219,7 @@ describe("RestaurantsListComponent", () => {
     queryParamsMock$.next(paramsMap);
 
     fixture.detectChanges();
-    tick(component.minLoadingTimeMs);
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     expect(component.pageStartIndex).toBe(expectedPageStart);
     expect(component.pageEndIndex).toBe(expectedPageEnd);

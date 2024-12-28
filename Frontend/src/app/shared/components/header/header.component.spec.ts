@@ -3,7 +3,9 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { HeaderComponent } from "./header.component";
 import { By } from "@angular/platform-browser";
 import { provideRouter } from "@angular/router";
-import { RoutePaths, appRoutes } from "../../../app.routes";
+import { RoutePath, appRoutes } from "../../../app.routes";
+import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 
 describe("HeaderComponent", () => {
   let fixture: ComponentFixture<HeaderComponent>;
@@ -11,7 +13,11 @@ describe("HeaderComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HeaderComponent],
-      providers: [provideRouter(appRoutes)],
+      providers: [
+        provideRouter(appRoutes),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
@@ -35,8 +41,14 @@ describe("HeaderComponent", () => {
       .queryAll(By.css("nav a"))
       .map((debugElement) => debugElement.nativeElement as HTMLAnchorElement);
 
-    expect(navLinks[0].getAttribute("ng-reflect-router-link")).toBe(RoutePaths.Home);
-    expect(navLinks[1].getAttribute("ng-reflect-router-link")).toBe(RoutePaths.Restaurants);
-    expect(navLinks[2].getAttribute("ng-reflect-router-link")).toBe(RoutePaths.About);
+    expect(navLinks[0].getAttribute("ng-reflect-router-link")).toBe(
+      RoutePath.Home,
+    );
+    expect(navLinks[1].getAttribute("ng-reflect-router-link")).toBe(
+      RoutePath.Restaurants,
+    );
+    expect(navLinks[2].getAttribute("ng-reflect-router-link")).toBe(
+      RoutePath.About,
+    );
   });
 });

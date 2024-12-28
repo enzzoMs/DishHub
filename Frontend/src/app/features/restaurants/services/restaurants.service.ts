@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { Restaurant } from "../models/restaurant.model";
-import { PaginatedItems } from "../../../shared/models/PaginatedItems";
+import { PaginatedItems } from "../../../shared/models/paginated-items";
 import { RestaurantFilters } from "../models/restaurant-filters.model";
 import { Review } from "../models/review.model";
 import { MenuItem } from "../models/menu-item.model";

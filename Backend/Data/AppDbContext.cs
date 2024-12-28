@@ -1,9 +1,11 @@
 ﻿using DishHub.API.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DishHub.API.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<IdentityUser>(options)
 {
     public DbSet<RestaurantEntity> Restaurants { get; private set; }
 
@@ -12,5 +14,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<MenuItemEntity>()
             .Property(menu => menu.Category)
             .HasConversion<string>();
+        
+        base.OnModelCreating(modelBuilder);
     }
 }

@@ -1,0 +1,7 @@
+export const AppConfig = {
+  API_BASE_PATH: "api",
+  MIN_PASSWORD_LENGTH: 6,
+  USERNAME_ALLOWED_PATTERN: /^[a-zA-Z0-9 ]+$/,
+  MAX_FIELD_LENGTH: 256,
+  MIN_LOADING_TIME_MS: 800
+}

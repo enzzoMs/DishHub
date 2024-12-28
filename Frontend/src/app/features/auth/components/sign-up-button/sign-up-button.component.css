@@ -1,0 +1,58 @@
+::backdrop {
+  background: black;
+  opacity: 0.25;
+}
+
+dialog {
+  border: none;
+  border-radius: var(--surface-corner-radius);
+  padding: var(--space-xl);
+}
+
+dialog .dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: var(--space-xxl);
+  padding-bottom: var(--space-md);
+  border-bottom: var(--divider-height) solid var(--divider-color);
+  margin-bottom: var(--space-lg);
+}
+
+dialog .dialog-header h1 {
+  font-size: var(--text-lg);
+  margin: 0;
+}
+
+dialog .close-dialog-button {
+  font-size: var(--text-lg);
+  padding: 0;
+}
+
+dialog > p {
+  margin: 0;
+}
+
+dialog form {
+  font-size: var(--text-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+dialog form label {
+  align-self: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+dialog form input {
+  margin-bottom: var(--space-md);
+}
+
+dialog form button {
+  margin-top: var(--space-md);
+}
+
+.form-error {
+  color: var(--error-color);
+  margin: 0 0 var(--space-md) var(--space-sm);
+}

@@ -60,3 +60,13 @@ Accept: application/json
 GET {{host}}/restaurants/0/menu/0
 Accept: application/json
 
+### POST - Sign Up User
+
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+  "userName": "TestUser",
+  "email": "test@example",
+  "password": "123456"
+}

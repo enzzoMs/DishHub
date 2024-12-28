@@ -30,7 +30,7 @@ describe("RestaurantsService", () => {
   });
 
   afterEach(() => {
-    TestBed.inject(HttpTestingController).verify();
+    httpTesting.verify();
   });
 
   it("should be created", () => {

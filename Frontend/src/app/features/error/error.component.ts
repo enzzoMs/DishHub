@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ErrorCode } from "./models/ErrorCodes.model";
-import { RoutePaths } from "../../app.routes";
+import {ErrorCode, getErrorCode} from "./models/error-codes.model";
+import { RoutePath } from "../../app.routes";
 
 @Component({
   selector: "dhub-error",
@@ -24,16 +24,19 @@ export class ErrorComponent implements OnInit {
     const errorCodeParam =
       this.activatedRoute.snapshot.paramMap.get("errorCode");
 
-    if (errorCodeParam != null) {
+    if (errorCodeParam) {
       const errorCodeNum = Number(errorCodeParam);
+      this.errorCode = getErrorCode(errorCodeNum);
 
-      this.errorCode = isNaN(errorCodeNum) ? null : errorCodeNum;
+      if (this.errorCode !== null) {
+        return;
+      }
     }
 
-    this.redirectToNotFound();
+    this.redirectToDefaultError();
   }
 
-  redirectToNotFound() {
-    this.router.navigate([RoutePaths.Error, ErrorCode.NotFound]);
+  redirectToDefaultError() {
+    this.router.navigate([RoutePath.Error]);
   }
 }

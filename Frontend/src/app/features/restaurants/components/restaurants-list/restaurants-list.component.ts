@@ -1,13 +1,24 @@
 import { Component, OnInit } from "@angular/core";
 import { RestaurantsService } from "../../services/restaurants.service";
-import { BehaviorSubject, map, Observable, switchMap, timer, zip } from "rxjs";
-import {parseRestaurantScore, Restaurant} from "../../models/restaurant.model";
+import {
+  BehaviorSubject,
+  combineLatestWith,
+  map,
+  Observable,
+  switchMap,
+  timer,
+} from "rxjs";
+import {
+  parseRestaurantScore,
+  Restaurant,
+} from "../../models/restaurant.model";
 import { AsyncPipe } from "@angular/common";
 import { RestaurantItemComponent } from "../restaurant-item/restaurant-item.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe";
 import { RestaurantFilters } from "../../models/restaurant-filters.model";
+import {AppConfig} from "../../../../../config/config-constants";
 
 @Component({
   selector: "dhub-restaurants-list",
@@ -35,8 +46,6 @@ export class RestaurantsListComponent implements OnInit {
   private loadingSubject$ = new BehaviorSubject(true);
   loading$ = this.loadingSubject$.asObservable();
 
-  readonly minLoadingTimeMs = 800;
-
   private restaurantsFilters: RestaurantFilters = {
     name: null,
     location: null,
@@ -50,17 +59,15 @@ export class RestaurantsListComponent implements OnInit {
   ) {
     this.restaurants$ = this.restaurantsUpdater$.asObservable().pipe(
       switchMap(() =>
-        zip(
-          timer(this.minLoadingTimeMs),
-          restaurantService.getRestaurantsForPage(
-            this.currentPage,
-            this.pageSize,
-            this.restaurantsFilters,
-          ),
+        restaurantService.getRestaurantsForPage(
+          this.currentPage,
+          this.pageSize,
+          this.restaurantsFilters,
         ),
       ),
+      combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
       map((updateResult) => {
-        const paginatedRestaurants = updateResult[1];
+        const paginatedRestaurants = updateResult[0];
 
         this.totalItems = paginatedRestaurants.totalItems;
         this.updatePaginationRange();

@@ -2,10 +2,12 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using DishHub.API.Data;
+using DishHub.API.Data.Entities;
 using DishHub.API.Endpoints.Menu;
 using DishHub.API.Endpoints.Restaurants;
 using DishHub.API.Endpoints.Reviews;
 using DishHub.API.Utils;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -22,6 +24,25 @@ builder.Services
 builder.Services.Configure<ApiSettings>(
     builder.Configuration.GetSection(nameof(ApiSettings))
 );
+
+builder.Services
+    .AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.User.RequireUniqueEmail = false;
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+    })
+    .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = "DishHub.Identity";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.SlidingExpiration = true;
+});
 
 const string apiDocUri = "dishhub-api";
 builder.Services.AddSwaggerGen(options =>

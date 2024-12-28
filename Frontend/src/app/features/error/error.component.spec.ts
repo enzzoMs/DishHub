@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ErrorComponent } from "./error.component";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ErrorCode } from "./models/ErrorCodes.model";
-import { RoutePaths } from "../../app.routes";
+import { ErrorCode } from "./models/error-codes.model";
+import { RoutePath } from "../../app.routes";
 
 describe("ErrorComponent", () => {
   let component: ErrorComponent;
@@ -57,15 +57,14 @@ describe("ErrorComponent", () => {
     expect(component.errorCode).toBeNull();
   });
 
-  it("should redirect to 'Not Found' error page if an invalid errorCode is passed", () => {
+  it("should redirect to default error page if an invalid errorCode is passed", () => {
     const errorCode = "blaBla";
     routeParamMap.set("errorCode", errorCode.toString());
 
     component.ngOnInit();
 
     expect(routerMock.navigate).toHaveBeenCalledOnceWith([
-      RoutePaths.Error,
-      ErrorCode.NotFound,
+      RoutePath.Error
     ]);
 
     expect(component.errorCode).toBeNull();

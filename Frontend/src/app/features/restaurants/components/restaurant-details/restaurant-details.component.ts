@@ -9,8 +9,8 @@ import { TabItemComponent } from "../../../../shared/components/tab-item/tab-ite
 import { TabPanelComponent } from "../../../../shared/components/tab-panel/tab-panel.component";
 import { RestaurantReviewsComponent } from "../restaurant-reviews/restaurant-reviews.component";
 import { RestaurantMenuComponent } from "../restaurant-menu/restaurant-menu.component";
-import { RoutePaths } from "../../../../app.routes";
-import { ErrorCode } from "../../../error/models/ErrorCodes.model";
+import { RoutePath } from "../../../../app.routes";
+import { ErrorCode } from "../../../error/models/error-codes.model";
 
 @Component({
   selector: "dhub-restaurant-details",
@@ -57,6 +57,6 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   redirectToNotFound() {
-    this.router.navigate([RoutePaths.Error, ErrorCode.NotFound]);
+    this.router.navigate([RoutePath.Error, ErrorCode.NotFound]);
   }
 }

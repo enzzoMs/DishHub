@@ -1,13 +1,28 @@
 <div>
-  <h1>{{ errorCode }}</h1>
+  @if (errorCode === 0) {
+    <h1>Network Error</h1>
+  } @else {
+    <h1>{{ errorCode ?? "Error" }}</h1>
+  }
   <p>Oops! Something went wrong!</p>
   @switch (errorCode) {
+    @case (ErrorCode.NetworkError) {
+      <p>Please check your connection and try again.</p>
+    }
+    @case (ErrorCode.BadRequest) {
+      <p>There was a bad request. Please verify your input.</p>
+    }
     @case (ErrorCode.NotFound) {
       <p>The resource you are looking for could not be found.</p>
+    }
+    @case (ErrorCode.Conflict) {
+      <p>There was a conflict with the request. Please try again.</p>
+    }
+    @case (ErrorCode.InternalServerError) {
+      <p>An internal server error occurred.</p>
     }
     @default {
       <p>Please try again later.</p>
     }
   }
 </div>
-

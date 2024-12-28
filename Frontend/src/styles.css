@@ -169,8 +169,14 @@ input:focus {
   padding: var(--space-sm) var(--space-lg);
 }
 
-.primary-button:hover {
+.primary-button:enabled:hover {
   background-color: var(--dark-primary-color);
+}
+
+.primary-button:disabled {
+  cursor: not-allowed;
+  background-color: var(--dark-primary-color);
+  opacity: 0.75;
 }
 
 .secondary-button {
@@ -183,6 +189,21 @@ input:focus {
   border-radius: 4px;
   border: var(--divider-height) solid var(--secondary-color);
   padding: var(--space-sm) var(--space-lg);
+}
+
+.borderless-button {
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: var(--weight-semibold);
+  color: var(--secondary-text-color);
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: var(--space-sm) 0;
+}
+
+.borderless-button:hover {
+  color: var(--primary-text-color);
 }
 
 .secondary-button:hover {

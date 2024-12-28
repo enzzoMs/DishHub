@@ -1,7 +1,7 @@
 import { Component, input } from "@angular/core";
 import { Restaurant } from "../../models/restaurant.model";
 import { RouterLink } from "@angular/router";
-import { RoutePaths } from "../../../../app.routes";
+import { RoutePath } from "../../../../app.routes";
 
 @Component({
   selector: "dhub-restaurant-item",
@@ -14,5 +14,5 @@ export class RestaurantItemComponent {
   restaurantModel = input.required<Restaurant>();
   showDetailsButton = input(true);
 
-  readonly RoutePaths = RoutePaths;
+  readonly RoutePaths = RoutePath;
 }

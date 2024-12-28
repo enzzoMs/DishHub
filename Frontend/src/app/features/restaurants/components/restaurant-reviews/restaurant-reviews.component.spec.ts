@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RestaurantReviewsComponent } from "./restaurant-reviews.component";
 import { RestaurantsService } from "../../services/restaurants.service";
 import { of } from "rxjs";
-import { PaginatedItems } from "../../../../shared/models/PaginatedItems";
+import { PaginatedItems } from "../../../../shared/models/paginated-items";
 import { Review } from "../../models/review.model";
 
 describe("RestaurantReviewsComponent", () => {

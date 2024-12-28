@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RestaurantItemComponent } from "./restaurant-item.component";
 import { Restaurant } from "../../models/restaurant.model";
 import { By } from "@angular/platform-browser";
-import { RoutePaths } from "../../../../app.routes";
+import { RoutePath } from "../../../../app.routes";
 import { provideRouter } from "@angular/router";
 
 describe("RestaurantItemComponent", () => {
@@ -47,7 +47,7 @@ describe("RestaurantItemComponent", () => {
       ).nativeElement as HTMLButtonElement;
 
       expect(seeDetailsButton.getAttribute("ng-reflect-router-link")).toBe(
-        `/${RoutePaths.Restaurants},${restaurantId}`,
+        `/${RoutePath.Restaurants},${restaurantId}`,
       );
     });
   });
