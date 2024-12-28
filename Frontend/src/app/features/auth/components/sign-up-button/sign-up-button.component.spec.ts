@@ -149,7 +149,6 @@ describe("AuthComponent", () => {
 
     tick(AppConfig.MIN_LOADING_TIME_MS);
 
-    console.log(loadingStatus);
     expect(loadingStatus.at(-2)).toBeTrue();
     expect(loadingStatus.at(-1)).toBeFalse();
   }));

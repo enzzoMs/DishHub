@@ -8,5 +8,6 @@ export const apiEndpoints = {
     `${AppConfig.API_BASE_PATH}/restaurants/${id}/reviews`,
   getRestaurantMenu: (id: number) =>
     `${AppConfig.API_BASE_PATH}/restaurants/${id}/menu`,
+  getAppStatistics: () => `${AppConfig.API_BASE_PATH}/statistics`,
   signUpUser: () => `${AppConfig.API_BASE_PATH}/auth/signup`,
 };

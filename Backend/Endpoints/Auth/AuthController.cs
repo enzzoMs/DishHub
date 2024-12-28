@@ -8,7 +8,21 @@ namespace DishHub.API.Endpoints.Auth;
 [Route("auth")]
 public class AuthController(UserManager<IdentityUser> userManager) : ControllerBase
 {
-    // Bad Request
+    /// <summary>
+    /// Allows a user to sign up by providing a username and password. 
+    /// </summary>
+    /// <response code="201">
+    /// Returns the created user's username along with a location URI for the new resource.
+    /// </response>
+    /// <response code="400">
+    /// If the request parameters are invalid (e.g. The password is too short).
+    /// </response>
+    /// <response code="409">
+    /// If the username is already taken by another account.
+    /// </response>
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     [HttpPost("signup")]
     public async Task<IActionResult> SignUpUser([FromBody] SignUpDto signUpDto)
     {

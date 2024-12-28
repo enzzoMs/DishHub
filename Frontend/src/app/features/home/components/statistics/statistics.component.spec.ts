@@ -1,9 +1,11 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 import { StatisticsComponent } from "./statistics.component";
 import { StatisticsService } from "../../services/statistics.service";
 import { Subject } from "rxjs";
 import { AppStatistics } from "../../models/app-statistics.model";
 import { RoundToFivePipe } from "../../../../shared/pipes/round-to-five/round-to-five.pipe";
+import {AppConfig} from "../../../../../config/config-constants";
+import {By} from "@angular/platform-browser";
 
 describe("StatisticsComponent", () => {
   let component: StatisticsComponent;
@@ -29,20 +31,24 @@ describe("StatisticsComponent", () => {
     fixture = TestBed.createComponent(StatisticsComponent);
     component = fixture.componentInstance;
     nativeElement = fixture.nativeElement as HTMLElement;
-    fixture.detectChanges();
   });
 
   it("should be created", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should display the app statistics", () => {
+  it("should display the app statistics", fakeAsync(() => {
     const newTestStatistics: AppStatistics = {
       usersCount: 35,
       restaurantsCount: 25,
       reviewsCount: 15,
     };
+
+    fixture.detectChanges();
+
     testStatistics$.next(newTestStatistics);
+
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     fixture.detectChanges();
 
@@ -58,17 +64,22 @@ describe("StatisticsComponent", () => {
     expect(statisticsSpans[2].innerText).toBe(
       `${newTestStatistics.reviewsCount}+`,
     );
-  });
+  }));
 
-  it("should round the statistics to the lowest multiple of five", () => {
+  it("should round the statistics to the lowest multiple of five", fakeAsync(() => {
     const newTestStatistics: AppStatistics = {
       usersCount: 31,
       restaurantsCount: 27,
       reviewsCount: 26,
     };
-    testStatistics$.next(newTestStatistics);
 
     const roundToFivePipe = new RoundToFivePipe();
+
+    fixture.detectChanges();
+
+    testStatistics$.next(newTestStatistics);
+
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     fixture.detectChanges();
 
@@ -84,7 +95,7 @@ describe("StatisticsComponent", () => {
     expect(statisticsSpans[2].innerText).toBe(
       `${roundToFivePipe.transform(newTestStatistics.reviewsCount)}+`,
     );
-  });
+  }));
 
   it("should display loading dots for each statistic when data is not available", () => {
     testStatistics$.next(undefined);
