@@ -1,12 +1,5 @@
 import { Component, ElementRef, viewChild } from "@angular/core";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppConfig } from "../../../../../config/config-constants";
 import { AuthService } from "../../services/auth.service";
 import {
@@ -19,7 +12,6 @@ import {
   Observable,
   Subject,
   switchMap,
-  tap,
   throwError,
   timer,
 } from "rxjs";
@@ -27,11 +19,12 @@ import { User } from "../../models/user.model";
 import { AsyncPipe } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorCode } from "../../../error/models/error-codes.model";
+import { AuthForm, AuthFormComponent } from "../auth-form/auth-form.component";
 
 @Component({
   selector: "dhub-sign-up-button",
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AsyncPipe],
+  imports: [FormsModule, ReactiveFormsModule, AsyncPipe, AuthFormComponent],
   templateUrl: "./sign-up-button.component.html",
   styleUrl: "./sign-up-button.component.css",
 })
@@ -42,42 +35,24 @@ export class SignUpButtonComponent {
   signUpResultDialog =
     viewChild.required<ElementRef<HTMLDialogElement>>("signUpResultDialog");
 
-  private readonly registeredUserUpdater$ = new Subject<void>();
+  authForm = viewChild.required(AuthFormComponent);
+
+  private readonly registeredUserUpdater$ = new Subject<AuthForm>();
   readonly registeredUser$: Observable<User>;
 
   private readonly loadingUserSubject$ = new BehaviorSubject(false);
-  readonly loadingUser$: Observable<boolean>;
-
-  readonly AppConfig = AppConfig;
-
-  readonly signUpForm: FormGroup<{
-    name: FormControl<string | null>;
-    password: FormControl<string | null>;
-  }>;
+  readonly loadingUser$ = this.loadingUserSubject$.asObservable();
 
   signUpResult: "userAlreadyExists" | "success" | undefined;
 
-  constructor(
-    private readonly authService: AuthService,
-    formBuilder: FormBuilder,
-  ) {
-    this.loadingUser$ = this.loadingUserSubject$.asObservable().pipe(
-      tap((loading) => {
-        if (loading) {
-          this.signUpForm.disable();
-        } else {
-          this.signUpForm.enable();
-        }
-      }),
-    );
-
+  constructor(authService: AuthService) {
     this.registeredUser$ = this.registeredUserUpdater$.asObservable().pipe(
-      switchMap(() => {
+      switchMap((authForm: AuthForm) => {
         this.loadingUserSubject$.next(true);
 
-        const { name, password } = this.signUpForm.value;
+        const { name, password } = authForm;
 
-        return this.authService.signUpUser(name!, password!).pipe(
+        return authService.signUpUser(name, password).pipe(
           catchError((error) => {
             if (
               error instanceof HttpErrorResponse &&
@@ -99,10 +74,6 @@ export class SignUpButtonComponent {
       map((loadingResult) => {
         const user = loadingResult[0];
 
-        if (this.loadingUserSubject$.value) {
-          this.loadingUserSubject$.next(false);
-        }
-        this.signUpDialog().nativeElement.close();
         this.signUpResultDialog().nativeElement.showModal();
 
         this.signUpResult = "success";
@@ -110,38 +81,11 @@ export class SignUpButtonComponent {
         return user;
       }),
     );
-
-    this.signUpForm = formBuilder.group({
-      name: [
-        "",
-        [
-          Validators.required,
-          Validators.pattern(AppConfig.USERNAME_ALLOWED_PATTERN),
-          Validators.maxLength(AppConfig.MAX_FIELD_LENGTH),
-        ],
-      ],
-      password: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(AppConfig.MIN_PASSWORD_LENGTH),
-          Validators.maxLength(AppConfig.MAX_FIELD_LENGTH),
-        ],
-      ],
-    });
-  }
-
-  get nameControl() {
-    return this.signUpForm.controls.name;
-  }
-
-  get passwordControl() {
-    return this.signUpForm.controls.password;
   }
 
   openSignUpDialog() {
     if (!this.loadingUserSubject$.value) {
-      this.signUpForm.reset();
+      this.authForm().resetForm();
     }
     this.signUpDialog().nativeElement.showModal();
   }
@@ -150,7 +94,7 @@ export class SignUpButtonComponent {
     this.signUpDialog().nativeElement.close();
 
     if (!this.loadingUserSubject$.value) {
-      this.signUpForm.reset();
+      this.authForm().resetForm();
     }
   }
 
@@ -158,7 +102,7 @@ export class SignUpButtonComponent {
     this.signUpResultDialog().nativeElement.close();
   }
 
-  submitSignUpForm() {
-    this.registeredUserUpdater$.next();
+  signUpUser(authForm: AuthForm) {
+    this.registeredUserUpdater$.next(authForm);
   }
 }

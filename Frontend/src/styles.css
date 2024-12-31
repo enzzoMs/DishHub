@@ -52,6 +52,7 @@
 }
 
 /* Global Styles ================== */
+
 body {
   margin: 0;
 }
@@ -74,6 +75,8 @@ h4 {
   font-size: var(--text-md);
 }
 
+/* Forms ==================== */
+
 input {
   color: var(--secondary-text-color);
   font-size: inherit;
@@ -91,6 +94,8 @@ input::placeholder {
 input:focus {
   outline: 2px solid var(--primary-color);
 }
+
+/* Ng-Select =================== */
 
 .ng-select-container {
   height: auto;
@@ -122,6 +127,8 @@ input:focus {
 .ng-option-marked {
   background-color: #efefef;
 }
+
+/* Pagination ==================== */
 
 .dhub-pagination-control {
   display: block;
@@ -157,6 +164,7 @@ input:focus {
 }
 
 /* Buttons ======================= */
+
 .primary-button {
   font-size: inherit;
   font-family: inherit;
@@ -166,6 +174,10 @@ input:focus {
   background-color: var(--primary-color);
   border-radius: 4px;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: var(--space-sm);
   padding: var(--space-sm) var(--space-lg);
 }
 
@@ -191,6 +203,10 @@ input:focus {
   padding: var(--space-sm) var(--space-lg);
 }
 
+.secondary-button:hover {
+  background-color: var(--secondary-color__alpha-10);
+}
+
 .borderless-button {
   font-size: inherit;
   font-family: inherit;
@@ -202,15 +218,16 @@ input:focus {
   padding: var(--space-sm) 0;
 }
 
-.borderless-button:hover {
+.borderless-button:enabled:hover {
   color: var(--primary-text-color);
 }
 
-.secondary-button:hover {
-  background-color: var(--secondary-color__alpha-10);
+.borderless-button:disabled {
+  cursor: not-allowed;
 }
 
 /* Section Heading ==================== */
+
 .section-heading-wrapper {
   display: flex;
   align-items: center;
@@ -241,6 +258,7 @@ input:focus {
 }
 
 /* Loading Indicators ============== */
+
 .loading-dots {
   font-size: var(--text-xxl);
   line-height: 1;
@@ -299,7 +317,41 @@ input:focus {
   }
 }
 
+/* Dialogs =========================== */
+
+::backdrop {
+  background: black;
+  opacity: 0.25;
+}
+
+dialog {
+  border: none;
+  border-radius: var(--surface-corner-radius);
+  padding: var(--space-xl);
+}
+
+dialog .dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: var(--space-xxl);
+  padding-bottom: var(--space-md);
+  border-bottom: var(--divider-height) solid var(--divider-color);
+  margin-bottom: var(--space-lg);
+}
+
+dialog .dialog-header h1 {
+  font-size: var(--text-lg);
+  margin: 0;
+}
+
+dialog .close-dialog-button {
+  font-size: var(--text-lg);
+  padding: 0;
+}
+
 /* Misc =========================== */
+
 .material-icons {
   font-size: inherit;
   font-weight: inherit;

@@ -41,59 +41,18 @@ describe("AuthComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should be invalid when form is empty", () => {
-    component.signUpForm.setValue({ name: "", password: "" });
-    expect(component.signUpForm.invalid).toBeTrue();
-  });
-
-  it("should be invalid when password is shorter than allowed", () => {
-    let password = "";
-    for (let i = 1; i < AppConfig.MIN_PASSWORD_LENGTH; i++) {
-      password = password + i;
-    }
-
-    component.signUpForm.setValue({ name: "Jane", password: password });
-    expect(component.signUpForm.invalid).toBeTrue();
-  });
-
-  it("should be invalid when user name contains special character", () => {
-    let password = "";
-    for (let i = 1; i <= AppConfig.MIN_PASSWORD_LENGTH; i++) {
-      password = password + i;
-    }
-
-    const userName = "Jane@--!éá";
-
-    component.signUpForm.setValue({ name: userName, password: password });
-    expect(component.signUpForm.invalid).toBeTrue();
-  });
-
-  it("should reset form when opening or closing the dialog", () => {
-    component.signUpForm.setValue({ name: "Jane", password: "123456" });
-    component.openSignUpDialog();
-
-    expect(component.signUpForm.value).toEqual({ name: null, password: null });
-
-    component.signUpForm.setValue({ name: "Jane", password: "123456" });
-    component.closeSignUpDialog();
-
-    expect(component.signUpForm.value).toEqual({ name: null, password: null });
-  });
-
   it("should update registered user when form is submitted", fakeAsync(() => {
     const testUser: User = { userName: "Jane" };
     authServiceMock.signUpUser.and.returnValue(of(testUser));
-
-    const userName = "Jane";
-    const password = "123456";
-    component.signUpForm.setValue({ name: userName, password: password });
 
     let registeredUser: User | undefined;
     component.registeredUser$.subscribe((user) => {
       registeredUser = user;
     });
 
-    component.submitSignUpForm();
+    const userName = "Jane";
+    const password = "123456";
+    component.signUpUser({ name: userName, password: password });
 
     fixture.detectChanges();
 
@@ -109,7 +68,7 @@ describe("AuthComponent", () => {
   it("should update the sign up result if the user was registered", fakeAsync(() => {
     fixture.detectChanges();
 
-    component.submitSignUpForm();
+    component.signUpUser({ name: "", password: "" });
 
     tick(AppConfig.MIN_LOADING_TIME_MS);
 
@@ -129,7 +88,7 @@ describe("AuthComponent", () => {
 
     fixture.detectChanges();
 
-    component.submitSignUpForm();
+    component.signUpUser({ name: "", password: "" });
 
     tick(AppConfig.MIN_LOADING_TIME_MS);
 
@@ -145,7 +104,7 @@ describe("AuthComponent", () => {
 
     fixture.detectChanges();
 
-    component.submitSignUpForm();
+    component.signUpUser({ name: "", password: "" });
 
     tick(AppConfig.MIN_LOADING_TIME_MS);
 

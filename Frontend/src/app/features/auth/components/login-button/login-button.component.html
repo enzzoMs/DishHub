@@ -1,0 +1,35 @@
+<button class="primary-button" (click)="openLoginDialog()">
+  <ng-content>Login</ng-content>
+</button>
+
+<dialog #loginDialog>
+  <div class="dialog-header">
+    <h1>Login</h1>
+    <button
+      class="borderless-button close-dialog-button"
+      (click)="closeLoginDialog()"
+    >
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+  <dhub-auth-form
+    [loading]="(loadingUser$ | async) ?? false"
+    (formSubmitted)="loginUser($event)"
+  />
+</dialog>
+
+<dialog #loginErrorDialog>
+  <div class="dialog-header">
+    <h1>Login</h1>
+    <button
+      class="borderless-button close-dialog-button"
+      (click)="closeLoginErrorDialog()"
+    >
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+  <p>
+    Oops! The login failed due to an invalid<br />
+    username or password!
+  </p>
+</dialog>

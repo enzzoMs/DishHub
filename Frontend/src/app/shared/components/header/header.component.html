@@ -24,8 +24,32 @@
       >About</a
     >
   </nav>
-  <div class="header-item account-buttons">
-    <dhub-sign-up-button />
-    <button class="primary-button">Login</button>
-  </div>
+
+  @let isLoggingOut = isLoggingOut$ | async;
+  @let loggedInUser = loggedInUser$ | async;
+
+  @if (loggedInUser) {
+    <div class="header-item account-buttons">
+      <button
+        class="borderless-button"
+        (click)="logoutUser()"
+        [disabled]="isLoggingOut"
+      >
+        Logout
+      </button>
+      <button class="primary-button">
+        <span class="material-icons">person</span>My Profile
+      </button>
+    </div>
+  } @else if (loggedInUser === null) {
+    <div class="header-item account-buttons">
+      <dhub-sign-up-button />
+      <dhub-login-button />
+    </div>
+  } @else {
+    <div class="header-item skeleton-account-buttons">
+      <div class="skeleton-text"></div>
+      <div class="skeleton-square"></div>
+    </div>
+  }
 </header>

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import {combineLatestWith, map, Observable, tap, timer} from "rxjs";
+import { combineLatestWith, map, Observable, timer } from "rxjs";
 import { AsyncPipe } from "@angular/common";
 import { AppStatistics } from "../../models/app-statistics.model";
 import { StatisticsService } from "../../services/statistics.service";
@@ -20,7 +20,6 @@ export class StatisticsComponent {
     this.appStatistics$ = statisticsService.appStatistics$.pipe(
       combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
       map((loadingResult) => loadingResult[0]),
-      tap(() => console.log("Sdasd"))
     );
   }
 }

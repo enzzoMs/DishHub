@@ -53,3 +53,20 @@ nav a.active-link {
   justify-content: flex-end;
   column-gap: var(--space-lg);
 }
+
+.skeleton-account-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: var(--space-lg);
+}
+
+.skeleton-account-buttons .skeleton-text {
+  width: 20%;
+  height: var(--text-md);
+}
+
+.skeleton-account-buttons .skeleton-square {
+  width: 25%;
+  height: var(--text-xxl);
+}

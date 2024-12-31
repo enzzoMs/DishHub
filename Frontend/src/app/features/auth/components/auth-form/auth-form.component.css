@@ -1,0 +1,23 @@
+form {
+  font-size: var(--text-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  align-self: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+input {
+  margin-bottom: var(--space-md);
+}
+
+button {
+  margin-top: var(--space-md);
+}
+
+.form-error {
+  color: var(--error-color);
+  margin: 0 0 var(--space-md) var(--space-sm);
+}

@@ -12,6 +12,9 @@
     @case (ErrorCode.BadRequest) {
       <p>There was a bad request. Please verify your input.</p>
     }
+    @case (ErrorCode.Unauthorized) {
+      <p>You are unauthorized to perform this action.</p>
+    }
     @case (ErrorCode.NotFound) {
       <p>The resource you are looking for could not be found.</p>
     }

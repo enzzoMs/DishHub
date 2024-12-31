@@ -1,7 +1,8 @@
-<button class="borderless-button" (click)="openSignUpDialog()">Sign Up</button>
+<button class="borderless-button" (click)="openSignUpDialog()">
+  <ng-content>Sign Up</ng-content>
+</button>
 
 @let registeredUser = registeredUser$ | async;
-@let loadingUser = loadingUser$ | async;
 
 <dialog #signUpDialog>
   <div class="dialog-header">
@@ -13,64 +14,10 @@
       <span class="material-icons">close</span>
     </button>
   </div>
-  <form [formGroup]="signUpForm" (ngSubmit)="submitSignUpForm()">
-    <label for="name-field">Name</label>
-    <input
-      id="name-field"
-      name="name"
-      type="text"
-      placeholder="eg. Jane Doe"
-      formControlName="name"
-    />
-    @if (nameControl.invalid && (nameControl.dirty || !nameControl.untouched)) {
-      @if (nameControl.hasError("pattern")) {
-        <p class="form-error">* Name can only contain letters and numbers.</p>
-      }
-      @if (nameControl.hasError("maxlength")) {
-        <p class="form-error">
-          * Name must be at most {{ AppConfig.MAX_FIELD_LENGTH }} characters.
-        </p>
-      }
-    }
-
-    <label for="password-field">Password</label>
-    <input
-      id="password-field"
-      name="password"
-      type="password"
-      placeholder="Enter your password"
-      formControlName="password"
-    />
-    @if (
-      passwordControl.invalid &&
-      (passwordControl.dirty || !passwordControl.untouched)
-    ) {
-      @if (passwordControl.hasError("minlength")) {
-        <p class="form-error">
-          * Password must be at least
-          {{ AppConfig.MIN_PASSWORD_LENGTH }} characters.
-        </p>
-      }
-      @if (passwordControl.hasError("maxlength")) {
-        <p class="form-error">
-          * Password must be at most
-          {{ AppConfig.MAX_FIELD_LENGTH }} characters.
-        </p>
-      }
-    }
-
-    <button
-      class="primary-button"
-      type="submit"
-      [disabled]="nameControl.invalid || passwordControl.invalid || loadingUser"
-    >
-      @if (loadingUser) {
-        Loading . . .
-      } @else {
-        Submit
-      }
-    </button>
-  </form>
+  <dhub-auth-form
+    [loading]="(loadingUser$ | async) ?? false"
+    (formSubmitted)="signUpUser($event)"
+  />
 </dialog>
 
 <dialog #signUpResultDialog>
@@ -84,8 +31,8 @@
     </button>
   </div>
   @if (signUpResult === "success") {
-    <p>Success, '{{ registeredUser?.userName }}'! You are signed up!</p>
+    <p>Success, {{ registeredUser?.userName }}! You are signed up!</p>
   } @else if (signUpResult === "userAlreadyExists") {
-    <p>Oops! The username '{{ nameControl.value }}' is already taken.</p>
+    <p>Oops! This username is already taken!</p>
   }
 </dialog>

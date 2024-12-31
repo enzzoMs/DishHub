@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DishHub.API", "DishHub.API.csproj", "{429CF048-33B1-458D-94E9-8905621AA9AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DishHub.API", "DishHub.API/DishHub.API.csproj", "{429CF048-33B1-458D-94E9-8905621AA9AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
