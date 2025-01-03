@@ -1,7 +1,9 @@
 ﻿using DishHub.API.Data;
 using DishHub.API.Data.Entities;
 using DishHub.API.Data.Extensions;
+using DishHub.API.Endpoints.Restaurants.Requests;
 using DishHub.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DishHub.API.Endpoints.Restaurants;
@@ -13,10 +15,13 @@ public class RestaurantsService(AppDbContext appDbContext)
         .Select(restaurant => restaurant.ToModel())
         .ToListAsync();
 
-    public async Task<RestaurantModel?> GetRestaurantById(int id, bool includeReviews, bool includeMenu)
+    public async Task<RestaurantEntity?> GetRestaurantById(
+        int id, bool includeReviews = false, bool includeMenu = false)
     {
         var restaurantsQuery = appDbContext.Restaurants.AsNoTracking();
 
+        restaurantsQuery = restaurantsQuery.Include(restaurant => restaurant.User);
+        
         if (includeReviews)
         {
             restaurantsQuery = restaurantsQuery.Include(restaurant => restaurant.Reviews);
@@ -26,10 +31,8 @@ public class RestaurantsService(AppDbContext appDbContext)
         {
             restaurantsQuery = restaurantsQuery.Include(restaurant => restaurant.Menu);
         }
-
-        var restaurantEntity = await restaurantsQuery.FirstOrDefaultAsync(restaurant => restaurant.Id == id);
-
-        return restaurantEntity?.ToModel();
+        
+        return await restaurantsQuery.FirstOrDefaultAsync(restaurant => restaurant.Id == id);
     }
 
     public Task<List<RestaurantModel>> GetPaginatedRestaurants(
@@ -66,6 +69,56 @@ public class RestaurantsService(AppDbContext appDbContext)
         return new PaginationMetadata(
             page, pageSize, restaurantsCount, previousPageLink, nextPageLink
         );
+    }
+    
+    /// <returns>The created restaurant.</returns>
+    public async Task<RestaurantModel> CreateRestaurant(
+        IdentityUser user, CreateRestaurantRequest creationRequest)
+    {
+        var restaurantEntity = new RestaurantEntity(
+            creationRequest.Name,
+            creationRequest.Description,
+            creationRequest.Location,
+            score: 0
+        ) { User = user };
+        
+        await appDbContext.Restaurants.AddAsync(restaurantEntity);
+        await appDbContext.SaveChangesAsync();
+        
+        return restaurantEntity.ToModel();
+    }
+    
+    /// <returns>The updated restaurant or null if the restaurant does not exist.</returns>
+    public async Task<RestaurantModel?> UpdateRestaurant(
+        int id, UpdateRestaurantRequest updateRequest)
+    {
+        var restaurantEntity = await appDbContext.Restaurants.FindAsync(id);
+
+        if (restaurantEntity == null)
+        {
+            return null;
+        }
+
+        restaurantEntity.Name = updateRequest.Name;
+        restaurantEntity.Description = updateRequest.Description;
+        restaurantEntity.Location = updateRequest.Location;
+        
+        await appDbContext.SaveChangesAsync();
+        
+        return restaurantEntity.ToModel();
+    }
+    
+    public async Task DeleteRestaurant(int id)
+    {
+        var restaurantEntity = await appDbContext.Restaurants.FindAsync(id);
+
+        if (restaurantEntity == null)
+        {
+            return;
+        }
+
+        appDbContext.Restaurants.Remove(restaurantEntity);
+        await appDbContext.SaveChangesAsync();
     }
 }
 

@@ -1,6 +1,9 @@
 ﻿using DishHub.API.Data;
+using DishHub.API.Data.Entities;
 using DishHub.API.Data.Extensions;
+using DishHub.API.Endpoints.Reviews.Requests;
 using DishHub.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DishHub.API.Endpoints.Reviews;
@@ -11,20 +14,18 @@ public class ReviewsService(AppDbContext appDbContext)
     {
         var restaurantEntity = await appDbContext.Restaurants
             .Include(restaurant => restaurant.Reviews)
+            .ThenInclude(review => review.User)
             .FirstOrDefaultAsync(restaurant => restaurant.Id == restaurantId);
 
         return restaurantEntity?.Reviews.Select(review => review.ToModel()).ToList();
     }
 
-    public async Task<ReviewModel?> GetRestaurantReview(int restaurantId, int reviewId)
+    public async Task<ReviewEntity?> GetRestaurantReview(int reviewId)
     {
-        var restaurantEntity = await appDbContext.Restaurants
-            .Include(restaurant => restaurant.Reviews)
-            .FirstOrDefaultAsync(restaurant => restaurant.Id == restaurantId);
-
-        var reviewEntity = restaurantEntity?.Reviews.FirstOrDefault(review => review.Id == reviewId);
-        
-        return reviewEntity?.ToModel();
+        var reviewEntity = await appDbContext.Reviews
+            .Include(review => review.User)
+            .FirstOrDefaultAsync(review => review.Id == reviewId);
+        return reviewEntity;
     }
     
     public async Task<List<ReviewModel>?> GetPaginatedRestaurantsReviews(
@@ -69,5 +70,63 @@ public class ReviewsService(AppDbContext appDbContext)
         return new PaginationMetadata(
             page, pageSize, reviewsCount, previousPageLink, nextPageLink
         );
+    }
+    
+    /// <returns>The created review or null if the associated restaurant does not exist.</returns>
+    public async Task<ReviewModel?> CreateReview(
+        int restaurantId, IdentityUser user, CreateReviewRequest creationRequest)
+    {
+        var restaurantEntity = await appDbContext.Restaurants.FindAsync(restaurantId);
+
+        if (restaurantEntity == null)
+        {
+            return null;
+        }
+        
+        var reviewEntity = new ReviewEntity(
+            creationRequest.Comment,
+            creationRequest.Rating,
+            DateTime.UtcNow
+        )
+        {
+            User = user, 
+            Restaurant = restaurantEntity
+        };
+        
+        await appDbContext.Reviews.AddAsync(reviewEntity);
+        await appDbContext.SaveChangesAsync();
+        
+        return reviewEntity.ToModel();
+    }
+    
+    /// <returns>The updated review or null if the review does not exist.</returns>
+    public async Task<ReviewModel?> UpdateReview(int id, UpdateReviewRequest updateRequest)
+    {
+        var reviewEntity = await appDbContext.Reviews.FindAsync(id);
+
+        if (reviewEntity == null)
+        {
+            return null;
+        }
+
+        reviewEntity.Comment = updateRequest.Comment;
+        reviewEntity.Rating = updateRequest.Rating;
+        
+        await appDbContext.SaveChangesAsync();
+        
+        return reviewEntity.ToModel();
+    }
+    
+    public async Task DeleteReview(int id)
+    {
+        var reviewEntity = await appDbContext.Reviews.FindAsync(id);
+
+        if (reviewEntity == null)
+        {
+            return;
+        }
+
+        appDbContext.Reviews.Remove(reviewEntity);
+        await appDbContext.SaveChangesAsync();
     }
 }

@@ -12,4 +12,7 @@ public record RestaurantModel(
 {
     public const int ScoreMinValue = 1;
     public const int ScoreMaxValue = 5;
+    
+    public const int MaxFieldLength = 64;
+    public const int MaxDescriptionLength = 256;
 }

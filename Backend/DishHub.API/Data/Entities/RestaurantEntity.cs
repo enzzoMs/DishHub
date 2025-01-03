@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DishHub.API.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DishHub.API.Data.Entities;
 
@@ -8,16 +10,18 @@ public class RestaurantEntity(string name, string description, string location, 
 {
     public int Id { get; private set; }
     
-    [MaxLength(80)]
+    [MaxLength(RestaurantModel.MaxFieldLength)]
     public string Name { get; set; } = name;
 
-    [MaxLength(300)]
+    [MaxLength(RestaurantModel.MaxDescriptionLength)]
     public string Description { get; set; } = description;
 
-    [MaxLength(80)]
+    [MaxLength(RestaurantModel.MaxFieldLength)]
     public string Location { get; set; } = location;
-
+    
     public double Score { get; set; } = score;
+    
+    public required IdentityUser User { get; set; }
 
     public ICollection<ReviewEntity> Reviews { get; } = [];
     

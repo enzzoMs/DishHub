@@ -16,7 +16,8 @@ public static class EntityExtensions
     );
     
     public static ReviewModel ToModel(this ReviewEntity reviewEntity) => new(
-        UserName: "",  // TODO: Add real user name,
+        Id: reviewEntity.Id,
+        UserName: reviewEntity.User.UserName!,
         Comment: reviewEntity.Comment,
         Rating: reviewEntity.Rating,
         CreationDate: reviewEntity.CreationDate

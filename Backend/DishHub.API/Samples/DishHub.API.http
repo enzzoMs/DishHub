@@ -17,47 +17,126 @@ Accept: application/json
 
 ### GET - Restaurants by Id
 
-GET {{host}}/restaurants/0
+GET {{host}}/restaurants/1
 Accept: application/json
 
 ### GET - Restaurants by Id with Reviews
 
-GET {{host}}/restaurants/0?includeReviews=true
+GET {{host}}/restaurants/1?includeReviews=true
 Accept: application/json
 
 ### GET - Restaurants by Id with Menu
 
-GET {{host}}/restaurants/0?includeMenu=true
+GET {{host}}/restaurants/1?includeMenu=true
+Accept: application/json
+
+### POST - Create Restaurant
+
+POST {{host}}/restaurants
+Content-Type: application/json
+
+{
+  "name": "La Tavola Italiana",
+  "location": "Pasta Lane",
+  "description": "A restaurant"
+}
+
+### PATCH - Update Restaurant
+
+PATCH {{host}}/restaurants/1
+Content-Type: application/json
+
+{
+  "name": "New Tavola Italiana",
+  "location": "New Pasta Lane",
+  "description": "A new restaurant"
+}
+
+### POST - Delete Restaurant
+
+DELETE {{host}}/restaurants/1
 Accept: application/json
 
 ### GET - Restaurants Reviews
 
-GET {{host}}/restaurants/0/reviews
+GET {{host}}/restaurants/1/reviews
 Accept: application/json
 
 ### GET - Restaurants Reviews with Pagination
 
-GET {{host}}/restaurants/0/reviews?page=1&pageSize=10
+GET {{host}}/restaurants/1/reviews?page=1&pageSize=10
 Accept: application/json
 
 ### GET - Restaurants Review by Id
 
-GET {{host}}/restaurants/0/reviews/0
+GET {{host}}/restaurants/1/reviews/1
+Accept: application/json
+
+### POST - Create Review
+
+POST {{host}}/restaurants/1/reviews
+Content-Type: application/json
+
+{
+  "comment": "A comment",
+  "rating": 5
+}
+
+### PATCH - Update Review
+
+PATCH {{host}}/restaurants/1/reviews/1
+Content-Type: application/json
+
+{
+  "comment": "A new comment",
+  "rating": 5
+}
+
+### DELETE - Delete Review
+
+DELETE {{host}}/restaurants/1/reviews/1
 Accept: application/json
 
 ### GET - Restaurants Menu
 
-GET {{host}}/restaurants/0/menu
+GET {{host}}/restaurants/1/menu
 Accept: application/json
 
 ### GET - Restaurants Menu with Pagination
 
-GET {{host}}/restaurants/0/menu?page=1&pageSize=10
+GET {{host}}/restaurants/1/menu?page=1&pageSize=10
 Accept: application/json
 
 ### GET - Restaurants Menu by Id
 
-GET {{host}}/restaurants/0/menu/0
+GET {{host}}/restaurants/1/menu/1
+Accept: application/json
+
+### POST - Create Menu Item
+
+POST {{host}}/restaurants/1/menu
+Content-Type: application/json
+
+{
+  "description": "A menu item",
+  "category": "Appetizers",
+  "price": 5.5
+}
+
+### PATCH - Update Menu Item
+
+PATCH {{host}}/restaurants/1/menu/1
+Content-Type: application/json
+
+{
+  "description": "A new menu item",
+  "category": "MainCourse",
+  "price": 5.5
+}
+
+### DELETE - Delete Menu Item
+
+DELETE {{host}}/restaurants/1/menu/1
 Accept: application/json
 
 ### GET - App Statistics
@@ -71,7 +150,7 @@ POST {{host}}/auth/signup
 Content-Type: application/json
 
 {
-  "userName": "TestUser@",
+  "userName": "TestUser",
   "password": "123456"
 }
 
@@ -85,12 +164,37 @@ Content-Type: application/json
   "password": "123456"
 }
 
-### POST - Logout User
+### POST - Logout Current User
 
 POST {{host}}/auth/logout
 Content-Type: application/json
 
-### Get - Current User Information
+### GET - User Information
 
 GET {{host}}/user
+Accept: application/json
+
+### PATCH - Update User
+
+PATCH {{host}}/user
+Content-Type: application/json
+
+{
+  "userName": "New TestUser",
+  "password": "246810"
+}
+
+### DELETE - Delete User
+
+DELETE {{host}}/user
+Accept: application/json
+
+### GET - User Restaurants
+
+GET {{host}}/user/restaurants
+Accept: application/json
+
+### GET - User Reviews
+
+GET {{host}}/user/reviews
 Accept: application/json

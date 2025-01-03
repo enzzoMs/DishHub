@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DishHub.API.Models;
 
-namespace DishHub.API.Models;
+namespace DishHub.API.Endpoints.Menu.Requests;
 
-public record MenuItemModel(
-    int Id,
-    
+public record CreateMenuItemRequest(
     [Required(AllowEmptyStrings = false)]
     [MaxLength(MenuItemModel.MaxDescriptionLength)]
     string Description,
@@ -13,16 +12,4 @@ public record MenuItemModel(
     
     [Range(0, double.MaxValue)]
     double Price
-)
-{
-    public const int MaxDescriptionLength = 256;
-}
-
-public enum MenuCategory
-{
-    Appetizers,
-    MainCourse,
-    Pasta,
-    Beverages,
-    Desserts
-}
+);

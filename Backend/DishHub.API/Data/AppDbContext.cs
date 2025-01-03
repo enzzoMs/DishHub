@@ -10,12 +10,26 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     public DbSet<RestaurantEntity> Restaurants { get; private set; }
     
     public DbSet<ReviewEntity> Reviews { get; private set; }
+    
+    public DbSet<MenuItemEntity> MenuItems { get; private set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MenuItemEntity>()
             .Property(menu => menu.Category)
             .HasConversion<string>();
+
+        modelBuilder.Entity<RestaurantEntity>()
+            .HasOne(restaurant => restaurant.User)
+            .WithMany();
+        
+        modelBuilder.Entity<ReviewEntity>()
+            .HasOne(review => review.User)
+            .WithMany();
+        
+        modelBuilder.Entity<MenuItemEntity>()
+            .HasOne(item => item.User)
+            .WithMany();
         
         base.OnModelCreating(modelBuilder);
     }

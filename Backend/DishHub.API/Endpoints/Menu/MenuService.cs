@@ -1,6 +1,9 @@
 ﻿using DishHub.API.Data;
+using DishHub.API.Data.Entities;
 using DishHub.API.Data.Extensions;
+using DishHub.API.Endpoints.Menu.Requests;
 using DishHub.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DishHub.API.Endpoints.Menu;
@@ -16,15 +19,12 @@ public class MenuService(AppDbContext appDbContext)
         return restaurantEntity?.Menu.Select(menuItem => menuItem.ToModel()).ToList();
     }
 
-    public async Task<MenuItemModel?> GetRestaurantMenuItem(int restaurantId, int menuItemId)
+    public async Task<MenuItemEntity?> GetRestaurantMenuItem(int menuItemId)
     {
-        var restaurantEntity = await appDbContext.Restaurants
-            .Include(restaurant => restaurant.Menu)
-            .FirstOrDefaultAsync(restaurant => restaurant.Id == restaurantId);
-
-        var menuItemEntity = restaurantEntity?.Menu.FirstOrDefault(item => item.Id == menuItemId);
-        
-        return menuItemEntity?.ToModel();
+        var menuItemEntity = await appDbContext.MenuItems
+            .Include(item => item.User)
+            .FirstOrDefaultAsync(item => item.Id == menuItemId);
+        return menuItemEntity;
     }
     
     public async Task<List<MenuItemModel>?> GetPaginatedRestaurantsMenu(
@@ -69,5 +69,64 @@ public class MenuService(AppDbContext appDbContext)
         return new PaginationMetadata(
             page, pageSize, menuCount, previousPageLink, nextPageLink
         );
+    }
+    
+    /// <returns>The created menu item or null if the associated restaurant does not exist.</returns>
+    public async Task<MenuItemModel?> CreateMenuItem(
+        int restaurantId, IdentityUser user, CreateMenuItemRequest creationRequest)
+    {
+        var restaurantEntity = await appDbContext.Restaurants.FindAsync(restaurantId);
+
+        if (restaurantEntity == null)
+        {
+            return null;
+        }
+        
+        var menuItemEntity = new MenuItemEntity(
+            creationRequest.Description,
+            creationRequest.Category,
+            creationRequest.Price
+        )
+        {
+            User = user, 
+            Restaurant = restaurantEntity
+        };
+        
+        await appDbContext.MenuItems.AddAsync(menuItemEntity);
+        await appDbContext.SaveChangesAsync();
+        
+        return menuItemEntity.ToModel();
+    }
+    
+    /// <returns>The updated menu item or null if the item does not exist.</returns>
+    public async Task<MenuItemModel?> UpdateMenuItem(int id, UpdateMenuItemRequest updateRequest)
+    {
+        var menuItemEntity = await appDbContext.MenuItems.FindAsync(id);
+
+        if (menuItemEntity == null)
+        {
+            return null;
+        }
+
+        menuItemEntity.Description = updateRequest.Description;
+        menuItemEntity.Category = updateRequest.Category;
+        menuItemEntity.Price = updateRequest.Price;
+        
+        await appDbContext.SaveChangesAsync();
+        
+        return menuItemEntity.ToModel();
+    }
+
+    public async Task DeleteMenuItem(int id)
+    {
+        var menuItemEntity = await appDbContext.MenuItems.FindAsync(id);
+
+        if (menuItemEntity == null)
+        {
+            return;
+        }
+
+        appDbContext.MenuItems.Remove(menuItemEntity);
+        await appDbContext.SaveChangesAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using DishHub.API.Models;
+﻿using DishHub.API.Endpoints.Auth.Requests;
+using DishHub.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -88,15 +89,15 @@ public class AuthController(
     /// <summary>
     /// Logs out the currently authenticated user. 
     /// </summary>
-    /// <response code="200">The user has been successfully logged out.</response>
+    /// <response code="204">The user has been successfully logged out.</response>
     /// <response code="401">If the request is made by an unauthenticated user.</response>
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize]
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
         await signInManager.SignOutAsync();
-        return Ok();
+        return NoContent();
     }
 }

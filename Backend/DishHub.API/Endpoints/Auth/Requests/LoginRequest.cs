@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DishHub.API.Endpoints.Auth;
+namespace DishHub.API.Endpoints.Auth.Requests;
 
 public record LoginRequest(
     [Required(AllowEmptyStrings = false)]

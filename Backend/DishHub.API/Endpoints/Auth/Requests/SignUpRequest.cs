@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DishHub.API.Models;
 
-namespace DishHub.API.Endpoints.Auth;
+namespace DishHub.API.Endpoints.Auth.Requests;
 
 public record SignUpRequest(
     [Required(AllowEmptyStrings = false)]
