@@ -1,7 +1,7 @@
 import { Component, input } from "@angular/core";
-import { Restaurant } from "../../models/restaurant.model";
 import { RouterLink } from "@angular/router";
 import { RoutePath } from "../../../../app.routes";
+import { Restaurant } from "../../../../shared/models/restaurant.model";
 
 @Component({
   selector: "dhub-restaurant-item",

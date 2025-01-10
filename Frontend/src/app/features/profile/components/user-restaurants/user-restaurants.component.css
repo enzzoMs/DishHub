@@ -1,0 +1,37 @@
+.restaurants-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--space-md);
+}
+
+.add-item-button {
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-sm);
+}
+
+.add-item-button .material-icons {
+  color: var(--primary-color);
+  font-size: var(--text-lg);
+}
+
+.add-item-button,
+dhub-user-restaurant-item,
+.restaurant-item-skeleton {
+  padding-bottom: var(--space-md);
+  border-bottom: var(--divider-height) solid var(--divider-color);
+}
+
+.restaurant-item-skeleton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.restaurant-item-skeleton .skeleton-text:first-child {
+  width: 25%;
+}
+
+.restaurant-item-skeleton .skeleton-text:last-child {
+  width: 20%;
+}

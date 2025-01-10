@@ -1,10 +1,11 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 
 import { RestaurantReviewsComponent } from "./restaurant-reviews.component";
-import { RestaurantsService } from "../../services/restaurants.service";
 import { of } from "rxjs";
 import { PaginatedItems } from "../../../../shared/models/paginated-items";
-import { Review } from "../../models/review.model";
+import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
+import { Review } from "../../../../shared/models/review.model";
+import {AppConfig} from "../../../../../config/config-constants";
 
 describe("RestaurantReviewsComponent", () => {
   let component: RestaurantReviewsComponent;
@@ -18,7 +19,7 @@ describe("RestaurantReviewsComponent", () => {
       userName: "",
       comment: "",
       rating: i,
-      date: new Date(),
+      creationDate: new Date(),
     });
   }
   const testReviewsTotalItems = RestaurantReviewsComponent.pageSize * 5;
@@ -52,7 +53,7 @@ describe("RestaurantReviewsComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should fetch reviews for the first page when restaurant id changes", () => {
+  it("should fetch reviews for the first page when restaurant id changes", fakeAsync(() => {
     let retrievedReviews: Review[] | undefined;
     component.reviews$?.subscribe((reviews: Review[]) => {
       retrievedReviews = reviews;
@@ -63,30 +64,30 @@ describe("RestaurantReviewsComponent", () => {
     fixture.componentRef.setInput("restaurantId", newRestaurantId);
     fixture.detectChanges();
 
-    expect(retrievedReviews).toEqual(testReviewsFirstPage);
-  });
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
-  it("should load the next batch of reviews when 'seeMoreReviews' is called", () => {
+    expect(retrievedReviews).toEqual(testReviewsFirstPage);
+  }));
+
+  it("should load the next batch of reviews when 'seeMoreReviews' is called", fakeAsync(() => {
     let retrievedReviews: Review[] | undefined;
-    component.reviews$?.subscribe((reviews: Review[]) => {
+    component.reviews$.subscribe((reviews: Review[]) => {
       retrievedReviews = reviews;
     });
 
-    const newRestaurantId = 10;
-
-    fixture.componentRef.setInput("restaurantId", newRestaurantId);
+    component.seeMoreReviews();
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     component.seeMoreReviews();
-    component.seeMoreReviews();
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     expect(retrievedReviews).toEqual([
       ...testReviewsFirstPage,
       ...testReviewsFirstPage,
-      ...testReviewsFirstPage,
     ]);
-  });
+  }));
 
-  it("should update the loading status while reviews are loading", () => {
+  it("should update the loading status while reviews are loading", fakeAsync(() => {
     const loadingStatus: boolean[] = [];
     component.loading$.subscribe((loading) => {
       loadingStatus.push(loading);
@@ -99,12 +100,16 @@ describe("RestaurantReviewsComponent", () => {
     const newRestaurantId = 10;
 
     fixture.componentRef.setInput("restaurantId", newRestaurantId);
+    fixture.detectChanges();
 
-    expect(loadingStatus[0]).toBe(true);
-    expect(loadingStatus[1]).toBe(false);
-  });
+    expect(loadingStatus.at(-1)).toBeTrue();
 
-  it("should update 'allReviewsAreLoaded' correctly", () => {
+    tick(AppConfig.MIN_LOADING_TIME_MS);
+
+    expect(loadingStatus.at(-1)).toBeFalse();
+  }));
+
+  it("should update 'allReviewsAreLoaded' correctly", fakeAsync(() => {
     component.reviews$?.subscribe(() => {
       return;
     });
@@ -115,17 +120,21 @@ describe("RestaurantReviewsComponent", () => {
     const newRestaurantId = 10;
 
     fixture.componentRef.setInput("restaurantId", newRestaurantId);
+    fixture.detectChanges();
 
-    expect(component.allReviewsLoaded).toBe(false);
+    tick(AppConfig.MIN_LOADING_TIME_MS);
+
+    expect(component.allReviewsLoaded).toBeFalse();
 
     for (let i = 1; i < totalPages; i++) {
       component.seeMoreReviews();
+      tick(AppConfig.MIN_LOADING_TIME_MS);
     }
 
-    expect(component.allReviewsLoaded).toBe(true);
-  });
+    expect(component.allReviewsLoaded).toBeTrue();
+  }));
 
-  it("should emmit 'reviewCountChanged' when fetching data for the first time", () => {
+  it("should emit 'reviewCountChanged' when fetching data for the first time", fakeAsync(() => {
     let reviewCount: number | undefined;
     component.reviewCountChanged?.subscribe((currentReviewCount) => {
       reviewCount = currentReviewCount;
@@ -136,6 +145,8 @@ describe("RestaurantReviewsComponent", () => {
     fixture.componentRef.setInput("restaurantId", newRestaurantId);
     fixture.detectChanges();
 
+    tick(AppConfig.MIN_LOADING_TIME_MS);
+
     expect(reviewCount).toBe(testReviewsTotalItems);
-  });
+  }));
 });

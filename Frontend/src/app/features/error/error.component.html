@@ -13,7 +13,16 @@
       <p>There was a bad request. Please verify your input.</p>
     }
     @case (ErrorCode.Unauthorized) {
-      <p>You are unauthorized to perform this action.</p>
+      <p>
+        You are not allowed to perform this action<br />
+        or access this resource.
+      </p>
+    }
+    @case (ErrorCode.Forbidden) {
+      <p>
+        You are not allowed to perform this action<br />
+        or access this resource.
+      </p>
     }
     @case (ErrorCode.NotFound) {
       <p>The resource you are looking for could not be found.</p>

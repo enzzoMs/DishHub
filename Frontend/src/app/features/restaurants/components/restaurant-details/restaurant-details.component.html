@@ -15,6 +15,7 @@
       <dhub-tab-panel>
         <dhub-tab-item header="Reviews [{{ reviewCount$ | async }}]">
           <dhub-restaurant-reviews
+            [restaurantId]="restaurantModel?.id"
             (reviewCountChanged)="updateReviewCount($event)"
           />
         </dhub-tab-item>

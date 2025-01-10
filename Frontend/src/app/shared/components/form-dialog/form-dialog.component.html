@@ -1,0 +1,48 @@
+<dialog #dialog>
+  <div class="dialog-header">
+    <h1>{{ header() }}</h1>
+    <button
+      class="borderless-button close-dialog-button"
+      (click)="closeDialog()"
+    >
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+  <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+    @for (field of formConfig().fields; track $index) {
+      <label for="{{ field.name }}-field">{{ field.label }}</label>
+      <input
+        id="{{ field.name }}-field"
+        [name]="field.name"
+        [type]="field.type"
+        [placeholder]="field.placeholder"
+        [formControlName]="field.name"
+      />
+      @let fieldControl = formGroup.controls[field.name];
+
+      @if (
+        fieldControl.invalid && (fieldControl.dirty || !fieldControl.untouched)
+      ) {
+        @for (validation of field.validators; track $index) {
+          @if (
+            validation.errorMessage && fieldControl.hasError(validation.name)
+          ) {
+            <p class="form-error">* {{ validation.errorMessage }}</p>
+          }
+        }
+      }
+    }
+
+    <button
+      class="primary-button"
+      type="submit"
+      [disabled]="formGroup.invalid || loading()"
+    >
+      {{
+        loading()
+          ? "Loading . . ."
+          : (formConfig().submitButtonText ?? "Submit")
+      }}
+    </button>
+  </form>
+</dialog>

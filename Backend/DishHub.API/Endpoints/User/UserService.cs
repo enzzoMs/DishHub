@@ -35,7 +35,6 @@ public class UserService(AppDbContext appDbContext, UserManager<IdentityUser> us
     {
         var reviews = await appDbContext.Reviews
             .Where(review => review.User.Id == userId)
-            .Include(review => review.User)
             .ToListAsync();
         
         return reviews

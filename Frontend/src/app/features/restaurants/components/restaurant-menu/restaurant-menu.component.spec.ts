@@ -1,9 +1,18 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from "@angular/core/testing";
 
 import { RestaurantMenuComponent } from "./restaurant-menu.component";
-import { RestaurantsService } from "../../services/restaurants.service";
 import { of } from "rxjs";
-import { MenuItem, MenuItemCategory } from "../../models/menu-item.model";
+import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
+import {
+  MenuItem,
+  MenuItemCategory,
+} from "../../../../shared/models/menu-item.model";
+import { AppConfig } from "../../../../../config/config-constants";
 
 describe("RestaurantMenuComponent", () => {
   let component: RestaurantMenuComponent;
@@ -33,7 +42,7 @@ describe("RestaurantMenuComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should fetch all menu items when restaurant id changes", () => {
+  it("should fetch all menu items when restaurant id changes", fakeAsync(() => {
     const testMenu: MenuItem[] = [
       {
         name: "Item1",
@@ -59,15 +68,18 @@ describe("RestaurantMenuComponent", () => {
     const newRestaurantId = 10;
 
     fixture.componentRef.setInput("restaurantId", newRestaurantId);
+
     fixture.detectChanges();
+
+    tick(AppConfig.MIN_LOADING_TIME_MS);
 
     expect(restaurantServiceMock.getRestaurantMenu).toHaveBeenCalledWith(
       newRestaurantId,
     );
     expect(menuItems).toEqual(testMenu);
-  });
+  }));
 
-  it("should filter menu items by selected category when category changes", () => {
+  it("should filter menu items by selected category when category changes", fakeAsync(() => {
     const testMenu: MenuItem[] = [
       {
         name: "Item1",
@@ -97,8 +109,10 @@ describe("RestaurantMenuComponent", () => {
     component.selectedCategory = testSelectedCategory;
     fixture.detectChanges();
 
+    tick(AppConfig.MIN_LOADING_TIME_MS);
+
     expect(menuItems).toEqual(
       testMenu.filter((item) => item.category === testSelectedCategory),
     );
-  });
+  }));
 });

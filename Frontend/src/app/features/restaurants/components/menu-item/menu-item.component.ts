@@ -1,6 +1,6 @@
 import { Component, input } from "@angular/core";
-import { MenuItem } from "../../models/menu-item.model";
-import {CurrencyPipe} from "@angular/common";
+import { CurrencyPipe } from "@angular/common";
+import { MenuItem } from "../../../../shared/models/menu-item.model";
 
 @Component({
   selector: "dhub-menu-item",

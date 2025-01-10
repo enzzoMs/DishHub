@@ -1,7 +1,10 @@
 import { TestBed } from "@angular/core/testing";
 
 import { MenuItemComponent } from "./menu-item.component";
-import { MenuItem, MenuItemCategory } from "../../models/menu-item.model";
+import {
+  MenuItem,
+  MenuItemCategory,
+} from "../../../../shared/models/menu-item.model";
 
 describe("MenuItemComponent", () => {
   it("should be created", async () => {

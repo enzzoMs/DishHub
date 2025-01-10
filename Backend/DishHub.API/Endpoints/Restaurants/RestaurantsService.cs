@@ -19,8 +19,6 @@ public class RestaurantsService(AppDbContext appDbContext)
         int id, bool includeReviews = false, bool includeMenu = false)
     {
         var restaurantsQuery = appDbContext.Restaurants.AsNoTracking();
-
-        restaurantsQuery = restaurantsQuery.Include(restaurant => restaurant.User);
         
         if (includeReviews)
         {

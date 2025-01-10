@@ -1,0 +1,30 @@
+<dialog #messageDialog>
+  @if (header()) {
+    <div class="dialog-header">
+      <h1>{{ header() }}</h1>
+      <button
+        class="borderless-button close-dialog-button"
+        (click)="closeDialog()"
+      >
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+  }
+  <p [innerHTML]="message()"></p>
+  <div [class.dialog-footer]="confirmMessage() || cancelMessage() || loading()">
+    @if (loading()) {
+      <p class="loading-dots"></p>
+    } @else {
+      @if (confirmMessage()) {
+        <button class="secondary-button" (click)="onCancel()">
+          {{ cancelMessage() }}
+        </button>
+      }
+      @if (cancelMessage()) {
+        <button class="primary-button" (click)="onConfirm()">
+          {{ confirmMessage() }}
+        </button>
+      }
+    }
+  </div>
+</dialog>

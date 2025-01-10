@@ -7,11 +7,12 @@
   --on-primary-color: #ffffff;
   --dark-primary-color: #8a2911;
   --secondary-color: #6d6d6d;
-  --secondary-color__alpha-10: #F1F1F1;
+  --secondary-color__alpha-10: rgba(109, 109, 109, 0.1);
   --surface-color: #f7eae6;
   --primary-text-color: #000000;
   --secondary-text-color: #6d6d6d;
-  --secondary-text-color__alpha-70: #9a9a9a;
+  --secondary-text-color__alpha-80: rgba(109, 109, 109, 0.8);
+  --selected-background-color: rgba(0, 0, 0, 0.10);
   --error-color: #b00020;
   --divider-color: #ededed;
   --background-item: #bdbdbd;
@@ -75,6 +76,11 @@ h4 {
   font-size: var(--text-md);
 }
 
+main > dhub-error,
+main > dhub-profile {
+  flex: 1;
+}
+
 /* Forms ==================== */
 
 input {
@@ -88,7 +94,7 @@ input {
 }
 
 input::placeholder {
-  color: var(--secondary-text-color__alpha-70);
+  color: var(--secondary-text-color__alpha-80);
 }
 
 input:focus {
@@ -216,6 +222,8 @@ input:focus {
   background-color: transparent;
   border: none;
   padding: var(--space-sm) 0;
+  display: flex;
+  align-items: center;
 }
 
 .borderless-button:enabled:hover {
@@ -261,6 +269,8 @@ input:focus {
 
 .loading-dots {
   font-size: var(--text-xxl);
+  margin: 0;
+  text-align: center;
   line-height: 1;
   display: block;
 }
@@ -348,6 +358,25 @@ dialog .dialog-header h1 {
 dialog .close-dialog-button {
   font-size: var(--text-lg);
   padding: 0;
+}
+
+dialog > p {
+  text-align: center;
+  margin: 0;
+}
+
+dialog .dialog-footer {
+  font-size: var(--text-sm);
+  display: flex;
+  justify-content: space-between;
+  column-gap: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: var(--divider-height) solid var(--divider-color);
+  margin-top: var(--space-md);
+}
+
+dialog .dialog-footer .loading-dots {
+  flex: 1;
 }
 
 /* Misc =========================== */

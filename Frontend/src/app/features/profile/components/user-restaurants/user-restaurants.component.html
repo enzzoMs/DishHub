@@ -1,0 +1,34 @@
+<div class="restaurants-wrapper">
+  <button
+    class="borderless-button add-item-button"
+    (click)="showCreateRestaurantDialog()"
+  >
+    <span class="material-icons">add</span>Add Restaurant
+  </button>
+
+  @if (userRestaurants$ | async; as restaurants) {
+    @for (restaurant of restaurants; track $index) {
+      <dhub-user-restaurant-item
+        [restaurantModel]="restaurant"
+        (restaurantUpdated)="restaurantUpdated($event)"
+        (restaurantDeleted)="restaurantDeleted($event)"
+      />
+    }
+  } @else {
+    @for (_ of numOfLoadingSkeletons | enumerate; track $index) {
+      <div class="restaurant-item-skeleton">
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    }
+  }
+</div>
+
+<dhub-form-dialog
+  header="Create Restaurant"
+  [loading]="(loadingRestaurants$ | async) ?? false"
+  [formConfig]="RestaurantFormConfig"
+  (formSubmitted)="createRestaurant($event)"
+></dhub-form-dialog>
+
+<dhub-message-dialog header="Success!" message="The restaurant was created." />

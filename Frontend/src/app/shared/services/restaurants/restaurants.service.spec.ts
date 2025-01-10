@@ -6,16 +6,16 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from "@angular/common/http/testing";
-import { Restaurant } from "../models/restaurant.model";
 import { apiEndpoints } from "../../../../api/api-endpoints";
 import { firstValueFrom } from "rxjs";
-import { RestaurantFilters } from "../models/restaurant-filters.model";
-import { Review } from "../models/review.model";
-import { MenuItem, MenuItemCategory } from "../models/menu-item.model";
 import {
   API_PAGINATION_HEADER,
   PaginationMetadata,
 } from "../../../../api/pagination-metadata.model";
+import { Restaurant } from "../../models/restaurant.model";
+import { Review } from "../../models/review.model";
+import { MenuItem, MenuItemCategory } from "../../models/menu-item.model";
+import { RestaurantFilters } from "../../../features/restaurants/models/restaurant-filters.model";
 
 describe("RestaurantsService", () => {
   let service: RestaurantsService;
@@ -116,7 +116,7 @@ describe("RestaurantsService", () => {
         userName: "",
         comment: "",
         rating: 5,
-        date: new Date(),
+        creationDate: new Date(),
       },
     ];
 
@@ -183,5 +183,75 @@ describe("RestaurantsService", () => {
     request.flush(testMenuItems);
 
     expect(await menuPromise).toEqual(testMenuItems);
+  });
+
+  it("should create restaurant", async () => {
+    const name = "Restaurant";
+    const description = "A restaurant";
+    const location = "Pasta Lane";
+
+    const testRestaurant: Restaurant = {
+      id: 0,
+      name,
+      description,
+      location,
+      score: 0,
+    };
+
+    const restaurantPromise = firstValueFrom(
+      service.createRestaurant(name, description, location),
+    );
+
+    const request = httpTesting.expectOne({
+      method: "POST",
+      url: apiEndpoints.createRestaurant(),
+    });
+
+    request.flush(testRestaurant);
+
+    expect(await restaurantPromise).toEqual(testRestaurant);
+  });
+
+  it("should update restaurant", async () => {
+    const id = 0;
+    const name = "Restaurant";
+    const description = "A restaurant";
+    const location = "Pasta Lane";
+
+    const testRestaurant: Restaurant = {
+      id: 0,
+      name,
+      description,
+      location,
+      score: 0,
+    };
+
+    const restaurantPromise = firstValueFrom(
+      service.updateRestaurant(id, name, description, location),
+    );
+
+    const request = httpTesting.expectOne({
+      method: "PATCH",
+      url: apiEndpoints.updateRestaurant(id),
+    });
+
+    request.flush(testRestaurant);
+
+    expect(await restaurantPromise).toEqual(testRestaurant);
+  });
+
+  it("should delete restaurant", async () => {
+    const id = 0;
+
+    const deletePromise = firstValueFrom(service.deleteRestaurant(id));
+
+    const request = httpTesting.expectOne({
+      method: "DELETE",
+      url: apiEndpoints.deleteRestaurant(id),
+    });
+
+    request.flush(null);
+
+    expect(await deletePromise).toBeNull();
   });
 });

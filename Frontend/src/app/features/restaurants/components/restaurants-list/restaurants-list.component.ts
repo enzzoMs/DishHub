@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { RestaurantsService } from "../../services/restaurants.service";
 import {
   BehaviorSubject,
   combineLatestWith,
@@ -8,17 +7,19 @@ import {
   switchMap,
   timer,
 } from "rxjs";
-import {
-  parseRestaurantScore,
-  Restaurant,
-} from "../../models/restaurant.model";
+
 import { AsyncPipe } from "@angular/common";
 import { RestaurantItemComponent } from "../restaurant-item/restaurant-item.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { ActivatedRoute, Router } from "@angular/router";
 import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe";
 import { RestaurantFilters } from "../../models/restaurant-filters.model";
-import {AppConfig} from "../../../../../config/config-constants";
+import { AppConfig } from "../../../../../config/config-constants";
+import {
+  parseRestaurantScore,
+  Restaurant,
+} from "../../../../shared/models/restaurant.model";
+import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
 
 @Component({
   selector: "dhub-restaurants-list",
@@ -63,9 +64,10 @@ export class RestaurantsListComponent implements OnInit {
           this.currentPage,
           this.pageSize,
           this.restaurantsFilters,
+        ).pipe(
+          combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
         ),
       ),
-      combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
       map((updateResult) => {
         const paginatedRestaurants = updateResult[0];
 
@@ -80,8 +82,10 @@ export class RestaurantsListComponent implements OnInit {
     this.updatePaginationRange();
 
     activatedRoute.queryParamMap.subscribe((paramMap) => {
-      const pageNumberParam = Number(paramMap.get("page"));
-      this.currentPage = isNaN(pageNumberParam) ? 1 : pageNumberParam;
+      const pageNumberParam = paramMap.get("page");
+      const pageNumber = Number(pageNumberParam);
+
+      this.currentPage = pageNumberParam === null || isNaN(pageNumber) ? 1 : pageNumber;
 
       this.restaurantsFilters.name = paramMap.get("name");
       this.restaurantsFilters.location = paramMap.get("location");

@@ -1,5 +1,5 @@
 import { Component, input } from "@angular/core";
-import { Restaurant } from "../../models/restaurant.model";
+import { Restaurant } from "../../../../shared/models/restaurant.model";
 
 @Component({
   selector: "dhub-restaurant-profile",

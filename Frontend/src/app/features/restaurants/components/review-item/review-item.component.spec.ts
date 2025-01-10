@@ -1,7 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 
 import { ReviewItemComponent } from "./review-item.component";
-import { Review } from "../../models/review.model";
+import { Review } from "../../../../shared/models/review.model";
 
 describe("ReviewItemComponent", () => {
   it("should be created", async () => {
@@ -13,7 +13,7 @@ describe("ReviewItemComponent", () => {
       userName: "",
       comment: "",
       rating: 0,
-      date: new Date(),
+      creationDate: new Date(),
     };
 
     const fixture = TestBed.createComponent(ReviewItemComponent);

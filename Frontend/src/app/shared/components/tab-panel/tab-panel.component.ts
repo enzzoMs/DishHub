@@ -2,7 +2,7 @@ import {
   Component,
   computed,
   contentChildren,
-  ElementRef,
+  ElementRef, input,
   signal,
   viewChild,
 } from "@angular/core";
@@ -17,6 +17,8 @@ import { NgTemplateOutlet } from "@angular/common";
   styleUrl: "./tab-panel.component.css",
 })
 export class TabPanelComponent {
+  panelStyle = input<"sidePanel" | "horizontalPanel">("horizontalPanel");
+
   tabItems = contentChildren(TabItemComponent);
   tabHeaders = computed(() => {
     return this.tabItems().map((tab) => tab.header());

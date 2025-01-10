@@ -3,8 +3,6 @@ import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { RoutePath } from "../../../app.routes";
 import { SignUpButtonComponent } from "../../../features/auth/components/sign-up-button/sign-up-button.component";
 import { LoginButtonComponent } from "../../../features/auth/components/login-button/login-button.component";
-import { AuthService } from "../../../features/auth/services/auth.service";
-import { User } from "../../../features/auth/models/user.model";
 import {
   BehaviorSubject,
   firstValueFrom,
@@ -17,6 +15,8 @@ import {
 } from "rxjs";
 import { AsyncPipe } from "@angular/common";
 import { AppConfig } from "../../../../config/config-constants";
+import { User } from "../../models/user.model";
+import { AuthService } from "../../services/auth/auth.service";
 
 @Component({
   selector: "dhub-header",
@@ -32,12 +32,12 @@ import { AppConfig } from "../../../../config/config-constants";
   styleUrl: "./header.component.css",
 })
 export class HeaderComponent {
-  readonly appRoutes = RoutePath;
-
   loggedInUser$: Observable<User | null | undefined>;
 
   private readonly isLoggingOutSubject$ = new BehaviorSubject(false);
   isLoggingOut$ = this.isLoggingOutSubject$.asObservable();
+
+  readonly appRoutes = RoutePath;
 
   constructor(
     private readonly authService: AuthService,

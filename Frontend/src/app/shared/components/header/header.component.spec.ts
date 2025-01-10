@@ -11,10 +11,10 @@ import { provideRouter, Router } from "@angular/router";
 import { RoutePath, appRoutes } from "../../../app.routes";
 import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
-import { AuthService } from "../../../features/auth/services/auth.service";
-import { User } from "../../../features/auth/models/user.model";
 import { of, Subject } from "rxjs";
 import { AppConfig } from "../../../../config/config-constants";
+import { AuthService } from "../../services/auth/auth.service";
+import { User } from "../../models/user.model";
 
 describe("HeaderComponent", () => {
   let component: HeaderComponent;
@@ -113,7 +113,7 @@ describe("HeaderComponent", () => {
   it("should update loading status when logging out", async () => {
     const loggingOutStatus: boolean[] = [];
     component.isLoggingOut$.subscribe((isLoggingOut) =>
-        loggingOutStatus.push(isLoggingOut)
+      loggingOutStatus.push(isLoggingOut),
     );
 
     await component.logoutUser();

@@ -4,7 +4,6 @@ import {
   HttpContext,
   HttpErrorResponse,
 } from "@angular/common/http";
-import { User } from "../models/user.model";
 import {
   BehaviorSubject,
   catchError,
@@ -14,8 +13,9 @@ import {
   throwError,
 } from "rxjs";
 import { apiEndpoints } from "../../../../api/api-endpoints";
-import { IGNORE_ERROR_STATUS_TOKEN } from "../../../shared/interceptors/error-interceptor";
-import { ErrorCode } from "../../error/models/error-codes.model";
+import { IGNORE_ERROR_STATUS_TOKEN } from "../../interceptors/error-interceptor";
+import { ErrorCode } from "../../../features/error/models/error-codes.model";
+import { User } from "../../models/user.model";
 
 @Injectable({
   providedIn: "root",
@@ -48,6 +48,10 @@ export class AuthService {
     currentUserRequest.subscribe((currentUser) =>
       this.loggedInUserSubject$.next(currentUser),
     );
+  }
+
+  getCurrentLoggedInUser(): User | null | undefined {
+    return this.loggedInUserSubject$.getValue();
   }
 
   /**

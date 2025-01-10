@@ -1,9 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { RestaurantProfileComponent } from "../restaurant-profile/restaurant-profile.component";
-import { BehaviorSubject, Observable } from "rxjs";
-import { Restaurant } from "../../models/restaurant.model";
-import { RestaurantsService } from "../../services/restaurants.service";
+import {
+  BehaviorSubject,
+  combineLatestWith,
+  map,
+  Observable,
+  timer,
+} from "rxjs";
 import { AsyncPipe } from "@angular/common";
 import { TabItemComponent } from "../../../../shared/components/tab-item/tab-item.component";
 import { TabPanelComponent } from "../../../../shared/components/tab-panel/tab-panel.component";
@@ -11,6 +15,9 @@ import { RestaurantReviewsComponent } from "../restaurant-reviews/restaurant-rev
 import { RestaurantMenuComponent } from "../restaurant-menu/restaurant-menu.component";
 import { RoutePath } from "../../../../app.routes";
 import { ErrorCode } from "../../../error/models/error-codes.model";
+import { Restaurant } from "../../../../shared/models/restaurant.model";
+import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
+import { AppConfig } from "../../../../../config/config-constants";
 
 @Component({
   selector: "dhub-restaurant-details",
@@ -48,8 +55,12 @@ export class RestaurantDetailsComponent implements OnInit {
       return;
     }
 
-    this.restaurantModel$ =
-      this.restaurantService.getRestaurantById(restaurantId);
+    this.restaurantModel$ = this.restaurantService
+      .getRestaurantById(restaurantId)
+      .pipe(
+        combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
+        map((loadingResult) => loadingResult[0]),
+      );
   }
 
   updateReviewCount(newReviewCount: number) {

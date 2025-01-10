@@ -8,12 +8,12 @@ import {
 import { LoginButtonComponent } from "./login-button.component";
 import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
-import { AuthService } from "../../services/auth.service";
 import { of } from "rxjs";
-import { AuthForm } from "../auth-form/auth-form.component";
 import { AppConfig } from "../../../../../config/config-constants";
-import {provideRouter, Router} from "@angular/router";
-import {appRoutes, RoutePath} from "../../../../app.routes";
+import { provideRouter, Router } from "@angular/router";
+import { appRoutes, RoutePath } from "../../../../app.routes";
+import { AuthService } from "../../../../shared/services/auth/auth.service";
+import {AuthForm} from "../auth-form-config";
 
 describe("LoginButtonComponent", () => {
   let component: LoginButtonComponent;

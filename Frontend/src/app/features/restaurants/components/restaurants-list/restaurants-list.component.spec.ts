@@ -6,11 +6,11 @@ import {
 } from "@angular/core/testing";
 
 import { RestaurantsListComponent } from "./restaurants-list.component";
-import { Restaurant } from "../../models/restaurant.model";
 import { of, Subject } from "rxjs";
-import { RestaurantsService } from "../../services/restaurants.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import {AppConfig} from "../../../../../config/config-constants";
+import { AppConfig } from "../../../../../config/config-constants";
+import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
+import { Restaurant } from "../../../../shared/models/restaurant.model";
 
 describe("RestaurantsListComponent", () => {
   let component: RestaurantsListComponent;

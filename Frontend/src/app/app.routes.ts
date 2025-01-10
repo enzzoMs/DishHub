@@ -4,13 +4,16 @@ import { RestaurantsComponent } from "./features/restaurants/restaurants.compone
 import { AboutComponent } from "./features/about/about.component";
 import { RestaurantDetailsComponent } from "./features/restaurants/components/restaurant-details/restaurant-details.component";
 import { ErrorComponent } from "./features/error/error.component";
-import {ErrorCode} from "./features/error/models/error-codes.model";
+import { ErrorCode } from "./features/error/models/error-codes.model";
+import { ProfileComponent } from "./features/profile/profile.component";
+import {authGuard} from "./shared/guards/auth.guard";
 
 export enum RoutePath {
   Home = "home",
   Restaurants = "restaurants",
   RestaurantDetails = "restaurants/:id",
   About = "about",
+  Profile = "profile",
   Error = "error",
   ErrorDetails = "error/:errorCode",
   ErrorNotFound = `${RoutePath.Error}/${ErrorCode.NotFound}`,
@@ -35,6 +38,12 @@ export const appRoutes: Routes = [
     path: RoutePath.About,
     component: AboutComponent,
     title: "About - DishHub",
+  },
+  {
+    path: RoutePath.Profile,
+    component: ProfileComponent,
+    title: "Profile - DishHub",
+    canActivate: [authGuard]
   },
   {
     path: RoutePath.ErrorDetails,

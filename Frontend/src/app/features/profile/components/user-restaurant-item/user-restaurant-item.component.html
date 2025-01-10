@@ -1,0 +1,45 @@
+<article>
+  <h1 class="restaurant-name">
+    <span class="material-icons">storefront</span
+    ><a [routerLink]="['/' + RoutePaths.Restaurants, restaurantModel().id]">{{
+      restaurantModel().name
+    }}</a>
+  </h1>
+  <p class="restaurant-score">
+    <span class="material-icons">star</span>{{ restaurantModel().score }}
+  </p>
+  <button class="borderless-button" (click)="showDeleteRestaurantDialog()">
+    <span class="material-icons">delete</span>
+  </button>
+  <button class="borderless-button" (click)="showUpdateRestaurantDialog()">
+    <span class="material-icons">edit</span>
+  </button>
+</article>
+
+<dhub-form-dialog
+  header="Update Restaurant"
+  [loading]="(loadingUpdate$ | async) ?? false"
+  [formConfig]="RestaurantFormConfig"
+  (formSubmitted)="updateRestaurant($event)"
+></dhub-form-dialog>
+
+<dhub-message-dialog
+  #updateSuccessDialog
+  header="Success!"
+  message="The restaurant was updated."
+/>
+
+<dhub-message-dialog
+  #deleteRestaurantDialog
+  [message]="'Are you sure you want to\ndelete this restaurant?'"
+  confirmMessage="Delete"
+  cancelMessage="Cancel"
+  [loading]="(loadingDelete$ | async) ?? false"
+  (confirmClicked)="deleteRestaurant()"
+/>
+
+<dhub-message-dialog
+  #deleteSuccessDialog
+  header="Success!"
+  message="The restaurant was deleted."
+/>

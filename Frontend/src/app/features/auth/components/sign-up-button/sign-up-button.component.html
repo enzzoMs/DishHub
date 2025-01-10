@@ -4,35 +4,18 @@
 
 @let registeredUser = registeredUser$ | async;
 
-<dialog #signUpDialog>
-  <div class="dialog-header">
-    <h1>Sign Up</h1>
-    <button
-      class="borderless-button close-dialog-button"
-      (click)="closeSignUpDialog()"
-    >
-      <span class="material-icons">close</span>
-    </button>
-  </div>
-  <dhub-auth-form
-    [loading]="(loadingUser$ | async) ?? false"
-    (formSubmitted)="signUpUser($event)"
-  />
-</dialog>
+<dhub-form-dialog
+  header="Sign Up"
+  [loading]="(loadingUser$ | async) ?? false"
+  [formConfig]="AuthFormConfig"
+  (formSubmitted)="signUpUser($event)"
+></dhub-form-dialog>
 
-<dialog #signUpResultDialog>
-  <div class="dialog-header">
-    <h1>Sign Up</h1>
-    <button
-      class="borderless-button close-dialog-button"
-      (click)="closeSignUpResultDialog()"
-    >
-      <span class="material-icons">close</span>
-    </button>
-  </div>
-  @if (signUpResult === "success") {
-    <p>Success, {{ registeredUser?.userName }}! You are signed up!</p>
-  } @else if (signUpResult === "userAlreadyExists") {
-    <p>Oops! This username is already taken!</p>
-  }
-</dialog>
+<dhub-message-dialog
+  header="Sign Up"
+  message="{{
+    signUpResult === 'success'
+      ? 'Success, ' + registeredUser?.userName + '! You are signed up!'
+      : 'Oops! This username is already taken!'
+  }}"
+/>

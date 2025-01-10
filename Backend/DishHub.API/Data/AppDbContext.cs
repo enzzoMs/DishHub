@@ -15,13 +15,17 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<MenuItemEntity>()
-            .Property(menu => menu.Category)
-            .HasConversion<string>();
-
+        modelBuilder.Entity<RestaurantEntity>()
+            .Navigation(restaurant => restaurant.User)
+            .AutoInclude();
+            
         modelBuilder.Entity<RestaurantEntity>()
             .HasOne(restaurant => restaurant.User)
             .WithMany();
+
+        modelBuilder.Entity<ReviewEntity>()
+            .Navigation(review => review.User)
+            .AutoInclude();
         
         modelBuilder.Entity<ReviewEntity>()
             .HasOne(review => review.User)
@@ -31,6 +35,14 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             .HasOne(item => item.User)
             .WithMany();
         
+        modelBuilder.Entity<MenuItemEntity>()
+            .Navigation(item => item.User)
+            .AutoInclude();
+        
+        modelBuilder.Entity<MenuItemEntity>()
+            .Property(menu => menu.Category)
+            .HasConversion<string>();
+                
         base.OnModelCreating(modelBuilder);
     }
 }

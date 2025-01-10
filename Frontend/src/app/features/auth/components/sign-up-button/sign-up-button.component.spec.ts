@@ -9,10 +9,10 @@ import { SignUpButtonComponent } from "./sign-up-button.component";
 import { HttpErrorResponse, provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { AppConfig } from "../../../../../config/config-constants";
-import { AuthService } from "../../services/auth.service";
-import { User } from "../../models/user.model";
 import { of, throwError } from "rxjs";
 import { ErrorCode } from "../../../error/models/error-codes.model";
+import {AuthService} from "../../../../shared/services/auth/auth.service";
+import {User} from "../../../../shared/models/user.model";
 
 describe("AuthComponent", () => {
   let component: SignUpButtonComponent;

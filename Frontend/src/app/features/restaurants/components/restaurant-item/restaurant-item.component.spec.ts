@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { RestaurantItemComponent } from "./restaurant-item.component";
-import { Restaurant } from "../../models/restaurant.model";
 import { By } from "@angular/platform-browser";
 import { RoutePath } from "../../../../app.routes";
 import { provideRouter } from "@angular/router";
+import { Restaurant } from "../../../../shared/models/restaurant.model";
 
 describe("RestaurantItemComponent", () => {
   let component: RestaurantItemComponent;

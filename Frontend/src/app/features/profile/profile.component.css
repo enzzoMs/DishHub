@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-header {
+  display: flex;
+  padding-bottom: var(--space-md);
+  border-bottom: var(--divider-height) solid var(--divider-color);
+}
+
+.profile-header h1 {
+  flex: 1;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
+.account-buttons {
+  font-size: var(--text-sm);
+  display: flex;
+  column-gap: var(--space-lg);
+}
+
+dhub-tab-panel {
+  flex: 1;
+  margin-top: var(--space-lg);
+}

@@ -6,9 +6,9 @@ import {
   provideHttpClientTesting,
 } from "@angular/common/http/testing";
 import { HttpErrorResponse, provideHttpClient } from "@angular/common/http";
-import { User } from "../models/user.model";
 import { firstValueFrom } from "rxjs";
 import { apiEndpoints } from "../../../../api/api-endpoints";
+import { User } from "../../models/user.model";
 
 describe("AuthService", () => {
   let service: AuthService;

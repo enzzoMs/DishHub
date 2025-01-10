@@ -14,7 +14,6 @@ public class ReviewsService(AppDbContext appDbContext)
     {
         var restaurantEntity = await appDbContext.Restaurants
             .Include(restaurant => restaurant.Reviews)
-            .ThenInclude(review => review.User)
             .FirstOrDefaultAsync(restaurant => restaurant.Id == restaurantId);
 
         return restaurantEntity?.Reviews.Select(review => review.ToModel()).ToList();
@@ -23,7 +22,6 @@ public class ReviewsService(AppDbContext appDbContext)
     public async Task<ReviewEntity?> GetRestaurantReview(int reviewId)
     {
         var reviewEntity = await appDbContext.Reviews
-            .Include(review => review.User)
             .FirstOrDefaultAsync(review => review.Id == reviewId);
         return reviewEntity;
     }

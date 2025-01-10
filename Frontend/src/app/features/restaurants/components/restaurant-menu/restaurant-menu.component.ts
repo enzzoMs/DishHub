@@ -1,12 +1,25 @@
 import { Component, effect, input } from "@angular/core";
-import { BehaviorSubject, map, Observable, of, switchMap, tap } from "rxjs";
-import { MenuItem, MenuItemCategory } from "../../models/menu-item.model";
-import { RestaurantsService } from "../../services/restaurants.service";
+import {
+  combineLatestWith,
+  map,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+  tap,
+  timer,
+} from "rxjs";
 import { MenuItemComponent } from "../menu-item/menu-item.component";
 import { AsyncPipe } from "@angular/common";
 import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe";
 import { NgSelectComponent } from "@ng-select/ng-select";
 import { FormsModule } from "@angular/forms";
+import {
+  MenuItem,
+  MenuItemCategory,
+} from "../../../../shared/models/menu-item.model";
+import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
+import { AppConfig } from "../../../../../config/config-constants";
 
 @Component({
   selector: "dhub-restaurant-menu",
@@ -35,7 +48,7 @@ export class RestaurantMenuComponent {
   private _selectedCategory: MenuItemCategory = this.menuCategories[0];
 
   readonly menuItems$: Observable<MenuItem[]>;
-  private readonly menuItemsUpdater$ = new BehaviorSubject<void>(undefined);
+  private readonly menuItemsUpdater$ = new Subject<void>();
   private allMenuItems: MenuItem[] | undefined;
 
   readonly numOfLoadingSkeletons = 3;
@@ -46,7 +59,10 @@ export class RestaurantMenuComponent {
         if (this.allMenuItems) {
           return of(this.allMenuItems);
         }
-        return restaurantsService.getRestaurantMenu(this.restaurantId()!);
+        return restaurantsService.getRestaurantMenu(this.restaurantId()!).pipe(
+          combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
+          map((loadingResult) => loadingResult[0]),
+        );
       }),
       tap((menuItems) => {
         this.allMenuItems = menuItems;

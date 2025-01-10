@@ -1,8 +1,6 @@
-import { Component, ElementRef, OnDestroy, viewChild } from "@angular/core";
+import { Component, OnDestroy, viewChild } from "@angular/core";
 import { AppConfig } from "../../../../../config/config-constants";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AuthService } from "../../services/auth.service";
-import { AuthForm, AuthFormComponent } from "../auth-form/auth-form.component";
 import {
   BehaviorSubject,
   catchError,
@@ -18,22 +16,27 @@ import { ErrorCode } from "../../../error/models/error-codes.model";
 import { AsyncPipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { RoutePath } from "../../../../app.routes";
+import { AuthService } from "../../../../shared/services/auth/auth.service";
+import { FormDialogComponent } from "../../../../shared/components/form-dialog/form-dialog.component";
+import { AuthForm, AuthFormConfig } from "../auth-form-config";
+import { MessageDialogComponent } from "../../../../shared/components/message-dialog/message-dialog.component";
 
 @Component({
   selector: "dhub-login-button",
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, AuthFormComponent, AsyncPipe],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    AsyncPipe,
+    FormDialogComponent,
+    MessageDialogComponent,
+  ],
   templateUrl: "./login-button.component.html",
-  styleUrl: "./login-button.component.css",
 })
 export class LoginButtonComponent implements OnDestroy {
-  loginDialog =
-    viewChild.required<ElementRef<HTMLDialogElement>>("loginDialog");
+  loginDialog = viewChild.required(FormDialogComponent);
 
-  loginErrorDialog =
-    viewChild.required<ElementRef<HTMLDialogElement>>("loginErrorDialog");
-
-  authForm = viewChild.required(AuthFormComponent);
+  loginErrorDialog = viewChild.required(MessageDialogComponent);
 
   private loginRequestSubscription: Subscription | undefined;
 
@@ -41,6 +44,7 @@ export class LoginButtonComponent implements OnDestroy {
   readonly loadingUser$ = this.loadingUserSubject$.asObservable();
 
   readonly AppConfig = AppConfig;
+  readonly AuthFormConfig = AuthFormConfig;
 
   constructor(
     private readonly router: Router,
@@ -52,22 +56,7 @@ export class LoginButtonComponent implements OnDestroy {
   }
 
   openLoginDialog() {
-    if (!this.loadingUserSubject$.value) {
-      this.authForm().resetForm();
-    }
-    this.loginDialog().nativeElement.showModal();
-  }
-
-  closeLoginDialog() {
-    this.loginDialog().nativeElement.close();
-
-    if (!this.loadingUserSubject$.value) {
-      this.authForm().resetForm();
-    }
-  }
-
-  closeLoginErrorDialog() {
-    this.loginErrorDialog().nativeElement.close();
+    this.loginDialog().showModal();
   }
 
   loginUser(authForm: AuthForm) {
@@ -82,14 +71,14 @@ export class LoginButtonComponent implements OnDestroy {
             error instanceof HttpErrorResponse &&
             error.status === ErrorCode.Unauthorized
           ) {
-            this.loginErrorDialog().nativeElement.showModal();
+            this.loginErrorDialog().showModal();
             return EMPTY;
           }
           return throwError(() => error);
         }),
         finalize(() => {
           this.loadingUserSubject$.next(false);
-          this.loginDialog().nativeElement.close();
+          this.loginDialog().closeDialog();
         }),
       );
 

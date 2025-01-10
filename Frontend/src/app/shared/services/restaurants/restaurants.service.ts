@@ -1,16 +1,16 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { Restaurant } from "../models/restaurant.model";
-import { PaginatedItems } from "../../../shared/models/paginated-items";
-import { RestaurantFilters } from "../models/restaurant-filters.model";
-import { Review } from "../models/review.model";
-import { MenuItem } from "../models/menu-item.model";
+import { PaginatedItems } from "../../models/paginated-items";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { apiEndpoints } from "../../../../api/api-endpoints";
 import {
   API_PAGINATION_HEADER,
   PaginationMetadata,
 } from "../../../../api/pagination-metadata.model";
+import { Restaurant } from "../../models/restaurant.model";
+import { Review } from "../../models/review.model";
+import { MenuItem } from "../../models/menu-item.model";
+import { RestaurantFilters } from "../../../features/restaurants/models/restaurant-filters.model";
 
 @Injectable({
   providedIn: "root",
@@ -56,11 +56,47 @@ export class RestaurantsService {
       apiEndpoints.getRestaurantReviews(id),
       page,
       pageSize,
+    ).pipe(
+      map((paginatedReviews) => {
+        paginatedReviews.data.forEach(
+          (review) => (review.creationDate = new Date(review.creationDate)),
+        );
+        return paginatedReviews;
+      }),
     );
   }
 
   getRestaurantMenu(id: number): Observable<MenuItem[]> {
     return this.http.get<MenuItem[]>(apiEndpoints.getRestaurantMenu(id));
+  }
+
+  createRestaurant(
+    name: string,
+    description: string,
+    location: string,
+  ): Observable<Restaurant> {
+    return this.http.post<Restaurant>(apiEndpoints.createRestaurant(), {
+      name,
+      description,
+      location,
+    });
+  }
+
+  updateRestaurant(
+    id: number,
+    name: string,
+    description: string,
+    location: string,
+  ): Observable<Restaurant> {
+    return this.http.patch<Restaurant>(apiEndpoints.updateRestaurant(id), {
+      name,
+      description,
+      location,
+    });
+  }
+
+  deleteRestaurant(id: number): Observable<null> {
+    return this.http.delete<null>(apiEndpoints.deleteRestaurant(id));
   }
 
   private getPaginatedItems<T>(
@@ -85,7 +121,7 @@ export class RestaurantsService {
           const paginationHeader = res.headers.get(API_PAGINATION_HEADER)!;
 
           const paginationMetadata = JSON.parse(
-            paginationHeader
+            paginationHeader,
           ) as PaginationMetadata;
 
           const paginatedItems: PaginatedItems<T> = {

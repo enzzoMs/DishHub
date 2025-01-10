@@ -11,7 +11,7 @@ import {
   RestaurantFilters,
   ScoreOption,
 } from "../../models/restaurant-filters.model";
-import { parseRestaurantScore } from "../../models/restaurant.model";
+import { parseRestaurantScore } from "../../../../shared/models/restaurant.model";
 
 @Component({
   selector: "dhub-restaurants-filter",

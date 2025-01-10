@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
-import { Restaurant } from "../../../restaurants/models/restaurant.model";
 import { RestaurantItemComponent } from "../../../restaurants/components/restaurant-item/restaurant-item.component";
-import { Review } from "../../../restaurants/models/review.model";
 import { ReviewItemComponent } from "../../../restaurants/components/review-item/review-item.component";
+import { Review } from "../../../../shared/models/review.model";
+import { Restaurant } from "../../../../shared/models/restaurant.model";
 
 @Component({
   selector: "dhub-features",
@@ -26,6 +26,6 @@ export class FeaturesComponent {
     comment:
       "The best pasta I've ever had! Cozy atmosphere and fantastic service. Highly recommend! I'll definitely be coming back soon!",
     rating: 5,
-    date: new Date("2024-03-16"),
+    creationDate: new Date("2024-03-16"),
   };
 }

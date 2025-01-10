@@ -1,11 +1,12 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 
 import { RestaurantDetailsComponent } from "./restaurant-details.component";
 import { ActivatedRoute } from "@angular/router";
 import { By } from "@angular/platform-browser";
-import { RestaurantsService } from "../../services/restaurants.service";
-import { Restaurant } from "../../models/restaurant.model";
 import { of } from "rxjs";
+import { Restaurant } from "../../../../shared/models/restaurant.model";
+import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
+import {AppConfig} from "../../../../../config/config-constants";
 
 describe("RestaurantDetailsComponent", () => {
   let fixture: ComponentFixture<RestaurantDetailsComponent>;
@@ -62,7 +63,7 @@ describe("RestaurantDetailsComponent", () => {
     expect(backLinkElement.getAttribute("ng-reflect-router-link")).toBe("../");
   });
 
-  it("should fetch restaurant on initialization using id from route params", () => {
+  it("should fetch restaurant on initialization using id from route params", fakeAsync(() => {
     const restaurantId = 10;
     const testRestaurant: Restaurant = {
       id: restaurantId,
@@ -83,13 +84,15 @@ describe("RestaurantDetailsComponent", () => {
       restaurantModel = currentRestaurantModel;
     });
 
+    tick(AppConfig.MIN_LOADING_TIME_MS);
+
     component.ngOnInit();
 
     expect(restaurantServiceMock.getRestaurantById).toHaveBeenCalledWith(
       restaurantId,
     );
     expect(restaurantModel).toEqual(testRestaurant);
-  });
+  }));
 
   it("'updateReviewCount' should update subject with the new value", () => {
     const newReviewCount = 2;
