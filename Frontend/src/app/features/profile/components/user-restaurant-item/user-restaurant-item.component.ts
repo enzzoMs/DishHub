@@ -12,11 +12,18 @@ import {
 import { BehaviorSubject, combineLatestWith, map, take, timer } from "rxjs";
 import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
 import { AppConfig } from "../../../../../config/config-constants";
+import { UserMenuComponent } from "../user-menu/user-menu.component";
 
 @Component({
   selector: "dhub-user-restaurant-item",
   standalone: true,
-  imports: [MessageDialogComponent, RouterLink, AsyncPipe, FormDialogComponent],
+  imports: [
+    MessageDialogComponent,
+    RouterLink,
+    AsyncPipe,
+    FormDialogComponent,
+    UserMenuComponent,
+  ],
   templateUrl: "./user-restaurant-item.component.html",
   styleUrl: "./user-restaurant-item.component.css",
 })
@@ -45,10 +52,16 @@ export class UserRestaurantItemComponent {
   private readonly loadingDeleteSubject$ = new BehaviorSubject(false);
   readonly loadingDelete$ = this.loadingDeleteSubject$.asObservable();
 
+  menuIsExpanded = false;
+
   readonly RoutePaths = RoutePath;
   readonly RestaurantFormConfig = RestaurantFormConfig;
 
   constructor(private readonly restaurantsService: RestaurantsService) {}
+
+  toggleMenuExpansion() {
+    this.menuIsExpanded = !this.menuIsExpanded;
+  }
 
   showUpdateRestaurantDialog() {
     const initialValue: RestaurantForm = {

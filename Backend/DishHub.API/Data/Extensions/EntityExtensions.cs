@@ -25,8 +25,8 @@ public static class EntityExtensions
     
     public static MenuItemModel ToModel(this MenuItemEntity menuItemEntity) => new(
         Id: menuItemEntity.Id,
+        Name: menuItemEntity.Name,
         Description: menuItemEntity.Description,
-        Category: menuItemEntity.Category,
         Price: menuItemEntity.Price
     );
 }

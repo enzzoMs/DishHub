@@ -1,0 +1,35 @@
+article {
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-md);
+}
+
+h1 {
+  flex: 1;
+  font-size: inherit;
+  font-weight: var(--weight-medium);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.menu-info {
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-md);
+}
+
+.menu-info * + * {
+  padding-left: var(--space-md);
+  border-left: var(--divider-height) solid var(--divider-color);
+}
+
+button {
+  padding: 0;
+}
+
+button .material-icons {
+  font-size: var(--text-lg);
+}

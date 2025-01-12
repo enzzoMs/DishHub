@@ -9,7 +9,6 @@ import {
 } from "../../../../api/pagination-metadata.model";
 import { Restaurant } from "../../models/restaurant.model";
 import { Review } from "../../models/review.model";
-import { MenuItem } from "../../models/menu-item.model";
 import { RestaurantFilters } from "../../../features/restaurants/models/restaurant-filters.model";
 
 @Injectable({
@@ -64,10 +63,6 @@ export class RestaurantsService {
         return paginatedReviews;
       }),
     );
-  }
-
-  getRestaurantMenu(id: number): Observable<MenuItem[]> {
-    return this.http.get<MenuItem[]>(apiEndpoints.getRestaurantMenu(id));
   }
 
   createRestaurant(

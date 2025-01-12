@@ -1,22 +1,3 @@
-.categories-filter {
-  display: flex;
-  align-items: center;
-  margin-top: var(--space-lg);
-}
-
-.categories-filter label {
-  font-weight: var(--weight-bold);
-  margin-right: var(--space-md);
-}
-
-.categories-filter .category-select {
-  flex: 0.3;
-}
-
-.categories-filter .category-selection-spacer {
-  flex: 1;
-}
-
 dhub-menu-item,
 .menu-item-skeleton {
   display: block;
@@ -46,4 +27,8 @@ dhub-menu-item:last-child {
 
 .menu-item-header-skeleton .skeleton-text:last-child {
   width: 8%;
+}
+
+.no-data-found-wrapper {
+  margin: var(--space-xxl) 0 var(--space-lg) 0;
 }

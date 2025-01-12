@@ -1,10 +1,12 @@
 <div class="restaurants-wrapper">
-  <button
-    class="borderless-button add-item-button"
-    (click)="showCreateRestaurantDialog()"
-  >
-    <span class="material-icons">add</span>Add Restaurant
-  </button>
+  <div class="add-item-button-wrapper">
+    <button
+      class="borderless-button"
+      (click)="showCreateRestaurantDialog()"
+    >
+      <span class="material-icons">add</span>Add Restaurant
+    </button>
+  </div>
 
   @if (userRestaurants$ | async; as restaurants) {
     @for (restaurant of restaurants; track $index) {

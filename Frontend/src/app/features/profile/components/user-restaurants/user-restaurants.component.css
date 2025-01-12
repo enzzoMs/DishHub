@@ -4,18 +4,19 @@
   row-gap: var(--space-md);
 }
 
-.add-item-button {
+.add-item-button-wrapper button {
   display: flex;
   align-items: center;
   column-gap: var(--space-sm);
+  padding: 0;
 }
 
-.add-item-button .material-icons {
+.add-item-button-wrapper button .material-icons {
   color: var(--primary-color);
   font-size: var(--text-lg);
 }
 
-.add-item-button,
+.add-item-button-wrapper,
 dhub-user-restaurant-item,
 .restaurant-item-skeleton {
   padding-bottom: var(--space-md);

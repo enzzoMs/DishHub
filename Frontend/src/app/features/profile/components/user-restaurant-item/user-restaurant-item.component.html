@@ -1,19 +1,34 @@
 <article>
-  <h1 class="restaurant-name">
-    <span class="material-icons">storefront</span
-    ><a [routerLink]="['/' + RoutePaths.Restaurants, restaurantModel().id]">{{
-      restaurantModel().name
-    }}</a>
-  </h1>
-  <p class="restaurant-score">
-    <span class="material-icons">star</span>{{ restaurantModel().score }}
-  </p>
-  <button class="borderless-button" (click)="showDeleteRestaurantDialog()">
-    <span class="material-icons">delete</span>
-  </button>
-  <button class="borderless-button" (click)="showUpdateRestaurantDialog()">
-    <span class="material-icons">edit</span>
-  </button>
+  <div class="restaurant-item">
+    <h1 class="restaurant-name">
+      <span class="material-icons">storefront</span
+      ><a [routerLink]="['/' + RoutePaths.Restaurants, restaurantModel().id]">{{
+        restaurantModel().name
+      }}</a>
+    </h1>
+    <div class="restaurant-info">
+      <p class="restaurant-score">
+        <span class="material-icons">star</span>{{ restaurantModel().score }}
+      </p>
+      <button class="borderless-button" (click)="toggleMenuExpansion()">
+        Menu<span class="material-icons">{{
+          menuIsExpanded ? "arrow_drop_up" : "arrow_drop_down"
+        }}</span>
+      </button>
+      <button class="borderless-button" (click)="showDeleteRestaurantDialog()">
+        <span class="material-icons">delete</span>
+      </button>
+      <button class="borderless-button" (click)="showUpdateRestaurantDialog()">
+        <span class="material-icons">edit</span>
+      </button>
+    </div>
+  </div>
+  @if (menuIsExpanded) {
+    <dhub-user-menu
+      [restaurantId]="restaurantModel().id"
+      [restaurantMenu]="restaurantModel().menu!"
+    />
+  }
 </article>
 
 <dhub-form-dialog

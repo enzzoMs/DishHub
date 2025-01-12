@@ -1,0 +1,25 @@
+<div class="menu-wrapper">
+  <div class="add-item-button-wrapper">
+    <button class="borderless-button" (click)="showCreateMenuItemDialog()">
+      <span class="material-icons">add</span>Add Menu Item
+    </button>
+  </div>
+
+  @for (menuItem of restaurantMenu(); track $index) {
+    <dhub-user-menu-item
+      [restaurantId]="restaurantId()"
+      [menuItemModel]="menuItem"
+      (itemUpdated)="itemUpdated($event)"
+      (itemDeleted)="itemDeleted($event)"
+    />
+  }
+</div>
+
+<dhub-form-dialog
+  header="Create Menu Item"
+  [loading]="(loadingMenuCreation$ | async) ?? false"
+  [formConfig]="MenuFormConfig"
+  (formSubmitted)="createMenuItem($event)"
+></dhub-form-dialog>
+
+<dhub-message-dialog header="Success!" message="The item was created." />

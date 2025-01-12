@@ -39,10 +39,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             .Navigation(item => item.User)
             .AutoInclude();
         
-        modelBuilder.Entity<MenuItemEntity>()
-            .Property(menu => menu.Category)
-            .HasConversion<string>();
-                
         base.OnModelCreating(modelBuilder);
     }
 }

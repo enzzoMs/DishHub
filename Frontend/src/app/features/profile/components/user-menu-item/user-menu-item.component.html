@@ -1,0 +1,42 @@
+<article>
+  <h1>
+    {{ menuItemModel().name }}
+  </h1>
+  <div class="menu-info">
+    <p>{{ menuItemModel().price | currency }}</p>
+    <button class="borderless-button" (click)="showDeleteItemDialog()">
+      <span class="material-icons">delete</span>
+    </button>
+    <button class="borderless-button" (click)="showUpdateItemDialog()">
+      <span class="material-icons">edit</span>
+    </button>
+  </div>
+</article>
+
+<dhub-form-dialog
+  header="Update Restaurant"
+  [loading]="(loadingUpdate$ | async) ?? false"
+  [formConfig]="MenuFormConfig"
+  (formSubmitted)="updateItem($event)"
+></dhub-form-dialog>
+
+<dhub-message-dialog
+  #updateSuccessDialog
+  header="Success!"
+  message="The item was updated."
+/>
+
+<dhub-message-dialog
+  #deleteItemDialog
+  [message]="'Are you sure you want to\ndelete this item?'"
+  confirmMessage="Delete"
+  cancelMessage="Cancel"
+  [loading]="(loadingDelete$ | async) ?? false"
+  (confirmClicked)="deleteItem()"
+/>
+
+<dhub-message-dialog
+  #deleteSuccessDialog
+  header="Success!"
+  message="The item was deleted."
+/>

@@ -51,7 +51,7 @@ export class UserRestaurantsComponent implements OnInit {
 
   ngOnInit() {
     this.userService
-      .getUserRestaurants()
+      .getUserRestaurants(true)
       .pipe(
         combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
         map((loadingResult) => loadingResult[0]),

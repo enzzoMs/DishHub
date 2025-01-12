@@ -8,30 +8,25 @@ import {
 import { RestaurantMenuComponent } from "./restaurant-menu.component";
 import { of } from "rxjs";
 import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
-import {
-  MenuItem,
-  MenuItemCategory,
-} from "../../../../shared/models/menu-item.model";
+import { MenuItem } from "../../../../shared/models/menu-item.model";
 import { AppConfig } from "../../../../../config/config-constants";
+import { MenuService } from "../../../../shared/services/menu/menu.service";
 
 describe("RestaurantMenuComponent", () => {
   let component: RestaurantMenuComponent;
   let fixture: ComponentFixture<RestaurantMenuComponent>;
 
-  let restaurantServiceMock: jasmine.SpyObj<RestaurantsService>;
+  let menuServiceMock: jasmine.SpyObj<MenuService>;
 
   beforeEach(async () => {
-    restaurantServiceMock = jasmine.createSpyObj<RestaurantsService>(
-      "RestaurantService",
-      ["getRestaurantMenu"],
-    );
-    restaurantServiceMock.getRestaurantMenu.and.returnValue(of([]));
+    menuServiceMock = jasmine.createSpyObj<MenuService>("menuService", [
+      "getRestaurantMenu",
+    ]);
+    menuServiceMock.getRestaurantMenu.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
       imports: [RestaurantMenuComponent],
-      providers: [
-        { provide: RestaurantsService, useValue: restaurantServiceMock },
-      ],
+      providers: [{ provide: RestaurantsService, useValue: menuServiceMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RestaurantMenuComponent);
@@ -45,20 +40,20 @@ describe("RestaurantMenuComponent", () => {
   it("should fetch all menu items when restaurant id changes", fakeAsync(() => {
     const testMenu: MenuItem[] = [
       {
+        id: 0,
         name: "Item1",
         description: "",
-        category: MenuItemCategory.Appetizers,
         price: 1,
       },
       {
+        id: 1,
         name: "Item2",
         description: "",
-        category: MenuItemCategory.Appetizers,
         price: 2,
       },
     ];
 
-    restaurantServiceMock.getRestaurantMenu.and.returnValue(of(testMenu));
+    menuServiceMock.getRestaurantMenu.and.returnValue(of(testMenu));
 
     let menuItems: MenuItem[] | undefined;
     component.menuItems$.subscribe((currentMenuItems) => {
@@ -73,46 +68,9 @@ describe("RestaurantMenuComponent", () => {
 
     tick(AppConfig.MIN_LOADING_TIME_MS);
 
-    expect(restaurantServiceMock.getRestaurantMenu).toHaveBeenCalledWith(
+    expect(menuServiceMock.getRestaurantMenu).toHaveBeenCalledWith(
       newRestaurantId,
     );
     expect(menuItems).toEqual(testMenu);
-  }));
-
-  it("should filter menu items by selected category when category changes", fakeAsync(() => {
-    const testMenu: MenuItem[] = [
-      {
-        name: "Item1",
-        description: "",
-        category: MenuItemCategory.Pasta,
-        price: 1,
-      },
-      {
-        name: "Item2",
-        description: "",
-        category: MenuItemCategory.Appetizers,
-        price: 2,
-      },
-    ];
-
-    restaurantServiceMock.getRestaurantMenu.and.returnValue(of(testMenu));
-
-    let menuItems: MenuItem[] | undefined;
-    component.menuItems$.subscribe((currentMenuItems) => {
-      menuItems = currentMenuItems;
-    });
-
-    const newRestaurantId = 10;
-    const testSelectedCategory = MenuItemCategory.Appetizers;
-
-    fixture.componentRef.setInput("restaurantId", newRestaurantId);
-    component.selectedCategory = testSelectedCategory;
-    fixture.detectChanges();
-
-    tick(AppConfig.MIN_LOADING_TIME_MS);
-
-    expect(menuItems).toEqual(
-      testMenu.filter((item) => item.category === testSelectedCategory),
-    );
   }));
 });

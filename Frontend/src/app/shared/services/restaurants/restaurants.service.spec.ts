@@ -14,7 +14,6 @@ import {
 } from "../../../../api/pagination-metadata.model";
 import { Restaurant } from "../../models/restaurant.model";
 import { Review } from "../../models/review.model";
-import { MenuItem, MenuItemCategory } from "../../models/menu-item.model";
 import { RestaurantFilters } from "../../../features/restaurants/models/restaurant-filters.model";
 
 describe("RestaurantsService", () => {
@@ -151,38 +150,6 @@ describe("RestaurantsService", () => {
     expect(paginatedReviews.data).toEqual(testReviews);
     expect(paginatedReviews.totalItems).toEqual(testReviews.length);
     expect(paginatedReviews.pageNumber).toEqual(page);
-  });
-
-  it("should fetch restaurant menu", async () => {
-    const testMenuItems: MenuItem[] = [
-      {
-        name: "Burger",
-        category: MenuItemCategory.MainCourse,
-        description: "",
-        price: 5,
-      },
-      {
-        name: "Pizza",
-        category: MenuItemCategory.MainCourse,
-        description: "",
-        price: 8,
-      },
-    ];
-
-    const testRestaurantId = 0;
-
-    const menuPromise = firstValueFrom(
-      service.getRestaurantMenu(testRestaurantId),
-    );
-
-    const request = httpTesting.expectOne({
-      method: "GET",
-      url: apiEndpoints.getRestaurantMenu(testRestaurantId),
-    });
-
-    request.flush(testMenuItems);
-
-    expect(await menuPromise).toEqual(testMenuItems);
   });
 
   it("should create restaurant", async () => {

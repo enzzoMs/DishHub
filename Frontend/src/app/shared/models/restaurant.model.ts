@@ -1,9 +1,14 @@
+import {Review} from "./review.model";
+import {MenuItem} from "./menu-item.model";
+
 export interface Restaurant {
   id: number;
   name: string;
   description: string;
   location: string;
   score: number;
+  reviews?: Review[];
+  menu?: MenuItem[];
 }
 
 const RESTAURANT_MIN_SCORE = 1;

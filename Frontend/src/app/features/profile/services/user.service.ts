@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Restaurant } from "../../../shared/models/restaurant.model";
 import { apiEndpoints } from "../../../../api/api-endpoints";
@@ -11,8 +11,12 @@ import { Review } from "../../../shared/models/review.model";
 export class UserService {
   constructor(private readonly http: HttpClient) {}
 
-  getUserRestaurants(): Observable<Restaurant[]> {
-    return this.http.get<Restaurant[]>(apiEndpoints.getUserRestaurants());
+  getUserRestaurants(includeMenu?: boolean): Observable<Restaurant[]> {
+    return this.http.get<Restaurant[]>(apiEndpoints.getUserRestaurants(), {
+      params: includeMenu
+        ? new HttpParams().append("includeMenu", includeMenu)
+        : undefined,
+    });
   }
 
   getUserReviews(): Observable<Review[]> {

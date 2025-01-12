@@ -83,8 +83,8 @@ public class MenuService(AppDbContext appDbContext)
         }
         
         var menuItemEntity = new MenuItemEntity(
+            creationRequest.Name,
             creationRequest.Description,
-            creationRequest.Category,
             creationRequest.Price
         )
         {
@@ -108,8 +108,8 @@ public class MenuService(AppDbContext appDbContext)
             return null;
         }
 
+        menuItemEntity.Name = updateRequest.Name;
         menuItemEntity.Description = updateRequest.Description;
-        menuItemEntity.Category = updateRequest.Category;
         menuItemEntity.Price = updateRequest.Price;
         
         await appDbContext.SaveChangesAsync();

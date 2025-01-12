@@ -1,18 +1,3 @@
-<div class="categories-filter">
-  <label for="category-selection">Category: </label>
-  <ng-select
-    id="category-selection"
-    class="category-select"
-    labelForId="category-selection"
-    [(ngModel)]="selectedCategory"
-    [items]="menuCategories"
-    [clearable]="false"
-    [searchable]="false"
-  >
-  </ng-select>
-  <div class="category-selection-spacer"></div>
-</div>
-
 @if (menuItems$ | async; as menuItems) {
   @if (menuItems.length === 0) {
     <div class="no-data-found-wrapper">

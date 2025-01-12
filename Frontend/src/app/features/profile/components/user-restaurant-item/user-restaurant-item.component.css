@@ -1,5 +1,15 @@
 article {
   display: flex;
+  flex-direction: column;
+}
+
+dhub-user-menu {
+  font-size: var(--text-sm);
+  margin: var(--space-sm) 0 0 var(--space-lg);
+}
+
+.restaurant-item {
+  display: flex;
   align-items: center;
   column-gap: var(--space-md);
 }
@@ -19,6 +29,17 @@ article {
   color: var(--primary-color);
 }
 
+.restaurant-info {
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-md);
+}
+
+.restaurant-info * + * {
+  padding-left: var(--space-md);
+  border-left: var(--divider-height) solid var(--divider-color);
+}
+
 .restaurant-score {
   color: var(--review-star-color);
   font-weight: var(--weight-semibold);
@@ -26,8 +47,6 @@ article {
   align-items: center;
   column-gap: var(--space-sm);
   margin: 0;
-  padding-right: var(--space-md);
-  border-right: var(--divider-height) solid var(--divider-color);
 }
 
 .restaurant-score .material-icons {
