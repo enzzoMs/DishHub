@@ -1,0 +1,25 @@
+<div class="reviews-wrapper">
+  @if (userReviews$ | async; as reviews) {
+    @if (reviews.length === 0) {
+      <div class="no-data-found-wrapper">
+        <span class="material-icons no-data-found-icon">restaurant</span>
+        <p>No Reviews Found</p>
+      </div>
+    } @else {
+      @for (review of reviews; track $index) {
+        <dhub-user-review-item
+          [reviewModel]="review"
+          (reviewUpdated)="reviewUpdated($event)"
+          (reviewDeleted)="reviewDeleted($event)"
+        />
+      }
+    }
+  } @else {
+    @for (_ of numOfLoadingSkeletons | enumerate; track $index) {
+      <div class="review-item-skeleton">
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    }
+  }
+</div>

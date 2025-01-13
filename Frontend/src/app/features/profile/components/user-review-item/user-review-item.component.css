@@ -1,0 +1,54 @@
+.review-header {
+  display: flex;
+  column-gap: var(--space-md);
+}
+
+.review-header > * + * {
+  padding-left: var(--space-md);
+  border-left: var(--divider-height) solid var(--divider-color);
+}
+
+.restaurant-name {
+  flex: 1;
+}
+
+.restaurant-name {
+  flex: 1;
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  display: flex;
+  align-items: center;
+  column-gap: var(--space-sm);
+  margin: 0;
+}
+
+.restaurant-name .material-icons {
+  font-size: var(--text-xl);
+  color: var(--primary-color);
+}
+
+button .material-icons {
+  font-size: var(--text-lg);
+}
+
+.review-quote {
+  font-size: var(--text-xl);
+  color: var(--primary-color);
+  vertical-align: middle;
+  margin-bottom: 4px;
+  margin-left: 4px;
+}
+
+.review-quote:first-child {
+  transform: scaleX(-1);
+  margin-left: 0;
+  margin-right: 4px;
+}
+
+.review-stars {
+  font-size: var(--text-lg);
+  display: flex;
+  color: var(--review-star-color);
+  column-gap: var(--space-sm);
+  margin-bottom: 0;
+}

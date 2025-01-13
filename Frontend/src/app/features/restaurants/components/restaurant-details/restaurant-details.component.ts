@@ -61,6 +61,8 @@ export class RestaurantDetailsComponent implements OnInit {
         combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
         map((loadingResult) => loadingResult[0]),
       );
+
+    window.scrollTo(0, 0);
   }
 
   updateReviewCount(newReviewCount: number) {

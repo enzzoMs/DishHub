@@ -3,11 +3,13 @@ import { RestaurantItemComponent } from "../../../restaurants/components/restaur
 import { ReviewItemComponent } from "../../../restaurants/components/review-item/review-item.component";
 import { Review } from "../../../../shared/models/review.model";
 import { Restaurant } from "../../../../shared/models/restaurant.model";
+import { RouterLink } from "@angular/router";
+import { RoutePath } from "../../../../app.routes";
 
 @Component({
   selector: "dhub-features",
   standalone: true,
-  imports: [RestaurantItemComponent, ReviewItemComponent],
+  imports: [RestaurantItemComponent, ReviewItemComponent, RouterLink],
   templateUrl: "./features.component.html",
   styleUrl: "./features.component.css",
 })
@@ -22,10 +24,14 @@ export class FeaturesComponent {
   };
 
   reviewExample: Review = {
+    id: 0,
     userName: "Jane Doe",
     comment:
       "The best pasta I've ever had! Cozy atmosphere and fantastic service. Highly recommend! I'll definitely be coming back soon!",
     rating: 5,
     creationDate: new Date("2024-03-16"),
+    restaurantId: 0,
+    restaurantName: "Tavola Italiana",
   };
+  protected readonly RoutePath = RoutePath;
 }

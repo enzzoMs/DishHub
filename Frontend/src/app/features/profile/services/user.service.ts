@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { Restaurant } from "../../../shared/models/restaurant.model";
 import { apiEndpoints } from "../../../../api/api-endpoints";
 import { Review } from "../../../shared/models/review.model";
@@ -20,6 +20,14 @@ export class UserService {
   }
 
   getUserReviews(): Observable<Review[]> {
-    return this.http.get<Review[]>(apiEndpoints.getUserReviews());
+    return this.http
+      .get<Review[]>(apiEndpoints.getUserReviews())
+      .pipe(
+        tap((review) =>
+          review.forEach(
+            (review) => (review.creationDate = new Date(review.creationDate)),
+          ),
+        ),
+      );
   }
 }

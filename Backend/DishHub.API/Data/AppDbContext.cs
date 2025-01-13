@@ -28,6 +28,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             .AutoInclude();
         
         modelBuilder.Entity<ReviewEntity>()
+            .Navigation(review => review.Restaurant)
+            .AutoInclude();
+        
+        modelBuilder.Entity<ReviewEntity>()
             .HasOne(review => review.User)
             .WithMany();
         

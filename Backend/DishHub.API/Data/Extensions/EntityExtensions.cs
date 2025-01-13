@@ -20,7 +20,9 @@ public static class EntityExtensions
         UserName: reviewEntity.User.UserName!,
         Comment: reviewEntity.Comment,
         Rating: reviewEntity.Rating,
-        CreationDate: reviewEntity.CreationDate
+        CreationDate: reviewEntity.CreationDate,
+        RestaurantId: reviewEntity.Restaurant.Id,
+        RestaurantName: reviewEntity.Restaurant.Name
     );
     
     public static MenuItemModel ToModel(this MenuItemEntity menuItemEntity) => new(

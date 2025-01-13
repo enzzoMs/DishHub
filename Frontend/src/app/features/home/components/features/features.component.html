@@ -12,7 +12,9 @@
         Read the latest reviews from our community. Discover new places to dine
         and see what others have to say about their dining experiences.
       </p>
-      <button class="primary-button">Read More</button>
+      <button class="primary-button" [routerLink]="['/', RoutePath.Restaurants]">
+        Read More
+      </button>
     </div>
     <dhub-review-item [reviewModel]="reviewExample" />
   </div>
@@ -28,7 +30,9 @@
         Browse a variety of restaurants, from local favorites to hidden gems.
         Read reviews, explore menus, and find the perfect spot for any occasion.
       </p>
-      <button class="primary-button">See Details</button>
+      <button class="primary-button" [routerLink]="['/', RoutePath.Restaurants]">
+        See Details
+      </button>
     </div>
   </div>
 </section>

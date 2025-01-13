@@ -11,8 +11,8 @@ export interface Restaurant {
   menu?: MenuItem[];
 }
 
-const RESTAURANT_MIN_SCORE = 1;
-const RESTAURANT_MAX_SCORE = 5;
+export const RESTAURANT_MIN_SCORE = 1;
+export const RESTAURANT_MAX_SCORE = 5;
 
 /**
  * Parses a string into a score number, ensuring that is within a valid range.

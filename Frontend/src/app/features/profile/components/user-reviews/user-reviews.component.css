@@ -1,0 +1,24 @@
+.reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--space-md);
+}
+
+dhub-user-review-item {
+  padding-bottom: var(--space-lg);
+  border-bottom: var(--divider-height) solid var(--divider-color);
+}
+
+.review-item-skeleton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.review-item-skeleton .skeleton-text:first-child {
+  width: 25%;
+}
+
+.review-item-skeleton .skeleton-text:last-child {
+  width: 20%;
+}

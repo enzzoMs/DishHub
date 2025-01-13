@@ -5,7 +5,9 @@ public record ReviewModel(
     string UserName,
     string Comment,
     double Rating,
-    DateTime CreationDate
+    DateTime CreationDate,
+    int RestaurantId,
+    string RestaurantName
 )
 {
     public const int RatingMinValue = 1;

@@ -1,16 +1,38 @@
-import { Component, effect, input, output } from "@angular/core";
+import { Component, effect, input, output, viewChild } from "@angular/core";
 import { AsyncPipe } from "@angular/common";
-import {BehaviorSubject, combineLatestWith, map, Observable, Subject, switchMap, tap, timer} from "rxjs";
+import {
+  BehaviorSubject,
+  combineLatestWith,
+  map,
+  Observable,
+  Subject,
+  switchMap,
+  take,
+  tap,
+  timer,
+} from "rxjs";
 import { ReviewItemComponent } from "../review-item/review-item.component";
 import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe";
 import { Review } from "../../../../shared/models/review.model";
 import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
-import {AppConfig} from "../../../../../config/config-constants";
+import { AppConfig } from "../../../../../config/config-constants";
+import { AuthService } from "../../../../shared/services/auth/auth.service";
+import { User } from "../../../../shared/models/user.model";
+import { FormDialogComponent } from "../../../../shared/components/form-dialog/form-dialog.component";
+import { MessageDialogComponent } from "../../../../shared/components/message-dialog/message-dialog.component";
+import { ReviewForm, ReviewFormConfig } from "./review-form-config";
+import { ReviewsService } from "../../../../shared/services/reviews/reviews.service";
 
 @Component({
   selector: "dhub-restaurant-reviews",
   standalone: true,
-  imports: [AsyncPipe, ReviewItemComponent, EnumeratePipe],
+  imports: [
+    AsyncPipe,
+    ReviewItemComponent,
+    EnumeratePipe,
+    FormDialogComponent,
+    MessageDialogComponent,
+  ],
   templateUrl: "./restaurant-reviews.component.html",
   styleUrl: "./restaurant-reviews.component.css",
 })
@@ -32,17 +54,33 @@ export class RestaurantReviewsComponent {
   private loadingSubject$ = new BehaviorSubject(true);
   loading$ = this.loadingSubject$.asObservable();
 
-  constructor(restaurantsService: RestaurantsService) {
+  loggedInUser$: Observable<User | null | undefined>;
+
+  createReviewDialog = viewChild.required(FormDialogComponent);
+  creationSuccessDialog = viewChild.required(MessageDialogComponent);
+
+  private loadingCreationSubject$ = new BehaviorSubject(false);
+  loadingCreation$ = this.loadingCreationSubject$.asObservable();
+
+  readonly ReviewFormConfig = ReviewFormConfig;
+
+  constructor(
+    restaurantsService: RestaurantsService,
+    authService: AuthService,
+    private readonly reviewsService: ReviewsService,
+  ) {
     this.reviews$ = this.reviewsUpdater$.asObservable().pipe(
       switchMap(() =>
-        restaurantsService.getRestaurantReviews(
-          this.restaurantId()!,
-          this.currentReviewsPage,
-          this.pageSize,
-        ).pipe(
-          combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
-          map(loadingResult => loadingResult[0])
-        ),
+        restaurantsService
+          .getRestaurantReviews(
+            this.restaurantId()!,
+            this.currentReviewsPage,
+            this.pageSize,
+          )
+          .pipe(
+            combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
+            map((loadingResult) => loadingResult[0]),
+          ),
       ),
       tap((paginatedReviews) => {
         if (this.totalReviews === undefined) {
@@ -70,6 +108,38 @@ export class RestaurantReviewsComponent {
         this.reviewsUpdater$.next();
       }
     });
+
+    this.loggedInUser$ = authService.loggedInUser$;
+  }
+
+  showCreateReviewDialog() {
+    this.createReviewDialog().showModal();
+  }
+
+  createReview(reviewForm: ReviewForm) {
+    const { comment, rating } = reviewForm;
+
+    this.loadingCreationSubject$.next(true);
+
+    this.reviewsService
+      .createReview(this.restaurantId()!, comment, rating)
+      .pipe(
+        take(1),
+        combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
+        map((loadingResult) => loadingResult[0]),
+      )
+      .subscribe((review) => {
+        this.loadedReviews.splice(0, 0, review);
+
+        this.createReviewDialog().closeDialog();
+        this.loadingCreationSubject$.next(false);
+        this.creationSuccessDialog().showModal();
+
+        if (this.totalReviews !== undefined) {
+          this.totalReviews++;
+          this.reviewCountChanged.emit(this.totalReviews);
+        }
+      });
   }
 
   seeMoreReviews() {

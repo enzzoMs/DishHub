@@ -5,11 +5,11 @@ import { SignUpButtonComponent } from "../../../features/auth/components/sign-up
 import { LoginButtonComponent } from "../../../features/auth/components/login-button/login-button.component";
 import {
   BehaviorSubject,
-  firstValueFrom,
   map,
   Observable,
   of,
   switchMap,
+  take,
   timer,
   zip,
 } from "rxjs";
@@ -57,12 +57,15 @@ export class HeaderComponent {
     );
   }
 
-  async logoutUser() {
+  logoutUser() {
     this.isLoggingOutSubject$.next(true);
 
-    await firstValueFrom(this.authService.logout());
-
-    this.router.navigate([RoutePath.Home]);
-    this.isLoggingOutSubject$.next(false);
+    this.authService
+      .logout()
+      .pipe(take(1))
+      .subscribe(() => {
+        this.router.navigate([RoutePath.Home]);
+        this.isLoggingOutSubject$.next(false);
+      });
   }
 }

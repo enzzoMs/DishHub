@@ -1,10 +1,19 @@
+@let loading = loading$ | async;
 @let reviews = reviews$ | async;
+
+@if ((loggedInUser$ | async) && !loading) {
+  <div class="add-item-button-wrapper">
+    <button class="borderless-button" (click)="showCreateReviewDialog()">
+      <span class="material-icons">add</span>Add Review
+    </button>
+  </div>
+}
 
 @if (reviews?.length !== 0) {
   @for (review of reviews; track $index) {
     <dhub-review-item [reviewModel]="review" />
   }
-  @if (loading$ | async) {
+  @if (loading) {
     @for (_ of pageSize | enumerate; track $index) {
       <div class="review-skeleton">
         <div class="review-header-skeleton">
@@ -31,3 +40,12 @@
     <p>No Reviews Found</p>
   </div>
 }
+
+<dhub-form-dialog
+  header="Create Review"
+  [loading]="(loadingCreation$ | async) ?? false"
+  [formConfig]="ReviewFormConfig"
+  (formSubmitted)="createReview($event)"
+></dhub-form-dialog>
+
+<dhub-message-dialog header="Success!" message="The review was created." />

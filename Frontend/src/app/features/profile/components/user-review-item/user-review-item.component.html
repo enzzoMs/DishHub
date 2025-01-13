@@ -1,0 +1,61 @@
+<article>
+  <div class="review-header">
+    <h1 class="restaurant-name">
+      <span class="material-icons">storefront</span
+      ><a
+        [routerLink]="[
+          '/' + RoutePaths.Restaurants,
+          reviewModel().restaurantId,
+        ]"
+        >{{ reviewModel().restaurantName }}</a
+      >
+    </h1>
+    <button class="borderless-button" (click)="showDeleteReviewDialog()">
+      <span class="material-icons">delete</span>
+    </button>
+    <button class="borderless-button" (click)="showUpdateReviewDialog()">
+      <span class="material-icons">edit</span>
+    </button>
+  </div>
+  <div class="review-info">
+    <p>
+      <span class="material-icons review-quote">format_quote</span
+      >{{ reviewModel().comment
+      }}<span class="material-icons review-quote"> format_quote </span>
+    </p>
+    <p class="review-stars">
+      @for (_ of reviewModel().rating | enumerate; track $index) {
+        <span class="material-icons">star</span>
+      }
+    </p>
+  </div>
+</article>
+
+<dhub-form-dialog
+  header="Update Review"
+  [loading]="(loadingUpdate$ | async) ?? false"
+  [formConfig]="ReviewFormConfig"
+  (formSubmitted)="updateReview($event)"
+></dhub-form-dialog>
+
+<dhub-message-dialog
+  #updateSuccessDialog
+  header="Success!"
+  message="The review was updated."
+/>
+
+<dhub-message-dialog
+  #deleteReviewDialog
+  [message]="'Are you sure you want to\ndelete this review?'"
+  confirmMessage="Delete"
+  cancelMessage="Cancel"
+  [loading]="(loadingDelete$ | async) ?? false"
+  (confirmClicked)="deleteReview()"
+/>
+
+<dhub-message-dialog
+  #deleteSuccessDialog
+  header="Success!"
+  message="The review was deleted."
+/>
+

@@ -33,8 +33,6 @@ export class UserMenuComponent {
   readonly loadingMenuCreation$ =
     this.loadingMenuCreationSubject$.asObservable();
 
-  readonly numOfLoadingSkeletons = 3;
-
   readonly MenuFormConfig = MenuFormConfig;
 
   constructor(private readonly menuService: MenuService) {}
