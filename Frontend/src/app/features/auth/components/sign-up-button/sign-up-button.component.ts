@@ -19,10 +19,10 @@ import { AsyncPipe } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorCode } from "../../../error/models/error-codes.model";
 import { User } from "../../../../shared/models/user.model";
-import { AuthService } from "../../../../shared/services/auth/auth.service";
 import { FormDialogComponent } from "../../../../shared/components/form-dialog/form-dialog.component";
 import { AuthForm, AuthFormConfig } from "../auth-form-config";
 import { MessageDialogComponent } from "../../../../shared/components/message-dialog/message-dialog.component";
+import { UserService } from "../../../../shared/services/user/user.service";
 
 @Component({
   selector: "dhub-sign-up-button",
@@ -51,14 +51,14 @@ export class SignUpButtonComponent {
 
   readonly AuthFormConfig = AuthFormConfig;
 
-  constructor(authService: AuthService) {
+  constructor(userService: UserService) {
     this.registeredUser$ = this.registeredUserUpdater$.asObservable().pipe(
       switchMap((authForm: AuthForm) => {
         this.loadingUserSubject$.next(true);
 
         const { name, password } = authForm;
 
-        return authService.signUpUser(name, password).pipe(
+        return userService.signUpUser(name, password).pipe(
           combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),
           map((loadingResult) => loadingResult[0]),
           catchError((error) => {

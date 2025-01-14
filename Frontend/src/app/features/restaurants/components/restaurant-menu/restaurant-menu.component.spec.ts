@@ -11,6 +11,8 @@ import { RestaurantsService } from "../../../../shared/services/restaurants/rest
 import { MenuItem } from "../../../../shared/models/menu-item.model";
 import { AppConfig } from "../../../../../config/config-constants";
 import { MenuService } from "../../../../shared/services/menu/menu.service";
+import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 
 describe("RestaurantMenuComponent", () => {
   let component: RestaurantMenuComponent;
@@ -26,7 +28,11 @@ describe("RestaurantMenuComponent", () => {
 
     await TestBed.configureTestingModule({
       imports: [RestaurantMenuComponent],
-      providers: [{ provide: RestaurantsService, useValue: menuServiceMock }],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: MenuService, useValue: menuServiceMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RestaurantMenuComponent);
@@ -60,16 +66,15 @@ describe("RestaurantMenuComponent", () => {
       menuItems = currentMenuItems;
     });
 
-    const newRestaurantId = 10;
+    const restaurantId = 10;
 
-    fixture.componentRef.setInput("restaurantId", newRestaurantId);
-
+    fixture.componentRef.setInput("restaurantId", restaurantId);
     fixture.detectChanges();
 
     tick(AppConfig.MIN_LOADING_TIME_MS);
 
     expect(menuServiceMock.getRestaurantMenu).toHaveBeenCalledWith(
-      newRestaurantId,
+      restaurantId,
     );
     expect(menuItems).toEqual(testMenu);
   }));

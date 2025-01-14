@@ -1,8 +1,12 @@
 <div class="profile-header">
   <h1>My Profile</h1>
   <div class="account-buttons">
-    <button class="borderless-button">Edit</button>
-    <button class="primary-button">Delete</button>
+    <button class="borderless-button" (click)="showUpdateUserDialog()">
+      Edit
+    </button>
+    <button class="primary-button" (click)="showDeleteItemDialog()">
+      Delete
+    </button>
   </div>
 </div>
 
@@ -14,3 +18,25 @@
     <dhub-user-reviews />
   </dhub-tab-item>
 </dhub-tab-panel>
+
+<dhub-form-dialog
+  header="Update User"
+  [loading]="(loadingUpdate$ | async) ?? false"
+  [formConfig]="AuthFormConfig"
+  (formSubmitted)="updateUser($event)"
+></dhub-form-dialog>
+
+<dhub-message-dialog
+  #updateSuccessDialog
+  header="Success!"
+  message="The user was updated."
+/>
+
+<dhub-message-dialog
+  #deleteUserDialog
+  [message]="'Are you sure you want to\ndelete your account?'"
+  confirmMessage="Delete"
+  cancelMessage="Cancel"
+  [loading]="(loadingDelete$ | async) ?? false"
+  (confirmClicked)="deleteUser()"
+/>

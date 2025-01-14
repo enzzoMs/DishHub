@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Identity;
 namespace DishHub.API.Data.Entities;
 
 [Table("Reviews")]
-public class ReviewEntity(string comment, double rating, DateTime creationDate)
+public class ReviewEntity(string comment, int rating, DateTime creationDate)
 {
     public int Id { get; private set; }
 
     [MaxLength(ReviewModel.MaxCommentLength)] 
     public string Comment { get; set; } = comment;
 
-    public double Rating { get; set; } = rating;
+    public int Rating { get; set; } = rating;
 
     public DateTime CreationDate { get; set; } = creationDate;
     

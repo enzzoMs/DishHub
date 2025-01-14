@@ -5,7 +5,7 @@
       >{{ restaurantModel().name }}
     </h1>
     <p class="restaurant-score">
-      <span class="material-icons">star</span>{{ restaurantModel().score }}
+      <span class="material-icons">star</span>{{ restaurantModel().score | number:'1.0-2' }}
     </p>
   </div>
   <p>

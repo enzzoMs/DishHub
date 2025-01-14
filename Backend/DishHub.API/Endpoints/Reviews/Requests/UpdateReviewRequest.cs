@@ -8,5 +8,5 @@ public record UpdateReviewRequest(
     [MaxLength(ReviewModel.MaxCommentLength)]
     string Comment,
     [Range(ReviewModel.RatingMinValue, ReviewModel.RatingMaxValue)]
-    double Rating
+    int Rating
 );

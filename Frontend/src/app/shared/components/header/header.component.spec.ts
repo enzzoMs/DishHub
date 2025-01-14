@@ -13,8 +13,8 @@ import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { of, Subject } from "rxjs";
 import { AppConfig } from "../../../../config/config-constants";
-import { AuthService } from "../../services/auth/auth.service";
 import { User } from "../../models/user.model";
+import { UserService } from "../../services/user/user.service";
 
 describe("HeaderComponent", () => {
   let component: HeaderComponent;
@@ -24,8 +24,8 @@ describe("HeaderComponent", () => {
 
   beforeEach(async () => {
     loggedInUserUpdater$ = new Subject();
-    const authServiceMock: jasmine.SpyObj<AuthService> = jasmine.createSpyObj(
-      "AuthService",
+    const authServiceMock: jasmine.SpyObj<UserService> = jasmine.createSpyObj(
+      "UserService",
       ["logout"],
       {
         loggedInUser$: loggedInUserUpdater$,
@@ -40,7 +40,7 @@ describe("HeaderComponent", () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         {
-          provide: AuthService,
+          provide: UserService,
           useValue: authServiceMock,
         },
       ],

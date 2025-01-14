@@ -15,12 +15,13 @@
       <dhub-tab-panel>
         <dhub-tab-item header="Reviews [{{ reviewCount$ | async }}]">
           <dhub-restaurant-reviews
-            [restaurantId]="restaurantModel?.id"
+            [restaurantId]="restaurantModel?.id ?? undefined"
             (reviewCountChanged)="updateReviewCount($event)"
+            (reviewCreated)="reviewCreated($event)"
           />
         </dhub-tab-item>
         <dhub-tab-item header="Menu">
-          <dhub-restaurant-menu [restaurantId]="restaurantModel?.id" />
+          <dhub-restaurant-menu [restaurantId]="restaurantModel?.id ?? undefined" />
         </dhub-tab-item>
       </dhub-tab-panel>
     </section>

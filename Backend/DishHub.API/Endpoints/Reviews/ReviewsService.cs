@@ -94,6 +94,8 @@ public class ReviewsService(AppDbContext appDbContext)
         await appDbContext.Reviews.AddAsync(reviewEntity);
         await appDbContext.SaveChangesAsync();
         
+        await UpdateRestaurantScore(reviewEntity.Restaurant);
+
         return reviewEntity.ToModel();
     }
     
@@ -108,7 +110,12 @@ public class ReviewsService(AppDbContext appDbContext)
         }
 
         reviewEntity.Comment = updateRequest.Comment;
-        reviewEntity.Rating = updateRequest.Rating;
+
+        if (reviewEntity.Rating != updateRequest.Rating)
+        {
+            reviewEntity.Rating = updateRequest.Rating;
+            await UpdateRestaurantScore(reviewEntity.Restaurant);
+        }
         
         await appDbContext.SaveChangesAsync();
         
@@ -125,6 +132,21 @@ public class ReviewsService(AppDbContext appDbContext)
         }
 
         appDbContext.Reviews.Remove(reviewEntity);
+        await appDbContext.SaveChangesAsync();
+
+        await UpdateRestaurantScore(reviewEntity.Restaurant);
+    }
+
+    private async Task UpdateRestaurantScore(RestaurantEntity restaurantEntity)
+    {
+        var associatedReviews = appDbContext.Reviews.Where(
+            review => review.Restaurant.Id == restaurantEntity.Id
+        );
+        
+        var newScore = await associatedReviews.AverageAsync(review => review.Rating);
+        
+        restaurantEntity.Score = newScore;
+        
         await appDbContext.SaveChangesAsync();
     }
 }

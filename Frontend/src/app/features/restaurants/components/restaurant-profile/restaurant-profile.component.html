@@ -7,7 +7,7 @@
       <div class="restaurant-header">
         <h1 id="restaurant-name">{{ restaurant.name }}</h1>
         <p class="restaurant-score">
-          <span class="material-icons">star</span>{{ restaurant.score }}
+          <span class="material-icons">star</span>{{ restaurant.score | number:'1.0-2' }}
         </p>
       </div>
       <p>{{ restaurant.description }}</p>

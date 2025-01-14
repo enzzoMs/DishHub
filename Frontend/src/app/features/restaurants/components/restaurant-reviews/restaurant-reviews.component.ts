@@ -16,12 +16,12 @@ import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe
 import { Review } from "../../../../shared/models/review.model";
 import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
 import { AppConfig } from "../../../../../config/config-constants";
-import { AuthService } from "../../../../shared/services/auth/auth.service";
 import { User } from "../../../../shared/models/user.model";
 import { FormDialogComponent } from "../../../../shared/components/form-dialog/form-dialog.component";
 import { MessageDialogComponent } from "../../../../shared/components/message-dialog/message-dialog.component";
 import { ReviewForm, ReviewFormConfig } from "./review-form-config";
 import { ReviewsService } from "../../../../shared/services/reviews/reviews.service";
+import { UserService } from "../../../../shared/services/user/user.service";
 
 @Component({
   selector: "dhub-restaurant-reviews",
@@ -62,11 +62,13 @@ export class RestaurantReviewsComponent {
   private loadingCreationSubject$ = new BehaviorSubject(false);
   loadingCreation$ = this.loadingCreationSubject$.asObservable();
 
+  reviewCreated = output<Review>();
+
   readonly ReviewFormConfig = ReviewFormConfig;
 
   constructor(
     restaurantsService: RestaurantsService,
-    authService: AuthService,
+    userService: UserService,
     private readonly reviewsService: ReviewsService,
   ) {
     this.reviews$ = this.reviewsUpdater$.asObservable().pipe(
@@ -109,7 +111,7 @@ export class RestaurantReviewsComponent {
       }
     });
 
-    this.loggedInUser$ = authService.loggedInUser$;
+    this.loggedInUser$ = userService.loggedInUser$;
   }
 
   showCreateReviewDialog() {
@@ -139,6 +141,8 @@ export class RestaurantReviewsComponent {
           this.totalReviews++;
           this.reviewCountChanged.emit(this.totalReviews);
         }
+
+        this.reviewCreated.emit(review);
       });
   }
 

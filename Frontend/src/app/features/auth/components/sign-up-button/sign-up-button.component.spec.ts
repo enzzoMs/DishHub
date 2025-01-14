@@ -11,25 +11,25 @@ import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { AppConfig } from "../../../../../config/config-constants";
 import { of, throwError } from "rxjs";
 import { ErrorCode } from "../../../error/models/error-codes.model";
-import {AuthService} from "../../../../shared/services/auth/auth.service";
-import {User} from "../../../../shared/models/user.model";
+import { User } from "../../../../shared/models/user.model";
+import { UserService } from "../../../../shared/services/user/user.service";
 
 describe("AuthComponent", () => {
   let component: SignUpButtonComponent;
   let fixture: ComponentFixture<SignUpButtonComponent>;
 
-  let authServiceMock: jasmine.SpyObj<AuthService>;
+  let userServiceMock: jasmine.SpyObj<UserService>;
 
   beforeEach(async () => {
-    authServiceMock = jasmine.createSpyObj("authService", ["signUpUser"]);
-    authServiceMock.signUpUser.and.returnValue(of({ userName: "" }));
+    userServiceMock = jasmine.createSpyObj("authService", ["signUpUser"]);
+    userServiceMock.signUpUser.and.returnValue(of({ userName: "" }));
 
     await TestBed.configureTestingModule({
       imports: [SignUpButtonComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: UserService, useValue: userServiceMock },
       ],
     }).compileComponents();
 
@@ -43,7 +43,7 @@ describe("AuthComponent", () => {
 
   it("should update registered user when form is submitted", fakeAsync(() => {
     const testUser: User = { userName: "Jane" };
-    authServiceMock.signUpUser.and.returnValue(of(testUser));
+    userServiceMock.signUpUser.and.returnValue(of(testUser));
 
     let registeredUser: User | undefined;
     component.registeredUser$.subscribe((user) => {
@@ -58,7 +58,7 @@ describe("AuthComponent", () => {
 
     tick(AppConfig.MIN_LOADING_TIME_MS);
 
-    expect(authServiceMock.signUpUser).toHaveBeenCalledOnceWith(
+    expect(userServiceMock.signUpUser).toHaveBeenCalledOnceWith(
       userName,
       password,
     );
@@ -76,7 +76,7 @@ describe("AuthComponent", () => {
   }));
 
   it("should update the sign up result if the user already exists", fakeAsync(() => {
-    authServiceMock.signUpUser.and.returnValue(
+    userServiceMock.signUpUser.and.returnValue(
       throwError(
         () =>
           new HttpErrorResponse({

@@ -16,10 +16,10 @@ import { ErrorCode } from "../../../error/models/error-codes.model";
 import { AsyncPipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { RoutePath } from "../../../../app.routes";
-import { AuthService } from "../../../../shared/services/auth/auth.service";
 import { FormDialogComponent } from "../../../../shared/components/form-dialog/form-dialog.component";
 import { AuthForm, AuthFormConfig } from "../auth-form-config";
 import { MessageDialogComponent } from "../../../../shared/components/message-dialog/message-dialog.component";
+import { UserService } from "../../../../shared/services/user/user.service";
 
 @Component({
   selector: "dhub-login-button",
@@ -48,7 +48,7 @@ export class LoginButtonComponent implements OnDestroy {
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
   ngOnDestroy() {
@@ -62,7 +62,7 @@ export class LoginButtonComponent implements OnDestroy {
   loginUser(authForm: AuthForm) {
     this.loginRequestSubscription?.unsubscribe();
 
-    const loginRequest$ = this.authService
+    const loginRequest$ = this.userService
       .loginUser(authForm.name, authForm.password)
       .pipe(
         combineLatestWith(timer(AppConfig.MIN_LOADING_TIME_MS)),

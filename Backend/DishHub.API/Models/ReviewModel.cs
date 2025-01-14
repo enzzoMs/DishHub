@@ -4,7 +4,7 @@ public record ReviewModel(
     int Id,
     string UserName,
     string Comment,
-    double Rating,
+    int Rating,
     DateTime CreationDate,
     int RestaurantId,
     string RestaurantName

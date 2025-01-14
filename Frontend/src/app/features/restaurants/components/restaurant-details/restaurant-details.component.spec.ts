@@ -1,4 +1,9 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from "@angular/core/testing";
 
 import { RestaurantDetailsComponent } from "./restaurant-details.component";
 import { ActivatedRoute } from "@angular/router";
@@ -6,7 +11,9 @@ import { By } from "@angular/platform-browser";
 import { of } from "rxjs";
 import { Restaurant } from "../../../../shared/models/restaurant.model";
 import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
-import {AppConfig} from "../../../../../config/config-constants";
+import { AppConfig } from "../../../../../config/config-constants";
+import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 
 describe("RestaurantDetailsComponent", () => {
   let fixture: ComponentFixture<RestaurantDetailsComponent>;
@@ -35,6 +42,8 @@ describe("RestaurantDetailsComponent", () => {
     await TestBed.configureTestingModule({
       imports: [RestaurantDetailsComponent],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: RestaurantsService, useValue: restaurantServiceMock },
         {
           provide: ActivatedRoute,

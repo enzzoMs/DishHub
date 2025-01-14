@@ -4,21 +4,21 @@ import { CanActivateFn, Router } from "@angular/router";
 import { authGuard } from "./auth.guard";
 import { RoutePath } from "../../app.routes";
 import { ErrorCode } from "../../features/error/models/error-codes.model";
-import { AuthService } from "../services/auth/auth.service";
+import { UserService } from "../services/user/user.service";
 
 describe("authGuard", () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
     TestBed.runInInjectionContext(() => authGuard(...guardParameters));
 
-  let authServiceMock: jasmine.SpyObj<AuthService>;
+  let authServiceMock: jasmine.SpyObj<UserService>;
 
   beforeEach(() => {
-    authServiceMock = jasmine.createSpyObj<AuthService>("AuthService", [
+    authServiceMock = jasmine.createSpyObj<UserService>("UserService", [
       "getCurrentLoggedInUser",
     ]);
 
     TestBed.configureTestingModule({
-      providers: [{ provide: AuthService, useValue: authServiceMock }],
+      providers: [{ provide: UserService, useValue: authServiceMock }],
     });
   });
 

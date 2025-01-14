@@ -1,6 +1,5 @@
 import { TestBed } from "@angular/core/testing";
 
-import { AuthService } from "./auth.service";
 import {
   HttpTestingController,
   provideHttpClientTesting,
@@ -9,16 +8,19 @@ import { HttpErrorResponse, provideHttpClient } from "@angular/common/http";
 import { firstValueFrom } from "rxjs";
 import { apiEndpoints } from "../../../../api/api-endpoints";
 import { User } from "../../models/user.model";
+import { Restaurant } from "../../models/restaurant.model";
+import { Review } from "../../models/review.model";
+import { UserService } from "./user.service";
 
-describe("AuthService", () => {
-  let service: AuthService;
+describe("UserService", () => {
+  let service: UserService;
   let httpTesting: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideHttpClient(), provideHttpClientTesting()],
     });
-    service = TestBed.inject(AuthService);
+    service = TestBed.inject(UserService);
     httpTesting = TestBed.inject(HttpTestingController);
 
     const userRequest = httpTesting.expectOne(apiEndpoints.userInformation());
@@ -158,5 +160,57 @@ describe("AuthService", () => {
     await logoutPromise;
 
     expect(loggedInUser).toBeNull();
+  });
+
+  it("should fetch user restaurants", async () => {
+    const testRestaurants: Restaurant[] = [
+      { id: 0, name: "", description: "", location: "", score: 0 },
+      { id: 1, name: "", description: "", location: "", score: 0 },
+    ];
+
+    const restaurantsPromise = firstValueFrom(service.getUserRestaurants());
+
+    const request = httpTesting.expectOne({
+      method: "GET",
+      url: apiEndpoints.getUserRestaurants(),
+    });
+
+    request.flush(testRestaurants);
+
+    expect(await restaurantsPromise).toEqual(testRestaurants);
+  });
+
+  it("should fetch user reviews", async () => {
+    const testReviews: Review[] = [
+      {
+        id: 0,
+        restaurantId: 0,
+        restaurantName: "",
+        userName: "",
+        comment: "",
+        rating: 1,
+        creationDate: new Date(),
+      },
+      {
+        id: 0,
+        restaurantId: 0,
+        restaurantName: "",
+        userName: "",
+        comment: "",
+        rating: 2,
+        creationDate: new Date(),
+      },
+    ];
+
+    const reviewsPromise = firstValueFrom(service.getUserReviews());
+
+    const request = httpTesting.expectOne({
+      method: "GET",
+      url: apiEndpoints.getUserReviews(),
+    });
+
+    request.flush(testReviews);
+
+    expect(await reviewsPromise).toEqual(testReviews);
   });
 });

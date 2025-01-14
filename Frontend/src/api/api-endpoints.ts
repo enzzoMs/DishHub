@@ -5,8 +5,10 @@ export const apiEndpoints = {
   getRestaurantById: (id: number) =>
     `${AppConfig.API_BASE_PATH}/restaurants/${id}`,
   createRestaurant: () => `${AppConfig.API_BASE_PATH}/restaurants`,
-  updateRestaurant: (id: number) => `${AppConfig.API_BASE_PATH}/restaurants/${id}`,
-  deleteRestaurant: (id: number) => `${AppConfig.API_BASE_PATH}/restaurants/${id}`,
+  updateRestaurant: (id: number) =>
+    `${AppConfig.API_BASE_PATH}/restaurants/${id}`,
+  deleteRestaurant: (id: number) =>
+    `${AppConfig.API_BASE_PATH}/restaurants/${id}`,
 
   getRestaurantMenu: (restaurantId: number) =>
     `${AppConfig.API_BASE_PATH}/restaurants/${restaurantId}/menu`,
@@ -34,4 +36,6 @@ export const apiEndpoints = {
   userInformation: () => `${AppConfig.API_BASE_PATH}/user`,
   getUserRestaurants: () => `${AppConfig.API_BASE_PATH}/user/restaurants`,
   getUserReviews: () => `${AppConfig.API_BASE_PATH}/user/reviews`,
+  updateUser: () => `${AppConfig.API_BASE_PATH}/user`,
+  deleteUser: () => `${AppConfig.API_BASE_PATH}/user`,
 };

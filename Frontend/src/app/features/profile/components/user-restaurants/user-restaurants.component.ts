@@ -1,7 +1,6 @@
 import { Component, OnInit, viewChild } from "@angular/core";
 import { BehaviorSubject, combineLatestWith, map, take, timer } from "rxjs";
 import { Restaurant } from "../../../../shared/models/restaurant.model";
-import { UserService } from "../../services/user.service";
 import { AppConfig } from "../../../../../config/config-constants";
 import {
   RestaurantForm,
@@ -13,6 +12,7 @@ import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe
 import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
 import { AsyncPipe } from "@angular/common";
 import { MessageDialogComponent } from "../../../../shared/components/message-dialog/message-dialog.component";
+import { UserService } from "../../../../shared/services/user/user.service";
 
 @Component({
   selector: "dhub-user-restaurants",

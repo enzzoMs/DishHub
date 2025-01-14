@@ -1,10 +1,7 @@
 import { TestBed } from "@angular/core/testing";
 
 import { MenuItemComponent } from "./menu-item.component";
-import {
-  MenuItem,
-  MenuItemCategory,
-} from "../../../../shared/models/menu-item.model";
+import { MenuItem } from "../../../../shared/models/menu-item.model";
 
 describe("MenuItemComponent", () => {
   it("should be created", async () => {
@@ -13,8 +10,8 @@ describe("MenuItemComponent", () => {
     }).compileComponents();
 
     const testMenuItem: MenuItem = {
+      id: 0,
       name: "",
-      category: MenuItemCategory.Appetizers,
       description: "",
       price: 0,
     };

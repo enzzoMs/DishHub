@@ -48,7 +48,12 @@ export const ReviewFormConfig: FormConfig<ReviewForm> = {
         {
           name: "min",
           validatorFn: Validators.min(RESTAURANT_MIN_SCORE),
-          errorMessage: `Rating must be more than ${RESTAURANT_MIN_SCORE}.`,
+          errorMessage: `Rating must be greater than ${RESTAURANT_MIN_SCORE}.`,
+        },
+        {
+          name: "pattern",
+          validatorFn: Validators.pattern(/^[0-9]*$/),
+          errorMessage: `Only round numbers allowed.`,
         },
       ],
     },

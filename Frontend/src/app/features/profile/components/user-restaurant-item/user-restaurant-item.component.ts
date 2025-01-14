@@ -3,7 +3,7 @@ import { Restaurant } from "../../../../shared/models/restaurant.model";
 import { MessageDialogComponent } from "../../../../shared/components/message-dialog/message-dialog.component";
 import { RouterLink } from "@angular/router";
 import { RoutePath } from "../../../../app.routes";
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, DecimalPipe } from "@angular/common";
 import { FormDialogComponent } from "../../../../shared/components/form-dialog/form-dialog.component";
 import {
   RestaurantForm,
@@ -23,6 +23,7 @@ import { UserMenuComponent } from "../user-menu/user-menu.component";
     AsyncPipe,
     FormDialogComponent,
     UserMenuComponent,
+    DecimalPipe,
   ],
   templateUrl: "./user-restaurant-item.component.html",
   styleUrl: "./user-restaurant-item.component.css",

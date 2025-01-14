@@ -10,6 +10,9 @@ describe("ReviewItemComponent", () => {
     }).compileComponents();
 
     const testReview: Review = {
+      id: 0,
+      restaurantName: "",
+      restaurantId: 0,
       userName: "",
       comment: "",
       rating: 0,

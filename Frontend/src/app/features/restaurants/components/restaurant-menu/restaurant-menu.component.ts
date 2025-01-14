@@ -41,7 +41,7 @@ export class RestaurantMenuComponent {
     );
 
     effect(() => {
-      if (this.restaurantId()) {
+      if (this.restaurantId() !== undefined) {
         this.menuItemsUpdater$.next();
       }
     });

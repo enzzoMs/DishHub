@@ -9,11 +9,11 @@ import { UserRestaurantsComponent } from "./user-restaurants.component";
 import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { AppConfig } from "../../../../../config/config-constants";
-import { UserService } from "../../services/user.service";
 import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
 import { of } from "rxjs";
 import { Restaurant } from "../../../../shared/models/restaurant.model";
 import { RestaurantForm } from "../restaurant-form-config";
+import { UserService } from "../../../../shared/services/user/user.service";
 
 describe("UserRestaurantsComponent", () => {
   let component: UserRestaurantsComponent;

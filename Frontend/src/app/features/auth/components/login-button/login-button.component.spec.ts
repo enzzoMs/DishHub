@@ -12,18 +12,18 @@ import { of } from "rxjs";
 import { AppConfig } from "../../../../../config/config-constants";
 import { provideRouter, Router } from "@angular/router";
 import { appRoutes, RoutePath } from "../../../../app.routes";
-import { AuthService } from "../../../../shared/services/auth/auth.service";
-import {AuthForm} from "../auth-form-config";
+import { AuthForm } from "../auth-form-config";
+import { UserService } from "../../../../shared/services/user/user.service";
 
 describe("LoginButtonComponent", () => {
   let component: LoginButtonComponent;
   let fixture: ComponentFixture<LoginButtonComponent>;
 
-  let authServiceMock: jasmine.SpyObj<AuthService>;
+  let userServiceMock: jasmine.SpyObj<UserService>;
 
   beforeEach(async () => {
-    authServiceMock = jasmine.createSpyObj("AuthService", ["loginUser"]);
-    authServiceMock.loginUser.and.returnValue(of({ userName: "" }));
+    userServiceMock = jasmine.createSpyObj("AuthService", ["loginUser"]);
+    userServiceMock.loginUser.and.returnValue(of({ userName: "" }));
 
     await TestBed.configureTestingModule({
       imports: [LoginButtonComponent],
@@ -31,7 +31,7 @@ describe("LoginButtonComponent", () => {
         provideRouter(appRoutes),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: UserService, useValue: userServiceMock },
       ],
     }).compileComponents();
 
@@ -57,7 +57,7 @@ describe("LoginButtonComponent", () => {
     tick(AppConfig.MIN_LOADING_TIME_MS);
     fixture.detectChanges();
 
-    expect(authServiceMock.loginUser).toHaveBeenCalledOnceWith(
+    expect(userServiceMock.loginUser).toHaveBeenCalledOnceWith(
       testName,
       testPassword,
     );

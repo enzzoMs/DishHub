@@ -16,7 +16,7 @@ import {
 import { AsyncPipe } from "@angular/common";
 import { AppConfig } from "../../../../config/config-constants";
 import { User } from "../../models/user.model";
-import { AuthService } from "../../services/auth/auth.service";
+import { UserService } from "../../services/user/user.service";
 
 @Component({
   selector: "dhub-header",
@@ -40,12 +40,12 @@ export class HeaderComponent {
   readonly appRoutes = RoutePath;
 
   constructor(
-    private readonly authService: AuthService,
+    private readonly userService: UserService,
     private readonly router: Router,
   ) {
-    this.loggedInUser$ = authService.loggedInUser$.pipe(
+    this.loggedInUser$ = userService.loggedInUser$.pipe(
       switchMap((loggedInUser) => {
-        if (loggedInUser === undefined) {
+        if (loggedInUser === undefined || this.isLoggingOutSubject$.value) {
           return of(loggedInUser);
         } else {
           return zip(
@@ -60,7 +60,7 @@ export class HeaderComponent {
   logoutUser() {
     this.isLoggingOutSubject$.next(true);
 
-    this.authService
+    this.userService
       .logout()
       .pipe(take(1))
       .subscribe(() => {

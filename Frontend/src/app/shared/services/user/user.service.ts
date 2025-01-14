@@ -3,6 +3,7 @@ import {
   HttpClient,
   HttpContext,
   HttpErrorResponse,
+  HttpParams,
 } from "@angular/common/http";
 import {
   BehaviorSubject,
@@ -16,11 +17,13 @@ import { apiEndpoints } from "../../../../api/api-endpoints";
 import { IGNORE_ERROR_STATUS_TOKEN } from "../../interceptors/error-interceptor";
 import { ErrorCode } from "../../../features/error/models/error-codes.model";
 import { User } from "../../models/user.model";
+import { Restaurant } from "../../models/restaurant.model";
+import { Review } from "../../models/review.model";
 
 @Injectable({
   providedIn: "root",
 })
-export class AuthService {
+export class UserService {
   private readonly loggedInUserSubject$ = new BehaviorSubject<
     User | null | undefined
   >(undefined);
@@ -102,6 +105,38 @@ export class AuthService {
   logout(): Observable<void> {
     return this.http
       .post<void>(apiEndpoints.logout(), {})
+      .pipe(tap(() => this.loggedInUserSubject$.next(null)));
+  }
+
+  getUserRestaurants(includeMenu?: boolean): Observable<Restaurant[]> {
+    return this.http.get<Restaurant[]>(apiEndpoints.getUserRestaurants(), {
+      params: includeMenu
+        ? new HttpParams().append("includeMenu", includeMenu)
+        : undefined,
+    });
+  }
+
+  getUserReviews(): Observable<Review[]> {
+    return this.http
+      .get<Review[]>(apiEndpoints.getUserReviews())
+      .pipe(
+        tap((review) =>
+          review.forEach(
+            (review) => (review.creationDate = new Date(review.creationDate)),
+          ),
+        ),
+      );
+  }
+
+  updateUser(userName: string, password: string): Observable<User> {
+    return this.http
+      .patch<User>(apiEndpoints.updateUser(), { userName, password })
+      .pipe(tap((user) => this.loggedInUserSubject$.next(user)));
+  }
+
+  deleteUser(): Observable<null> {
+    return this.http
+      .delete<null>(apiEndpoints.deleteUser())
       .pipe(tap(() => this.loggedInUserSubject$.next(null)));
   }
 }

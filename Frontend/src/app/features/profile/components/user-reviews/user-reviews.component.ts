@@ -3,9 +3,9 @@ import { AsyncPipe } from "@angular/common";
 import { UserReviewItemComponent } from "../user-review-item/user-review-item.component";
 import { EnumeratePipe } from "../../../../shared/pipes/enumerate/enumerate.pipe";
 import { BehaviorSubject, combineLatestWith, map, take, timer } from "rxjs";
-import { UserService } from "../../services/user.service";
 import { AppConfig } from "../../../../../config/config-constants";
 import { Review } from "../../../../shared/models/review.model";
+import { UserService } from "../../../../shared/services/user/user.service";
 
 @Component({
   selector: "dhub-user-reviews",

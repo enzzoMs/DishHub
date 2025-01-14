@@ -112,6 +112,9 @@ describe("RestaurantsService", () => {
   it("should fetch restaurants reviews with pagination", async () => {
     const testReviews: Review[] = [
       {
+        id: 0,
+        restaurantName: "",
+        restaurantId: 0,
         userName: "",
         comment: "",
         rating: 5,

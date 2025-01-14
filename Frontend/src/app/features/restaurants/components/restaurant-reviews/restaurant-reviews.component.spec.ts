@@ -1,11 +1,18 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from "@angular/core/testing";
 
 import { RestaurantReviewsComponent } from "./restaurant-reviews.component";
 import { of } from "rxjs";
 import { PaginatedItems } from "../../../../shared/models/paginated-items";
 import { RestaurantsService } from "../../../../shared/services/restaurants/restaurants.service";
 import { Review } from "../../../../shared/models/review.model";
-import {AppConfig} from "../../../../../config/config-constants";
+import { AppConfig } from "../../../../../config/config-constants";
+import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 
 describe("RestaurantReviewsComponent", () => {
   let component: RestaurantReviewsComponent;
@@ -16,6 +23,9 @@ describe("RestaurantReviewsComponent", () => {
   const testReviewsFirstPage: Review[] = [];
   for (let i = 0; i < RestaurantReviewsComponent.pageSize; i++) {
     testReviewsFirstPage.push({
+      id: 0,
+      restaurantName: "",
+      restaurantId: 0,
       userName: "",
       comment: "",
       rating: i,
@@ -41,6 +51,8 @@ describe("RestaurantReviewsComponent", () => {
     await TestBed.configureTestingModule({
       imports: [RestaurantReviewsComponent],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         { provide: RestaurantsService, useValue: restaurantServiceMock },
       ],
     }).compileComponents();
