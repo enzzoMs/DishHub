@@ -34,7 +34,7 @@ The application was developed as part of a practical project for the Software En
 <h1 align="center">
     <img alt="App Showcase 1" src="./assets/showcase_1.png" height="400"/>
     <img alt="App Showcase 2" src="./assets/showcase_2.png" height="400"/>
-    <img alt="App Showcase 3" src="./assets/showcase_3.png" height="400"/>
+    <img alt="App Showcase 3" src="./assets/showcase_3.png" height="465"/>
 </h1>
 
 # License
