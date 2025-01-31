@@ -1,6 +1,7 @@
 :host {
   display: flex;
   flex-direction: column;
+  row-gap: var(--space-md);
 }
 
 .add-item-button-wrapper button {
@@ -19,8 +20,4 @@ dhub-user-menu-item {
   display: block;
   padding-top: var(--space-md);
   border-top: var(--divider-height) solid var(--divider-color);
-}
-
-dhub-user-menu-item:first-of-type {
-  margin-top: var(--space-md);
 }

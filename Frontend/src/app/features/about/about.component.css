@@ -1,0 +1,8 @@
+h1 {
+  font-size: var(--text-xxl);
+  margin-top: 0;
+}
+
+h2 {
+  font-size: var(--text-lg);
+}
